@@ -33,7 +33,8 @@ cd RR-Turismo
 | **JDK 21** | Rodar o Spring | https://adoptium.net (Temurin 21) |
 | **MySQL 8** | Banco de dados | https://dev.mysql.com/downloads/installer/ |
 | **Node.js 20 ou superior** | Rodar o app | https://nodejs.org (versão LTS) |
-| **Expo Go** (no celular) | Abrir o app | Play Store / App Store |
+| **Android Studio** (emulador) | Rodar o app no computador | https://developer.android.com/studio |
+| **Expo Go** (opcional, no celular) | Abrir o app no celular | Play Store / App Store |
 
 Confira no terminal: `java -version` (deve mostrar 21), `node -v` (20 ou mais), e se o MySQL está ligado.
 
@@ -52,13 +53,18 @@ Siga o [`RR-Turismo-Spring/README.md`](RR-Turismo-Spring/README.md). Resumo:
 2. Entre e abra **Criar nova viagem** no menu. Preencha, envie uma foto e salve.
 
 ### Passo 3 — Aplicativo (Mobile)
-Siga o [`RR-Turismo-Mobile/README.md`](RR-Turismo-Mobile/README.md). Resumo:
+Siga o [`RR-Turismo-Mobile/README.md`](RR-Turismo-Mobile/README.md). Resumo, com o **Spring já rodando**:
+
 ```bash
 cd RR-Turismo-Mobile
-npm install
-npx expo start -c
+npm install          # só na 1ª vez: baixa as bibliotecas do app
+npm run android      # abre o EMULADOR Android e o app
 ```
-Escaneie o QR code com o Expo Go (celular e computador na **mesma rede Wi-Fi**). A viagem criada no site aparece no app.
+
+- **Emulador (principal):** instale o Android Studio, crie um aparelho em *Device Manager* e deixe-o ligado. Depois rode `npm run android`.
+- **Celular (alternativo):** rode `npx expo start -c` e escaneie o QR code com o app **Expo Go** (celular e computador na **mesma rede Wi-Fi**).
+
+A viagem criada no site aparece no app.
 
 ---
 
@@ -81,7 +87,7 @@ RR-Turismo/
 ```
 
 ## Equipe
-- **Web (Spring):** site e criação das viagens — Rafael Rodrigues
-- **Mobile:** aplicativo do turista — Rodolfo Miguel Irano
+- **Web (Spring):** site e criação das viagens — _nome do integrante_
+- **Mobile:** aplicativo do turista — _nome do integrante_
 
 Guia para subir e atualizar este repositório: [`docs/GUIA_GIT.md`](docs/GUIA_GIT.md)

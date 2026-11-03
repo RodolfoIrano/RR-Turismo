@@ -33,7 +33,7 @@ git config --global user.email "o-mesmo-email-do-github@exemplo.com"
 4. **NÃO marque** "Add a README", ".gitignore" nem "license" (o projeto já tem).
 5. Clique em **Create repository**.
 
-A página seguinte mostra o endereço, parecido com `https://github.com/SEU-USUARIO/RR-Turismo.git`. Copie.
+A página seguinte mostra o endereço, parecido com `https://github.com/RodolfoIrano/RR-Turismo.git`. Copie.
 
 ---
 
@@ -47,7 +47,7 @@ A página seguinte mostra o endereço, parecido com `https://github.com/SEU-USUA
    git branch -M main
    git add .
    git commit -m "Primeira versão do RR Turismo (Spring + Mobile)"
-   git remote add origin https://github.com/SEU-USUARIO/RR-Turismo.git
+   git remote add origin https://github.com/RodolfoIrano/RR-Turismo.git
    git push -u origin main
    ```
 4. No `git push` vai abrir uma janela do navegador pedindo para entrar no GitHub: faça login e autorize.
@@ -62,7 +62,7 @@ A página seguinte mostra o endereço, parecido com `https://github.com/SEU-USUA
 
 ### O link para a feira e para o professor
 ```
-https://github.com/SEU-USUARIO/RR-Turismo
+https://github.com/RodolfoIrano/RR-Turismo
 ```
 Na tela inicial do repositório o `README.md` já ensina a **baixar** (Code → Download ZIP, ou `git clone`) e a **rodar**.
 
@@ -71,7 +71,7 @@ Na tela inicial do repositório o `README.md` já ensina a **baixar** (Code → 
 ## Parte 4 — Testar como o professor vai testar
 Em outra pasta (ou outro computador):
 ```
-git clone https://github.com/SEU-USUARIO/RR-Turismo.git
+git clone https://github.com/RodolfoIrano/RR-Turismo.git
 ```
 e siga o `README.md`. Se funcionar do zero, está perfeito.
 
@@ -106,7 +106,7 @@ Com o projeto no GitHub, basta me passar o `usuario/RR-Turismo` (e o erro que ap
 |---|---|
 | `warning: LF will be replaced by CRLF` (ou o contrário) | É só um aviso do Windows sobre quebra de linha. **Pode ignorar**, o envio continua normal. |
 | `git: command not found` / "não reconhecido" | Instale o Git e **abra um terminal novo**. |
-| `remote origin already exists` | `git remote set-url origin https://github.com/SEU-USUARIO/RR-Turismo.git` |
+| `remote origin already exists` | `git remote set-url origin https://github.com/RodolfoIrano/RR-Turismo.git` |
 | `failed to push ... rejected` | Alguém mudou o repositório. Rode `git pull --rebase` e depois `git push`. |
 | `Authentication failed` | Refaça o login na janela do navegador, ou use um *Personal Access Token* (GitHub → Settings → Developer settings → Tokens) como senha. |
 | Subiu a senha do MySQL sem querer | **Troque a senha do MySQL** imediatamente (apagar o arquivo depois não remove do histórico). |

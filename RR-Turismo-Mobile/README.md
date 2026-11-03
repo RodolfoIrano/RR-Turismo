@@ -3,35 +3,59 @@
 Aplicativo do **turista** (e do guia durante a viagem), feito com **Expo SDK 58 + React Native + TypeScript**.
 Mostra as viagens criadas no site, faz a compra, e acompanha a viagem **ao vivo num mapa** (sua bolinha azul, o guia e o grupo).
 
-O app usa o servidor da pasta [`RR-Turismo-Spring`](../RR-Turismo-Spring) — ele precisa estar **rodando**.
+O app usa o servidor da pasta [`RR-Turismo-Spring`](../RR-Turismo-Spring), que precisa estar **rodando** (porta 9000).
+
+Dá para rodar de duas formas: no **emulador Android** (principal) ou no **celular** com o Expo Go.
 
 ---
 
-## 1. Instalar o que precisa
-- **Node.js 20 ou superior** — https://nodejs.org (`node -v` para conferir)
-- **Expo Go** no celular, atualizado (Play Store / App Store)
-- Celular e computador na **mesma rede Wi-Fi**
+## 1. Instalar o que precisa (uma vez só)
+- **Node.js 20 ou superior** — https://nodejs.org (confira com `node -v`)
+- **Android Studio** — https://developer.android.com/studio (traz o emulador)
+- *(Opcional)* **Expo Go** no celular, atualizado
 
-## 2. Instalar as dependências
-Dentro desta pasta (`RR-Turismo-Mobile`):
+## 2. Instalar as bibliotecas do app (uma vez por computador)
+Dentro da pasta `RR-Turismo-Mobile`:
 ```bash
 npm install
 ```
+Isso baixa as bibliotecas para a pasta `node_modules`. Ela não vai para o GitHub (é pesada e se recria com esse comando), por isso é preciso rodar `npm install` depois de baixar o projeto.
 
 ## 3. Ligar o servidor
 Rode o Spring antes (veja `../RR-Turismo-Spring/README.md`) e crie pelo menos uma viagem no site.
 
-## 4. Iniciar o app
-```bash
-npx expo start -c
-```
-Abra o **Expo Go** e escaneie o **QR code** do terminal.
-(Android: botão *Scan QR code* dentro do Expo Go. iPhone: câmera do celular.)
+---
 
-O app **descobre sozinho** o endereço do servidor (usa o IP do computador que está rodando o `expo start`). Não precisa editar nenhum arquivo.
+## Opção A — Emulador Android (principal)
 
-### Emulador Android
-Funciona do mesmo jeito; se não achar o servidor, ele tenta `10.0.2.2` automaticamente.
+**Criar o emulador (uma vez só):**
+1. Abra o Android Studio → **More Actions → Virtual Device Manager** (ou *Tools → Device Manager*).
+2. **Create Device** → escolha um aparelho (ex.: *Pixel 7*) → **Next**.
+3. Escolha uma imagem do Android (ex.: *API 34*) e clique em *Download* se precisar → **Next → Finish**.
+
+**Rodar o app:**
+1. Clique no **▶ (Play)** ao lado do aparelho para **ligar o emulador** e espere a tela inicial do Android.
+2. No terminal, dentro de `RR-Turismo-Mobile`:
+   ```bash
+   npm run android
+   ```
+   (ou `npx expo start -c` e depois aperte a tecla **a**.)
+3. Na primeira vez o Expo instala o **Expo Go** no emulador sozinho e abre o app. Pode demorar alguns minutos.
+
+> Se aparecer "adb not found", o Android Studio ainda não configurou o SDK. Abra *Settings → Languages & Frameworks → Android SDK*, anote o caminho do **Android SDK Location** e adicione a subpasta `platform-tools` ao PATH do Windows. Feche e abra o terminal de novo.
+
+O emulador acessa o servidor do computador automaticamente.
+
+## Opção B — Celular com Expo Go
+1. Celular e computador na **mesma rede Wi-Fi**.
+2. Libere a porta 9000 no firewall do computador (veja o README do Spring, seção 5).
+3. Rode:
+   ```bash
+   npx expo start -c
+   ```
+4. Abra o **Expo Go** e escaneie o **QR code**. (Android: *Scan QR code* dentro do Expo Go. iPhone: câmera do celular.)
+
+O app **descobre sozinho** o endereço do servidor. Não precisa editar nenhum arquivo.
 
 ### Se o app não achar o servidor
 1. Copie `.env.exemplo` para `.env` e coloque o IP do computador:
@@ -46,14 +70,17 @@ Funciona do mesmo jeito; se não achar o servidor, ele tenta `10.0.2.2` automati
 
 | Sintoma | Solução |
 |---|---|
-| `Network request failed` / "erro de API" no login | Servidor desligado, ou firewall bloqueando a porta 9000 (veja o README do Spring, seção 5), ou celular em outra rede. |
-| Lista de viagens vazia | Nenhuma viagem criada no site ainda, ou o servidor não está acessível. |
-| Mapa em branco | Precisa de internet no celular (carrega o mapa do OpenStreetMap). Permita a localização quando o app pedir. |
+| `Network request failed` / erro de API no login | Servidor desligado, firewall bloqueando a porta 9000, ou (no celular) outra rede Wi-Fi. |
+| Lista de viagens vazia | Nenhuma viagem criada no site, ou o servidor não está acessível. |
+| Emulador não abre o app | Deixe o emulador **já ligado** antes de rodar `npm run android`. |
+| `adb not found` | Veja a nota na Opção A. |
+| Mapa em branco | Precisa de internet (carrega o mapa do OpenStreetMap). Permita a localização quando o app pedir. |
 | Erro de versão no Expo Go | Atualize o Expo Go (o projeto usa SDK 58). |
 
-## Limitações do Expo Go
+## Limitações no Expo Go
 - Voz "segurar para falar" e localização com o app fechado exigem um *development build*.
 - A localização funciona com o app **aberto**.
+- No emulador a localização é simulada: use *Extended controls (⋯) → Location* para mudar o ponto.
 
 ## Estrutura
 ```
