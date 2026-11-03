@@ -44,7 +44,7 @@ Confira no terminal: `java -version` (deve mostrar 21), `node -v` (20 ou mais), 
 
 ### Passo 1 — Servidor (Spring)
 Siga o [`RR-Turismo-Spring/README.md`](RR-Turismo-Spring/README.md). Resumo:
-1. Copie `application-local.properties.exemplo` para `application-local.properties` e coloque a senha do seu MySQL.
+1. **Só se o seu MySQL tem senha:** dentro de `RR-Turismo-Spring`, copie `application-local.properties.exemplo`, cole na mesma pasta, renomeie a cópia para `application-local.properties` e escreva sua senha nela (passo a passo detalhado no README do Spring, seção 2). **Se o MySQL não tem senha, pule este passo.**
 2. **Windows:** duplo clique em `rodar.bat` · **Mac/Linux:** `./rodar.sh`
 3. Aguarde `Tomcat started on port 9000` e abra http://localhost:9000
 
@@ -87,7 +87,7 @@ RR-Turismo/
 ```
 
 ## Equipe
-- **Web (Spring):** site e criação das viagens — _nome do integrante_
-- **Mobile:** aplicativo do turista — _nome do integrante_
+- **Web (Spring):** site e criação das viagens — Rafael Rodrigues
+- **Mobile:** aplicativo do turista — Rodolfo Migueln Irano
 
 Guia para subir e atualizar este repositório: [`docs/GUIA_GIT.md`](docs/GUIA_GIT.md)

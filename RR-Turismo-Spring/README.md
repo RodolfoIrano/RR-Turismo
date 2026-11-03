@@ -31,15 +31,39 @@ Não precisa criar tabelas: o Spring cria o banco `turismo_db` e todas as tabela
 
 ## 2. Configurar a senha do banco
 
-1. Dentro desta pasta, copie o arquivo `application-local.properties.exemplo` e renomeie a cópia para **`application-local.properties`**.
-2. Abra e troque pela senha do **seu** MySQL:
+O Spring entra no MySQL com o usuário **`root`**. Por segurança, a senha **não fica no código** (o código vai para o GitHub). Ela fica num arquivo pessoal do seu computador.
+
+### Caso A — Seu MySQL **não tem senha**
+**Não faça nada.** Pule para o passo 3. O projeto já vem pronto para usuário `root` sem senha.
+
+### Caso B — Seu MySQL **tem senha**
+Você vai **copiar um arquivo modelo e colar na mesma pasta**, só com outro nome.
+
+**Onde:** tudo acontece dentro da pasta `RR-Turismo-Spring`. Nela você vê, entre outros: `lib`, `src`, `rodar.bat` e um arquivo chamado **`application-local.properties.exemplo`**.
+
+1. Dentro da pasta `RR-Turismo-Spring`, clique com o **botão direito** em `application-local.properties.exemplo` e escolha **Copiar**.
+2. Ainda **na mesma pasta** (`RR-Turismo-Spring`), clique com o botão direito num espaço vazio e escolha **Colar**.
+   Vai aparecer um segundo arquivo: `application-local.properties - Copia.exemplo` (ou parecido).
+3. Clique com o botão direito nesse arquivo novo → **Renomear**, apague tudo e digite **exatamente**:
+   ```
+   application-local.properties
+   ```
+   Aperte Enter. Se o Windows avisar que o arquivo pode ficar inutilizável, clique em **Sim**.
+   > Se você não vê o `.exemplo` no fim dos nomes, ative em **Exibir → Mostrar → Extensões de nomes de arquivos** (no Explorador de Arquivos).
+4. Abra o arquivo novo (botão direito → **Abrir com** → Bloco de Notas, ou VS Code) e troque o texto depois de `password=` pela senha do seu MySQL:
    ```properties
    spring.datasource.username=root
-   spring.datasource.password=A_SENHA_QUE_VOCE_CRIOU
+   spring.datasource.password=SUA_SENHA_AQUI
    ```
-Esse arquivo é pessoal e **não vai para o Git** (está no `.gitignore`).
+5. Salve (`Ctrl + S`).
 
-*Alternativa sem arquivo:* definir a variável de ambiente `DB_SENHA` (e, se precisar, `DB_USUARIO` e `DB_HOST`).
+Ao final, a pasta `RR-Turismo-Spring` terá **os dois arquivos**: o `.exemplo` (modelo, continua lá) e o `application-local.properties` (o seu, com a senha).
+
+*Atalho pelo terminal* (dentro da pasta `RR-Turismo-Spring`): `cp application-local.properties.exemplo application-local.properties` (Git Bash / Mac / Linux) ou `copy application-local.properties.exemplo application-local.properties` (Prompt de Comando).
+
+Esse arquivo é só seu e **nunca vai para o Git**.
+
+*Outro usuário do MySQL?* No mesmo arquivo troque `root` pelo seu usuário.
 
 ---
 
@@ -113,7 +137,7 @@ RR-Turismo-Spring/
 
 | Mensagem / sintoma | Causa e solução |
 |---|---|
-| `Access denied for user 'root'` | Senha errada em `application-local.properties`. |
+| `Access denied for user 'root'` | Seu MySQL tem senha: crie o `application-local.properties` (passo 2, caso B) ou corrija a senha dele. |
 | `Communications link failure` / `Connection refused` | MySQL desligado. Ligue o serviço do MySQL. |
 | `Port 9000 was already in use` | Já há um servidor rodando. Feche a janela antiga (ou o processo `java`). |
 | `release version 21 not supported` | Seu `javac` é mais antigo que 21. Instale o JDK 21. |
