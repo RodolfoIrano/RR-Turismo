@@ -1,0 +1,158 @@
+body{
+background-color:var(--cor-fundo);
+font-family:sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+margin:0;
+}
+
+.cadastro-container{
+background-color:var(--cor-card);
+padding:3.5rem;
+border-radius:1.5rem;
+box-shadow:var(--sombra-card);
+width:38rem;
+text-align:center;
+max-height: 70rem;
+}
+
+/* LOGO */
+
+.logo-box{
+display:flex;
+justify-content:center;
+align-items:center;
+height:13rem;
+overflow:hidden;
+margin-top: -1rem;
+}
+
+.logo-box img{
+height:20rem;
+}
+
+/* TITULOS */
+
+h1{
+font-size:2.2rem;
+color:var(--preto2);
+margin-bottom:1.2rem;
+}
+
+.descricao{
+font-size:1.4rem;
+color:#666;
+margin-bottom:3rem;
+}
+
+/* INPUT MODERNO */
+
+.campo{
+position:relative;
+margin-bottom:2rem;
+display:none;
+}
+
+.campo input{
+width:100%;
+padding:1rem 1rem;
+border:1px solid var(--cinza8);
+border-radius:0.8rem;
+font-size:1.3rem;
+outline:none;
+background:white;
+}
+
+.campo label{
+position:absolute;
+left:1rem;
+top:50%;
+transform:translateY(-50%);
+background:white;
+padding:0 .4rem;
+font-size:1.2rem;
+color:#777;
+transition:0.25s;
+pointer-events:none;
+}
+
+.campo input:focus + label,
+.campo input:not(:placeholder-shown) + label{
+top:-8px;
+font-size:1.1rem;
+color:var(--azul6);
+}
+
+.campo input:focus{
+border-color:var(--azul6);
+}
+
+.campo.senha-ok input{
+border-color:#1d9a63;
+box-shadow:0 0 0 2px rgba(29,154,99,0.12);
+}
+
+.campo.senha-ok label{
+color:#1d9a63;
+}
+
+.campo.senha-erro input{
+border-color:#d73b3e;
+box-shadow:0 0 0 2px rgba(215,59,62,0.12);
+}
+
+.campo.senha-erro label{
+color:#d73b3e;
+}
+
+/* CHECKBOX */
+
+.tipo-conta{
+display:flex;
+justify-content:space-between;
+margin-bottom:2rem;
+font-size:1.4rem;
+}
+
+.tipo-empresa{
+display:none;
+justify-content:space-between;
+margin-bottom:2rem;
+font-size:1.4rem;
+}
+
+/* BOTAO */
+
+.cadastrar{
+width:100%;
+padding:1.1rem;
+background-color:var(--azul6);
+color:white;
+border:none;
+border-radius:0.8rem;
+font-size:1.4rem;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}   
+
+.cadastrar:hover{
+background-color:var(--azul8);
+}
+
+.entrar{
+font-size:1.4rem;
+color:#666;
+margin-top:2.5rem;
+}
+
+.entrar a{
+color:var(--azul6);
+font-weight:bold;
+}
+
+.entrar a:hover{
+text-decoration:underline;
+}

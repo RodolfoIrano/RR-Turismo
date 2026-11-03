@@ -1,0 +1,48 @@
+:root {
+    /* Cores Padrão */
+    --cor-fundo: #f4f7f6;
+    --cor-card: #ffffff;
+    --insta: #ff0084;
+    --whatsapp: #09ff00;
+    --azuldark: #02053c;
+    --predo-dark-mode: #0b0f14;
+    --preto-dark-mode-card: #0f1720;
+    --sombra-card: 0 15px 35px rgba(0, 0, 0, 0.1);
+
+    /* Azul */
+    --azul1: rgba(148, 205, 255, 0.575);
+    --azul2: rgba(122, 173, 255, 0.822);
+    --azul3: rgb(0, 110, 255);
+    --azul4: rgb(10, 65, 231);
+    --azul5: rgba(3, 61, 155, 0.822);
+    --azul6: rgb(9, 15, 194);
+    --azul7: #003366;
+    --azul8: rgb(0, 17, 70);
+
+    /* Preto */
+    --preto1: rgba(0, 0, 0, 0.2);
+    --preto2: rgba(0, 0, 0, 0.844);
+
+    /* Amarelo */
+    --amarelo1: #c5b912;
+
+    /* Vermelho */
+    --vermelho1: rgb(200, 0, 0);
+    --vermelho-claro: rgba(255, 1, 1, 0.904);
+
+    /* Verde */
+    --verde1: rgb(0, 183, 0);
+
+    /* Cinza */
+    --cinza1: rgb(245, 245, 245);
+    --cinza2: rgb(240, 240, 240);
+    --cinza3: rgb(230, 230, 230);
+    --cinza4: rgb(228, 228, 228);
+    --cinza5: rgb(225, 225, 225);
+    --cinza6: rgb(220, 220, 220);
+    --cinza7: rgb(200, 200, 200);
+    --cinza8: #ccc;
+    --cinza9: rgb(100, 100, 100);
+    --cinza10: rgb(90, 90, 90);
+    --cinza11: rgb(50, 50, 50);
+}

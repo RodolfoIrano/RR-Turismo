@@ -1,0 +1,10 @@
+# ============================================================
+# CONFIGURAÇÃO PESSOAL DO SEU COMPUTADOR
+# ------------------------------------------------------------
+# 1. Copie este arquivo e renomeie a cópia para:
+#        application-local.properties
+# 2. Troque a senha abaixo pela senha do SEU MySQL.
+# O arquivo application-local.properties NÃO vai para o Git.
+# ============================================================
+spring.datasource.username=root
+spring.datasource.password=COLOQUE_A_SENHA_DO_SEU_MYSQL_AQUI

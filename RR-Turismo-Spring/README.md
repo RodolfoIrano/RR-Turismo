@@ -1,0 +1,122 @@
+# RR Turismo — Spring (site + API)
+
+Servidor Java que entrega o **site** (páginas JSP para guias/empresas) e a **API REST** (`/api/**`) usada pelo aplicativo Mobile.
+Roda na porta **9000** e guarda tudo num banco **MySQL** chamado `turismo_db`.
+
+Este guia serve para **qualquer computador** (Windows, Mac ou Linux), do zero.
+
+---
+
+## 1. Instalar o que precisa
+
+### 1.1 Java (JDK 21)
+1. Baixe o **Temurin 21** em https://adoptium.net e instale (marque a opção de adicionar ao PATH / `JAVA_HOME`).
+2. Abra um terminal novo e confira:
+   ```
+   java -version
+   javac -version
+   ```
+   Os dois precisam mostrar **21**. Se mostrar só `java` e der erro no `javac`, você instalou o JRE em vez do JDK.
+
+> Use o JDK **21**. Versões mais novas (23, 24, 25) podem falhar com o Lombok.
+
+### 1.2 MySQL 8
+1. Baixe o **MySQL Installer** em https://dev.mysql.com/downloads/installer/ (ou use XAMPP / MariaDB).
+2. Durante a instalação defina uma **senha para o usuário `root`** e **anote**.
+3. Deixe o serviço MySQL **ligado** (porta `3306`).
+
+Não precisa criar tabelas: o Spring cria o banco `turismo_db` e todas as tabelas sozinho.
+
+---
+
+## 2. Configurar a senha do banco
+
+1. Dentro desta pasta, copie o arquivo `application-local.properties.exemplo` e renomeie a cópia para **`application-local.properties`**.
+2. Abra e troque pela senha do **seu** MySQL:
+   ```properties
+   spring.datasource.username=root
+   spring.datasource.password=A_SENHA_QUE_VOCE_CRIOU
+   ```
+Esse arquivo é pessoal e **não vai para o Git** (está no `.gitignore`).
+
+*Alternativa sem arquivo:* definir a variável de ambiente `DB_SENHA` (e, se precisar, `DB_USUARIO` e `DB_HOST`).
+
+---
+
+## 3. Rodar
+
+| Sistema | Como |
+|---|---|
+| **Windows** | Duplo clique em **`rodar.bat`** (ou, no terminal: `.\rodar.bat`) |
+| **Mac / Linux** | No terminal: `chmod +x rodar.sh` (só na 1ª vez) e depois `./rodar.sh` |
+
+O script compila o projeto e inicia o servidor. Espere aparecer:
+
+```
+Tomcat started on port 9000
+```
+
+Abra no navegador: **http://localhost:9000**
+
+Para parar: `Ctrl + C` na janela do terminal.
+
+> **Não use o botão "Run" do VS Code.** Ele pode usar outra versão do Java e dar erro `Unsupported class file major version`. Use sempre o `rodar.bat` / `rodar.sh`.
+
+---
+
+## 4. Primeiro uso
+
+1. Em http://localhost:9000 abra o **Cadastro** e crie uma conta de **Guia** ou **Empresa** (senha com no mínimo 8 caracteres).
+2. Entre e use **Criar viagem**: preencha os dados, as datas, envie uma foto (até 20 MB) e salve.
+3. A viagem aparece no site e no aplicativo Mobile.
+
+---
+
+## 5. Usar com o aplicativo no celular
+
+O celular precisa alcançar o computador pela rede:
+1. Computador e celular na **mesma rede Wi-Fi**.
+2. Libere a porta 9000 no firewall.
+   **Windows** (terminal como Administrador):
+   ```
+   netsh advfirewall firewall add rule name="RR Turismo 9000" dir=in action=allow protocol=TCP localport=9000
+   ```
+3. Teste no navegador do celular: `http://IP-DO-COMPUTADOR:9000/api/viagens` (deve mostrar um texto JSON, mesmo que vazio `[]`).
+   Para descobrir o IP: `ipconfig` (Windows) ou `ifconfig` / `ip a` (Mac/Linux).
+
+---
+
+## 6. Estrutura
+
+```
+RR-Turismo-Spring/
+├── src/
+│   ├── application.properties      ← porta, banco, upload
+│   ├── com/projeto/
+│   │   ├── Principal.java          ← classe que inicia tudo
+│   │   ├── controller/             ← rotas do site e da API
+│   │   ├── service/  repository/   ← regras e acesso ao banco
+│   │   ├── model/  dto/            ← tabelas e formatos da API
+│   │   ├── security/ interceptor/  ← login, token do app
+│   │   └── aovivo/                 ← rastreio ao vivo da viagem
+│   └── main/
+│       ├── webapp/view/            ← páginas JSP
+│       └── resources/              ← css, js e imagens
+├── lib/                            ← bibliotecas .jar
+├── rodar.bat / rodar.sh
+└── application-local.properties.exemplo
+```
+
+---
+
+## 7. Problemas comuns
+
+| Mensagem / sintoma | Causa e solução |
+|---|---|
+| `Access denied for user 'root'` | Senha errada em `application-local.properties`. |
+| `Communications link failure` / `Connection refused` | MySQL desligado. Ligue o serviço do MySQL. |
+| `Port 9000 was already in use` | Já há um servidor rodando. Feche a janela antiga (ou o processo `java`). |
+| `release version 21 not supported` | Seu `javac` é mais antigo que 21. Instale o JDK 21. |
+| `Unsupported class file major version` | Você rodou pelo botão Run do VS Code. Use `rodar.bat` / `rodar.sh`. |
+| Código cheio de linhas vermelhas no VS Code, mas o servidor roda | É só o editor. `Ctrl+Shift+P` → **Java: Clean Java Language Server Workspace** → **Restart and delete**. Abra a pasta `RR-Turismo-Spring` direto (não a pasta de cima). |
+| Erro ao criar viagem com foto grande | O limite é 20 MB. Use uma foto menor. |

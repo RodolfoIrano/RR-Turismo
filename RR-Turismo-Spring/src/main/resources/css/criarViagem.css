@@ -1,0 +1,586 @@
+/* ===================== LAYOUT ===================== */
+.conteudo2 {
+    flex: 1;
+    background-color: var(--cor-fundo);
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 950px;
+    padding: 40px;
+}
+
+/* ===================== TÍTULOS ===================== */
+.titulo-pagina {
+    font-size: 32px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.bloco h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.bloco h3,
+.grid-2 h3,
+.grid-3 h3 {
+    font-weight: 600;
+}
+
+/* ===================== BLOCOS ===================== */
+.bloco {
+    background: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 14px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.destaque {
+    border-left: 5px solid var(--azul4);
+}
+
+/* ===================== TEXTOS ===================== */
+.info {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* ===================== INPUTS ===================== */
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border-radius: 10px;
+    border: 1px solid var(--cinza7);
+    font-size: 14px;
+}
+
+.bloco input {
+    margin-bottom: 1rem;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border: 1px solid var(--azul3);
+}
+
+.erro {
+    border: 2px solid var(--vermelho1) !important;
+}
+/* ===================== MENSAGENS ===================== */
+/* ===================== MENSAGENS ===================== */
+.mensagem {
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 25px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.mensagem-sucesso {
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #b7e4c7;
+}
+
+.mensagem-erro {
+    background-color: #fff5f5;
+    color: #991b1b;
+    border: 1px solid #f1b5b5;
+}
+
+
+/* ===================== GRID ===================== */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+/* ===================== BOTÃO PRINCIPAL ===================== */
+#btnCriar {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background: var(--azul3);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#btnCriar:hover {
+    background: var(--azul4);
+}
+
+/* ===================== ASSENTOS ===================== */
+.assentos-box {
+    margin-top: 10px;
+}
+
+.controle-assentos, .controle-pessoas {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.controle-assentos button, .controle-pessoas button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: var(--azul3);
+    color: white;
+    font-size: 18px;
+    border-radius: 6px;
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.controle-assentos input, .controle-pessoas input {
+    width: 70px;
+    height: 30px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid var(--cinza7);
+}
+
+/* ===================== IMAGENS ===================== */
+#preview {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+#preview img {
+    width: 130px;
+    height: 90px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* ===================== PREVIEW FLUTUANTE ===================== */
+.preview-wrapper {
+    position: fixed;
+    top: 80px;
+    right: 25px;
+    z-index: 400;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+    transform-origin: top right;
+}
+
+.preview-wrapper.encolhido {
+    transform: scale(0.1) translate(50px, -50px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.preview-box {
+    position: relative;
+    background: white;
+    padding: 22px;
+    border-radius: 20px;
+    width: 320px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+}
+
+.preview-titulo {
+    font-size: 15px;
+    margin-bottom: 15px;
+    color: var(--cinza7);
+}
+
+/* ===================== CARD ===================== */
+.card-real {
+    background: var(--cor-card);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-real img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+}
+
+.destino {
+    background: var(--azul2);
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 4px;
+    margin: 0;
+    border-radius: 0 0 5px 5px;
+}
+
+#cardGuia {
+    color: var(--azul3);
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+#cardGuia:hover {
+    opacity: 0.8;
+}
+
+.card-info {
+    padding: 14px;
+}
+
+.info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.linha {
+    font-size: 14px;
+    color: var(--cinza9);
+}
+
+.linha strong {
+    color: var(--preto2);
+    font-weight: 600;
+}
+
+.preco {
+    color: var(--verde1);
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.btn-card {
+    width: 100%;
+    padding: 10px;
+    margin-top: 14px;
+    border: none;
+    border-radius: 10px;
+    background: var(--azul3);
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* ===================== BOTÃO MINIMIZAR ===================== */
+.btn-minimizar {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #f1f5f9;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #ff0000;
+    padding: 0;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-minimizar:hover {
+    background: #e2e8f0;
+    transform: scale(1.1);
+    color: #a80000;
+}
+
+/* ===================== ÍCONE FLUTUANTE ===================== */
+.icone-flutuante {
+    position: fixed;
+    top: 80px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    background: var(--azul3);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(30, 109, 224, 0.4);
+    cursor: pointer;
+    z-index: 401;
+    transform: scale(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+}
+
+.icone-flutuante:hover {
+    background: var(--azul4);
+    transform: scale(1.1);
+}
+
+.icone-flutuante.visivel {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ===================== AÇÕES NAS IMAGENS ===================== */
+.preview-item {
+    position: relative;
+    width: 130px;
+    height: 90px;
+}
+
+.image-actions-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.preview-item:hover .image-actions-overlay {
+    opacity: 1;
+}
+
+.action-btn {
+    flex: 1;
+    height: 100%;
+    border: none;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-substitute {
+    background: var(--preto2);
+    border-radius: 10px 0 0 10px;
+}
+
+.action-substitute:hover {
+    background: var(--azul3);
+}
+
+.action-remove {
+    background: var(--preto2);
+    border-radius: 0 10px 10px 0;
+}
+
+.action-remove:hover {
+    background: var(--vermelho1);
+}
+
+/* ===================== UTILITÁRIOS ===================== */
+.hidden {
+    display: none;
+}
+
+/* ===================== RESPONSIVO ===================== */
+@media (max-width: 950px) {
+    .preview-wrapper,
+    .icone-flutuante {
+        display: none !important;
+    }
+}
+
+/* =====================================================
+   AUTOCOMPLETE DE LOCAL / HOTEL (OpenStreetMap)
+   ===================================================== */
+.campo-autocomplete {
+    position: relative;
+}
+
+.lista-sugestoes {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    background: white;
+    border: 1px solid var(--cinza7);
+    border-radius: 10px;
+    margin-top: 4px;
+    max-height: 260px;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.lista-sugestoes.visivel {
+    display: block;
+}
+
+.item-sugestao {
+    padding: 10px 14px;
+    font-size: 13.5px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    line-height: 1.4;
+}
+
+.item-sugestao:last-child {
+    border-bottom: none;
+}
+
+.item-sugestao:hover {
+    background: var(--azul2);
+    color: var(--azul3);
+}
+
+/* =====================================================
+   CHECKBOX "VIAGEM BATE E VOLTA"
+   ===================================================== */
+.checkbox-linha {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    background: var(--azul2);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    width: fit-content;
+}
+
+.checkbox-linha input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--azul3);
+    cursor: pointer;
+}
+
+/* =====================================================
+   SELECT DE CATEGORIA - visual mais caprichado
+   ===================================================== */
+#categoria {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+    padding-right: 36px;
+}
+
+
+/* ============================================================
+   CRIAR / EDITAR VIAGEM — visual por seções numeradas (v2)
+   Mantém todos os campos e ids; só muda a apresentação.
+   ============================================================ */
+.cv-secao { position: relative; }
+
+.cv-secao-topo {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #eef1f6;
+}
+
+.cv-secao-topo h2 { margin: 0 0 4px; }
+.cv-secao-topo .info { margin: 0; }
+
+/* Bolinha com o número da etapa */
+.cv-num {
+    flex: 0 0 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--azul4);
+    color: #fff;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(10, 65, 231, 0.3);
+}
+
+.cv-dica {
+    display: block;
+    margin-top: 6px;
+    font-size: 12.5px;
+    color: #6b7686;
+}
+
+/* Resumo calculado das datas (duração + quanto falta) */
+.cv-resumo-datas {
+    margin: 16px 0 4px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: #eaf2ff;
+    border: 1px solid #c9dcff;
+    color: #0b3d91;
+    font-weight: 600;
+    font-size: 14.5px;
+}
+
+.cv-resumo-alerta {
+    background: #fff0f0;
+    border-color: #ffc9c9;
+    color: #b00020;
+}
+
+.cv-assentos { margin-top: 18px; }
+
+/* Campos: foco mais visível e campo inválido destacado */
+.bloco input:focus,
+.bloco select:focus,
+.bloco textarea:focus {
+    outline: none;
+    border-color: var(--azul3);
+    box-shadow: 0 0 0 3px rgba(0, 110, 255, 0.18);
+}
+
+.bloco input.erro,
+.bloco select.erro,
+.bloco textarea.erro {
+    border-color: #d93025;
+    box-shadow: 0 0 0 3px rgba(217, 48, 37, 0.15);
+}
+
+.bloco textarea { min-height: 150px; resize: vertical; }
+
+.container { max-width: 1000px; }
+
+/* Botão principal maior e com mais destaque */
+#btnCriar {
+    width: 100%;
+    padding: 16px;
+    font-size: 17px;
+    border-radius: 12px;
+    letter-spacing: .3px;
+}
+
+@media (max-width: 700px) {
+    .container { padding: 20px 14px; }
+    .cv-secao-topo { gap: 10px; }
+}

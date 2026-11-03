@@ -1,0 +1,583 @@
+/* =========================================================
+   BOTÃO DE ACESSIBILIDADE
+========================================================= */
+#acc-toggle-btn {
+    position: fixed;
+    bottom: 160px;
+    right: 0;
+    z-index: 9990;
+
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow: hidden;
+
+    width: 48px;
+    height: 48px;
+
+    background: var(--azul6);
+    color: white;
+    border: none;
+    border-radius: 10px 0 0 10px;
+
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 700;
+
+    box-shadow: -3px 3px 14px rgba(0,0,0,.3);
+    transition: width .35s cubic-bezier(.4,0,.2,1), background .2s;
+    padding: 0;
+}
+
+#acc-toggle-btn:hover,
+#acc-toggle-btn:focus-visible {
+    width: 188px;
+    background: var(--azul4);
+    outline: none;
+}
+
+#acc-toggle-btn .acc-icon-wrap {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+#acc-toggle-btn .acc-btn-label {
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity .25s .1s, transform .25s .1s;
+    pointer-events: none;
+    padding-right: 14px;
+}
+
+#acc-toggle-btn:hover .acc-btn-label,
+#acc-toggle-btn:focus-visible .acc-btn-label {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+/* =========================================================
+   PAINEL — centralizado verticalmente, não cola no topo
+========================================================= */
+#acc-painel {
+    position: fixed;
+    /* Centraliza verticalmente e alinha à direita */
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+    z-index: 9989;
+
+    width: 360px;
+    max-height: 80vh;
+
+    background: #f0f0f0;
+    border-radius: 16px;
+    box-shadow: 0 10px 50px rgba(0,0,0,.22);
+
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+#acc-painel.acc-aberto { display: flex; }
+
+/* Cabeçalho */
+.acc-h {
+    background: white;
+    padding: 13px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+.acc-h-titulo {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.acc-h-titulo span { font-size: 20px; }
+.acc-h-fechar {
+    background: none; border: none; cursor: pointer;
+    color: #777; font-size: 18px; padding: 4px 8px;
+    border-radius: 6px; line-height: 1;
+}
+.acc-h-fechar:hover { background: #f0f0f0; color: #000; }
+
+/* Corpo */
+.acc-body {
+    overflow-y: auto;
+    padding: 10px 12px 8px;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+}
+.acc-body::-webkit-scrollbar { width: 4px; }
+.acc-body::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
+/* Título de seção */
+.acc-st {
+    font-size: 13px;
+    font-weight: 700;
+    color: #222;
+    margin: 12px 0 7px 2px;
+}
+.acc-st:first-child { margin-top: 2px; }
+
+/* Grid */
+.acc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 4px; }
+
+/* Card */
+.acc-card {
+    background: white;
+    border: 2px solid #e5e5e5;
+    border-radius: 11px;
+    padding: 13px 10px 11px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    text-align: left;
+    position: relative;
+    transition: border-color .2s, background .2s;
+}
+.acc-card:hover { border-color: #bbb; }
+
+.acc-card.s1 { border-color: var(--azul3); background: #eef4ff; }
+.acc-card.s2 { border-color: var(--azul4); background: #c7d2fe; }
+.acc-card.s3 { border-color: var(--azul6); background: var(--azul6); }
+.acc-card.s3 .acc-cn { color: white; }
+.acc-card.s3 .acc-ci svg { stroke: white; }
+
+/* Indicadores de estágio */
+.acc-dots {
+    position: absolute; top: 7px; right: 7px;
+    display: flex; gap: 3px;
+}
+.acc-dot {
+    width: 5px; height: 5px; border-radius: 50%; background: #ddd;
+}
+.acc-dot.on { background: var(--azul3); }
+.acc-card.s3 .acc-dot.on { background: white; }
+.acc-card.s3 .acc-dot { background: rgba(255,255,255,.35); }
+
+/* Ícone e nome */
+.acc-ci { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
+.acc-ci svg { width: 24px; height: 24px; stroke: #333; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.acc-cn { font-size: 11.5px; font-weight: 600; color: #111; line-height: 1.3; }
+
+/* Rodapé */
+.acc-foot {
+    padding: 9px 13px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    flex-shrink: 0;
+}
+.acc-resetar {
+    background: none; border: none; color: #555; font-size: 12px;
+    cursor: pointer; padding: 5px 9px; border-radius: 7px;
+    display: flex; align-items: center; gap: 4px;
+}
+.acc-resetar:hover { background: #f0f0f0; }
+.acc-marca { font-size: 10px; color: #bbb; }
+
+/* =========================================================
+   BADGE MODO DALTÔNICO — melhorado
+========================================================= */
+.acc-dal-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 4px 8px;
+    margin-bottom: 3px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.acc-card.s1 .acc-dal-badge,
+.acc-card.s2 .acc-dal-badge { background: rgba(255,255,255,.55); border-color: rgba(255,255,255,.6); }
+.acc-dal-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15);
+}
+.acc-dal-nome {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #111;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.acc-dal-desc {
+    font-size: 9.5px;
+    color: #777;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+/* =========================================================
+   MODO SINÔNIMOS — cursor pointer para clicar na palavra
+========================================================= */
+body.acc-sin-modo {
+    cursor: default !important;
+}
+/* Elementos clicáveis que podem ter texto */
+body.acc-sin-modo p,
+body.acc-sin-modo span,
+body.acc-sin-modo li,
+body.acc-sin-modo a,
+body.acc-sin-modo h1,
+body.acc-sin-modo h2,
+body.acc-sin-modo h3,
+body.acc-sin-modo h4,
+body.acc-sin-modo h5,
+body.acc-sin-modo h6,
+body.acc-sin-modo td,
+body.acc-sin-modo th,
+body.acc-sin-modo label,
+body.acc-sin-modo strong,
+body.acc-sin-modo em,
+body.acc-sin-modo b,
+body.acc-sin-modo i,
+body.acc-sin-modo div {
+    cursor: pointer !important;
+}
+/* Destaque ao passar o mouse — roxo translúcido com borda tracejada */
+.acc-sin-hover {
+    background: rgba(108, 63, 197, 0.13) !important;
+    border-radius: 4px;
+    outline: 1.5px dashed rgba(108, 63, 197, 0.5) !important;
+    outline-offset: 2px;
+}
+/* O card de sinônimos e o painel ficam com cursor normal */
+#acc-sin-card,
+#acc-sin-card *,
+#acc-painel,
+#acc-painel * {
+    cursor: default !important;
+}
+#acc-sin-card button,
+#acc-painel button {
+    cursor: pointer !important;
+}
+
+/* =========================================================
+   CARD DE SINÔNIMOS E SIGNIFICADOS (NOVO — como da foto)
+========================================================= */
+#acc-sin-card {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    z-index: 9996;
+
+    width: 340px;
+    max-height: 520px;
+
+    background: #1a1a2e;
+    border-radius: 16px;
+    box-shadow: 0 12px 48px rgba(0,0,0,.35);
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#acc-sin-card.show { display: flex; }
+
+/* Header roxo */
+.acc-sin-header {
+    background: #6c3fc5;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    flex-shrink: 0;
+}
+.acc-sin-back {
+    background: rgba(255,255,255,.18);
+    border: none;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.acc-sin-back:hover { background: rgba(255,255,255,.30); }
+.acc-sin-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+}
+
+/* Body do card */
+.acc-sin-body {
+    overflow-y: auto;
+    padding: 16px;
+    flex: 1;
+    color: #e8e8f0;
+    scrollbar-width: thin;
+    scrollbar-color: #444 transparent;
+}
+.acc-sin-body::-webkit-scrollbar { width: 4px; }
+.acc-sin-body::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
+
+.acc-sin-placeholder {
+    color: #8888aa;
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.acc-sin-loading {
+    color: #8888aa;
+    font-size: 13px;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.acc-sin-palavra {
+    font-size: 13px;
+    color: #aaaacc;
+    margin-bottom: 14px;
+}
+.acc-sin-palavra strong {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.acc-sin-secao {
+    margin: 12px 0 5px;
+    font-size: 13px;
+}
+.acc-sin-secao strong {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.acc-sin-lista {
+    font-size: 13px;
+    color: #c0c0dd;
+    line-height: 1.6;
+}
+
+.acc-sin-def {
+    font-size: 12.5px;
+    color: #c0c0dd;
+    line-height: 1.65;
+}
+
+.acc-sin-exemplos {
+    margin: 0;
+    padding-left: 18px;
+    list-style: decimal;
+}
+.acc-sin-exemplos li {
+    font-size: 12.5px;
+    color: #c0c0dd;
+    line-height: 1.6;
+    margin-bottom: 6px;
+}
+
+/* =========================================================
+   LUPA
+========================================================= */
+#acc-lupa {
+    position: fixed;
+    z-index: 9994;
+    pointer-events: none;
+    background: white;
+    border: 2px solid var(--azul3);
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 20px !important;
+    font-weight: bold;
+    color: #111;
+    max-width: 220px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.15);
+    display: none;
+    line-height: 1.4;
+    font-family: Arial, sans-serif;
+}
+#acc-lupa.show { display: block; }
+
+/* =========================================================
+   MÁSCARA DE LEITURA
+========================================================= */
+.acc-mask-top, .acc-mask-bot {
+    position: fixed; left: 0; right: 0;
+    background: rgba(0,0,0,.72);
+    pointer-events: none;
+    z-index: 9980;
+    display: none;
+}
+body.acc-mascara .acc-mask-top,
+body.acc-mascara .acc-mask-bot { display: block; }
+
+/* GUIA */
+#acc-guia-line {
+    position: fixed; left: 0; right: 0;
+    height: 2px; background: var(--azul3);
+    pointer-events: none; z-index: 9981; display: none;
+}
+body.acc-guia #acc-guia-line { display: block; }
+
+/* =========================================================
+   LEITOR DE SITES — barra de controle
+========================================================= */
+#acc-leitor-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 9992;
+    background: var(--azul8);
+    color: white;
+    padding: 10px 20px;
+    display: none;
+    align-items: center;
+    gap: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+}
+#acc-leitor-bar.show { display: flex; }
+#acc-leitor-bar button {
+    background: rgba(255,255,255,.15); border: none; color: white;
+    padding: 6px 14px; border-radius: 7px; cursor: pointer; font-size: 13px;
+}
+#acc-leitor-bar button:hover { background: rgba(255,255,255,.28); }
+#acc-leitor-bar span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* =========================================================
+   BOTÃO DE IDIOMAS NO TOPO
+========================================================= */
+.topo-global { justify-content: space-between !important; }
+.topo-esquerda { display: flex; align-items: center; }
+
+.lang-trigger {
+    height: 42px; padding: 0 16px;
+    border: 1px solid rgba(82,113,179,.5); border-radius: 10px;
+    background: #20243a; color: #fff; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 9px;
+    font-size: 14px; font-weight: 700;
+    transition: background .2s, transform .15s;
+}
+.lang-trigger:hover { background: #252a44; transform: translateY(-1px); }
+.lang-trigger .globe-icon { font-size: 18px; color: #44c9ff; }
+#current-lang-flag { font-size: 14px; font-weight: 800; }
+#current-lang-label { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lang-trigger .chevron { width: 14px; height: 14px; margin-left: 4px; fill: none; stroke: #8f96bd; stroke-width: 2; flex-shrink: 0; transition: transform .25s; }
+.lang-trigger[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+
+/* =========================================================
+   EFEITOS — GLOBAIS (links, imagens funcionam em todo o site)
+========================================================= */
+
+/* Espaço entre letras */
+body.acc-letras-1 .conteudo * { letter-spacing: .06em !important; }
+body.acc-letras-2 .conteudo * { letter-spacing: .13em !important; }
+
+/* Espaço entre linhas */
+body.acc-linhas-1 .conteudo * { line-height: 1.9 !important; }
+body.acc-linhas-2 .conteudo * { line-height: 2.6 !important; }
+
+/* Negrito */
+body.acc-negrito-1 .conteudo p, body.acc-negrito-1 .conteudo span,
+body.acc-negrito-1 .conteudo td, body.acc-negrito-1 .conteudo li { font-weight: 600 !important; }
+body.acc-negrito-2 .conteudo p, body.acc-negrito-2 .conteudo span,
+body.acc-negrito-2 .conteudo td, body.acc-negrito-2 .conteudo li { font-weight: 900 !important; }
+
+/* Dislexia */
+body.acc-dislexia-1 .conteudo * { font-family: 'Trebuchet MS', sans-serif !important; letter-spacing: .04em !important; }
+body.acc-dislexia-2 .conteudo * { font-family: 'Comic Sans MS', cursive !important; letter-spacing: .07em !important; word-spacing: .12em !important; }
+
+/* Modo escuro */
+body.acc-escuro .conteudo { background: #0d1117 !important; }
+body.acc-escuro .conteudo h1, body.acc-escuro .conteudo h2, body.acc-escuro .conteudo h3,
+body.acc-escuro .conteudo h4, body.acc-escuro .conteudo h5, body.acc-escuro .conteudo h6,
+body.acc-escuro .conteudo p, body.acc-escuro .conteudo span:not([class*=icon]):not([class*=ico]),
+body.acc-escuro .conteudo td, body.acc-escuro .conteudo th, body.acc-escuro .conteudo li,
+body.acc-escuro .conteudo label, body.acc-escuro .conteudo a { color: #c9d1d9 !important; }
+body.acc-escuro .conteudo .card, body.acc-escuro .conteudo [class*="card"],
+body.acc-escuro .conteudo table, body.acc-escuro .conteudo tr { background: #161b22 !important; border-color: #21262d !important; }
+body.acc-escuro .conteudo input, body.acc-escuro .conteudo select, body.acc-escuro .conteudo textarea {
+    background: #21262d !important; color: #c9d1d9 !important; border-color: #30363d !important;
+}
+body.acc-escuro .topo-global { background: #0f1720 !important; border-color: #1e2a3a !important; }
+body.acc-escuro .topo-global * { color: #c9d1d9 !important; }
+
+/* Alto contraste */
+body.acc-contraste-1 .conteudo { background: #000 !important; }
+body.acc-contraste-1 .conteudo * { background-color: #000 !important; color: #fff !important; border-color: #fff !important; }
+body.acc-contraste-1 .conteudo a { color: #ffff00 !important; }
+body.acc-contraste-1 .conteudo img { filter: grayscale(100%) contrast(120%); }
+
+body.acc-contraste-2 .conteudo { background: #000 !important; }
+body.acc-contraste-2 .conteudo * { background-color: #000 !important; color: #ffff00 !important; border-color: #ffff00 !important; }
+
+body.acc-contraste-3 .conteudo * { filter: grayscale(100%) contrast(150%); }
+
+/* Intensidade */
+html.acc-sat-1 { filter: saturate(.4); }
+html.acc-sat-2 { filter: saturate(0); }
+
+/* Daltônico — filtros SVG no html inteiro */
+html.acc-dal-1 { filter: url(#acc-deuteranopia); }
+html.acc-dal-2 { filter: url(#acc-protanopia); }
+html.acc-dal-3 { filter: url(#acc-tritanopia); }
+
+/* Destaque de links — aplica em TODO o body para funcionar em qualquer parte do site */
+body.acc-links-1 a {
+    outline: 2px solid var(--azul3) !important;
+    outline-offset: 2px !important;
+    text-decoration: underline !important;
+    border-radius: 2px;
+}
+body.acc-links-2 a {
+    background: #ffff00 !important;
+    color: #000 !important;
+    outline: 2px solid #000 !important;
+    text-decoration: underline !important;
+    border-radius: 2px;
+}
+
+/* Esconder imagens — aplica em TODO o body */
+body.acc-semimg-1 img { opacity: .12 !important; }
+body.acc-semimg-2 img { visibility: hidden !important; }
+
+/* Destacar cabeçalhos */
+body.acc-heads-1 .conteudo h1, body.acc-heads-1 .conteudo h2, body.acc-heads-1 .conteudo h3,
+body.acc-heads-1 .conteudo h4 { border-left: 4px solid var(--azul3) !important; padding-left: 8px !important; background: #eef4ff !important; }
+
+body.acc-heads-2 .conteudo h1, body.acc-heads-2 .conteudo h2, body.acc-heads-2 .conteudo h3,
+body.acc-heads-2 .conteudo h4 { border-left: 6px solid var(--azul6) !important; padding-left: 10px !important; background: #c7d2fe !important; color: #000 !important; }
+
+/* Modo leitura */
+body.acc-leitura .conteudo .barra-lateral,
+body.acc-leitura header, body.acc-leitura footer,
+body.acc-leitura nav:not(#menuLateral),
+body.acc-leitura .topo-global { opacity: .08 !important; pointer-events: none !important; }

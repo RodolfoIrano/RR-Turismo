@@ -1,0 +1,25 @@
+{
+    // Código Java fica em src (sem Maven). As bibliotecas ficam em lib/.
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ],
+
+    // Lombok (@Getter, @Setter...) precisa do processamento de anotações ligado,
+    // senão o editor pinta de vermelho todo getter/setter que o Lombok gera.
+    "java.jdt.ls.lombokSupport.enabled": true,
+    "java.compile.nullAnalysis.mode": "disabled",
+
+    // JSP, CSS, JS e imagens não são código Java: o editor não precisa analisá-los.
+    "files.exclude": {
+        "**/bin": true
+    },
+    "java.import.exclusions": [
+        "**/main/webapp/**",
+        "**/main/resources/**"
+    ],
+
+    // Avisos que só poluem a lista de problemas (não são erros do projeto).
+    "java.errors.incompleteClasspath.severity": "ignore"
+}

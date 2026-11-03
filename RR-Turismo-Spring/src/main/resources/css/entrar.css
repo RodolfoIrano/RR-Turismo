@@ -1,0 +1,201 @@
+/* BASE */
+
+body {
+    background-color: var(--cor-fundo);
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+
+/* CARD */
+
+.login-container {
+
+    background-color: var(--cor-card);
+    padding: 3.5rem;
+    border-radius: 1.5rem;
+    box-shadow: var(--sombra-card);
+    width: 100%;
+    width: 38rem;
+    text-align: center;
+}
+
+
+/* LOGO */
+
+.logo-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15rem;
+    overflow: hidden;
+
+}
+
+.logo-box img {
+    height: 20rem;
+}
+
+/* TITULO */
+
+h1 {
+    font-size: 2.2rem;
+    color: var(--preto2);
+    margin-bottom: 1rem;
+}
+
+.descricao {
+    font-size: 1.4rem;
+    color: #666;
+    margin-bottom: 2.5rem;
+}
+
+
+/* INPUT MODERNO */
+
+.campo {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.campo input {
+    width: 100%;
+    padding: 1.3rem 1.2rem;
+    border: 1px solid var(--cinza8);
+    border-radius: 0.8rem;
+    font-size: 1.5rem;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.campo label {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    padding: 0 .4rem;
+    font-size: 1.4rem;
+    color: #777;
+    transition: .2s;
+    pointer-events: none;
+}
+
+.campo input:focus+label,
+.campo input:not(:placeholder-shown)+label {
+    top: -0.6rem;
+    font-size: 1.1rem;
+    color: var(--azul6);
+}
+
+.campo input:focus {
+    border-color: var(--azul6);
+    box-shadow: 0 0 0 2px rgba(0, 120, 255, 0.1);
+}
+
+.campo.senha-ok input {
+    border-color: #1d9a63;
+    box-shadow: 0 0 0 2px rgba(29, 154, 99, 0.12);
+}
+
+.campo.senha-ok label {
+    color: #1d9a63;
+}
+
+.campo.senha-erro input {
+    border-color: #d73b3e;
+    box-shadow: 0 0 0 2px rgba(215, 59, 62, 0.12);
+}
+
+.campo.senha-erro label {
+    color: #d73b3e;
+}
+
+
+/* OPCOES LOGIN */
+
+.opcoes-login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+}
+
+.opcoes-login label {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    cursor: pointer;
+}
+
+.opcoes-login a {
+    text-decoration: none;
+    color: var(--azul6);
+}
+
+.opcoes-login a:hover {
+    text-decoration: underline;
+}
+
+
+/* BOTAO */
+
+.entrar-btn {
+    width: 100%;
+    padding: 1.1rem;
+    background-color: var(--azul6);
+    color: white;
+    border: none;
+    border-radius: 0.8rem;
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.entrar-btn:hover {
+    background-color: var(--azul8);
+}
+
+
+/* LINK CADASTRO */
+
+.cadastro-link {
+    font-size: 1.4rem;
+    color: #666;
+    margin-top: 2.5rem;
+}
+
+.cadastro-link a {
+    color: var(--azul6);
+    text-decoration: none;
+}
+
+.cadastro-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* RESPONSIVO */
+
+@media(max-width:400px) {
+
+    .login-container {
+        padding: 2.5rem;
+        margin: 1rem;
+    }
+
+    .logo {
+        height: 7rem;
+    }
+
+    h1 {
+        font-size: 1.9rem;
+    }
+
+}

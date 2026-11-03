@@ -1,0 +1,984 @@
+/* =========================================================
+   RESET GLOBAL
+========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+
+    scroll-behavior: smooth;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    top: 0 !important;
+    background-color: var(--cinza2);
+}
+
+.toast-erro,
+.toast-sucesso {
+    position: fixed !important;
+    top: 18px !important;
+    left: 50% !important;
+    z-index: 10000 !important;
+
+    min-width: 420px;
+    max-width: min(760px, calc(100vw - 32px));
+    padding: 20px 28px;
+
+    border-radius: 8px;
+
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.22);
+
+    transform: translateX(-50%) !important;
+    animation: toastEntrada 0.35s ease, toastSaida 0.35s ease 4.5s forwards;
+}
+
+.toast-erro {
+    background: #d73b3e;
+}
+
+.toast-sucesso {
+    background: #1d9a63;
+}
+
+@keyframes toastEntrada {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes toastSaida {
+    to {
+        opacity: 0;
+        transform: translate(-50%, -18px);
+        pointer-events: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .toast-erro,
+    .toast-sucesso {
+        min-width: calc(100vw - 32px);
+        font-size: 15px;
+    }
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   BARRA LATERAL
+========================================================= */
+.barra-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 25rem;
+    height: 100vh;
+    min-height: 100vh;
+
+    padding: 1.5rem 1rem 10rem;
+
+    overflow: hidden;
+
+    background: linear-gradient(
+        180deg,
+        var(--azul6),
+        var(--azul8)
+    );
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Conteudo principal */
+.conteudo {
+    flex: 1;
+
+    width: calc(100% - 25rem);
+    margin-left: 25rem;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+.logo {
+    height: 10rem;
+    margin-bottom: 2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo img {
+    max-height: 20rem;
+}
+
+
+/* =========================================================
+   MENU LATERAL
+========================================================= */
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Links do menu */
+.menu a {
+    padding: 12px 14px;
+
+    border-radius: 6px;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    text-decoration: none;
+
+    transition: background 0.3s;
+}
+
+/* Hover */
+.menu a:hover {
+    background: rgba(0, 179, 255, 0.203);
+}
+
+/* Item ativo */
+.menu .ativo {
+    background: white;
+    color: black;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   FOOTER SIDEBAR
+========================================================= */
+.sidebar-footer {
+    position: absolute;
+    right: 1rem;
+    bottom: 1.5rem;
+    left: 1rem;
+
+    margin-top: 0;
+    padding-top: 0;
+
+    font-size: 15px;
+    text-align: center;
+}
+
+
+/* =========================================================
+   VARIAVEIS GLOBAIS
+========================================================= */
+:root {
+
+    /* Superficies */
+    --lang-surface: #13141c;
+    --lang-surface-2: #1c1e2a;
+
+    /* Bordas */
+    --lang-border: rgba(255, 255, 255, 0.08);
+
+    /* Cores principais */
+    --lang-accent: #4f8ef7;
+    --lang-accent-2: #7c5cfc;
+
+    /* Texto */
+    --lang-text: #e8eaf2;
+    --lang-muted: #8c90a6;
+
+    /* Radius */
+    --lang-radius: 14px;
+    --lang-radius-sm: 8px;
+
+    /* Sombras */
+    --lang-shadow:
+        0 32px 80px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+
+/* =========================================================
+   GOOGLE TRANSLATE
+========================================================= */
+
+/* Esconde interface padrao */
+.goog-te-banner-frame,
+.skiptranslate {
+    display: none !important;
+}
+
+
+/* =========================================================
+   BOTAO DE ACESSIBILIDADE
+========================================================= */
+.accessibility-wrapper {
+    position: fixed;
+    right: 15px;
+    bottom: 90px;
+
+    z-index: 1000;
+
+    width: 50px;
+    height: 50px;
+}
+
+/* Botao azul */
+.accessibility-button {
+    width: 50px;
+    height: 50px;
+
+    padding: 6px 8px;
+
+    border: none;
+    border-radius: 12px;
+
+    background-color: rgb(0, 110, 255) !important;
+
+    color: white;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    box-shadow: 2px 2px 4px rgb(0, 0, 0);
+
+    transition:
+        background-color 0.35s ease,
+        transform 0.35s ease;
+}
+
+/* Hover */
+.accessibility-button:hover {
+    background-color: rgb(122, 173, 255) !important;
+    transform: scale(1.03);
+}
+
+
+/* =========================================================
+   PAINEL DE ACESSIBILIDADE
+========================================================= */
+.accessibility-panel {
+    position: absolute;
+    right: 100%;
+    top: 50%;
+
+    margin-right: 0;
+    padding: 0;
+
+    border: none;
+    border-radius: 0;
+
+    background: transparent;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+
+    box-shadow: none;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transform: translate(20px, -50%);
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+/* Mostra painel */
+.accessibility-wrapper:has(.accessibility-button:hover) .accessibility-panel,
+.accessibility-panel:hover,
+.accessibility-panel:focus-within {
+    opacity: 1;
+    pointer-events: all;
+
+    transform: translate(0, -50%);
+}
+
+/* Texto acima do painel */
+.accessibility-panel-label {
+    margin: 0;
+
+    color: #8790bf;
+
+    font-size: 13px;
+    font-weight: 400;
+
+    line-height: 1;
+    letter-spacing: 2.6px;
+
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   BOTAO DE IDIOMAS
+========================================================= */
+.accessibility-panel .lang-trigger,
+.lang-trigger {
+    position: relative;
+
+    min-width: 252px;
+    height: 54px;
+
+    padding: 0 22px;
+
+    border: 1px solid rgba(82, 113, 179, 0.78);
+    border-radius: var(--lang-radius);
+
+    background: #20243a;
+    color: #ffffff;
+
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 11px;
+
+    overflow: hidden;
+
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.15s ease;
+}
+
+/* Efeito gradiente */
+.lang-trigger::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        135deg,
+        var(--lang-accent),
+        var(--lang-accent-2)
+    );
+
+    opacity: 0;
+
+    transition: opacity 0.25s ease;
+}
+
+/* Hover */
+.lang-trigger:hover {
+    border-color: rgba(95, 135, 220, 0.95);
+    background: #252a44;
+
+    transform: translateY(-1px);
+}
+
+.lang-trigger:hover::before {
+    opacity: 0.1;
+}
+
+/* Elementos internos */
+.lang-trigger span,
+.lang-trigger svg {
+    position: relative;
+    z-index: 1;
+}
+
+/* Icone globo */
+.lang-trigger .globe-icon,
+#current-lang-flag {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.lang-trigger .globe-icon {
+    width: 22px;
+    height: 22px;
+
+    border-radius: 50%;
+
+    color: #44c9ff;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+}
+
+/* Nome do idioma */
+#current-lang-label {
+    max-width: 150px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-weight: 700;
+}
+
+/* Seta */
+.accessibility-panel .lang-trigger .chevron,
+.lang-trigger .chevron {
+    width: 14px;
+    height: 14px;
+
+    margin-left: auto;
+
+    fill: none;
+
+    stroke: #8f96bd;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    flex-shrink: 0;
+
+    transition: transform 0.25s ease;
+}
+
+.lang-trigger .chevron polyline {
+    fill: none;
+}
+
+/* Rotacao da seta */
+.lang-trigger[aria-expanded="true"] .chevron {
+    transform: rotate(180deg);
+}
+
+
+/* =========================================================
+   OVERLAY DO MODAL
+========================================================= */
+.lang-overlay {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9998;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.25s ease;
+
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.lang-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+
+/* =========================================================
+   MODAL DE IDIOMAS
+========================================================= */
+.lang-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    z-index: 9999;
+
+    width: min(640px, calc(100vw - 32px));
+    max-height: min(640px, calc(100vh - 48px));
+
+    border: 1px solid var(--lang-border);
+    border-radius: 20px;
+
+    background: var(--lang-surface);
+    color: var(--lang-text);
+
+    box-shadow: var(--lang-shadow);
+
+    display: flex;
+    flex-direction: column;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transform: translate(-50%, -46%) scale(0.96);
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+/* Modal ativo */
+.lang-modal.active {
+    opacity: 1;
+    pointer-events: all;
+
+    transform: translate(-50%, -50%) scale(1);
+}
+
+
+/* =========================================================
+   HEADER MODAL
+========================================================= */
+.modal-header {
+    padding: 22px 24px 16px;
+
+    border-bottom: 1px solid var(--lang-border);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    flex-shrink: 0;
+}
+
+/* Titulo */
+.modal-title {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.modal-title span {
+    margin-left: 8px;
+
+    color: var(--lang-muted);
+
+    font-size: 13px;
+    font-weight: 400;
+}
+
+/* Botao fechar */
+.modal-close {
+    width: 32px;
+    height: 32px;
+
+    border: none;
+    border-radius: var(--lang-radius-sm);
+
+    background: transparent;
+    color: var(--lang-muted);
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.modal-close:hover {
+    background: var(--lang-surface-2);
+    color: var(--lang-text);
+}
+
+
+/* =========================================================
+   CAMPO DE PESQUISA
+========================================================= */
+.search-wrap {
+    position: relative;
+
+    padding: 14px 20px;
+
+    border-bottom: 1px solid var(--lang-border);
+
+    flex-shrink: 0;
+}
+
+/* Icone */
+.search-icon {
+    position: absolute;
+    top: 50%;
+    left: 36px;
+
+    color: var(--lang-muted);
+
+    font-size: 14px;
+
+    pointer-events: none;
+
+    transform: translateY(-50%);
+}
+
+/* Input */
+.search-input {
+    width: 100%;
+
+    padding: 10px 14px 10px 38px;
+
+    border: 1px solid var(--lang-border);
+    border-radius: var(--lang-radius-sm);
+
+    background: var(--lang-surface-2);
+    color: var(--lang-text);
+
+    outline: none;
+
+    font-size: 14px;
+
+    transition: border-color 0.2s ease;
+}
+
+.search-input::placeholder {
+    color: var(--lang-muted);
+}
+
+.search-input:focus {
+    border-color: rgba(79, 142, 247, 0.55);
+}
+
+
+/* =========================================================
+   ABAS DE REGIOES
+========================================================= */
+.region-tabs {
+    padding: 10px 20px;
+
+    border-bottom: 1px solid var(--lang-border);
+
+    display: flex;
+    gap: 4px;
+
+    overflow-x: auto;
+
+    flex-shrink: 0;
+
+    scrollbar-width: none;
+}
+
+/* Remove scrollbar */
+.region-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+/* Aba */
+.region-tab {
+    padding: 5px 12px;
+
+    border: 1px solid var(--lang-border);
+    border-radius: 20px;
+
+    background: transparent;
+    color: var(--lang-muted);
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease;
+}
+
+/* Hover */
+.region-tab:hover {
+    background: var(--lang-surface-2);
+    color: var(--lang-text);
+}
+
+/* Ativa */
+.region-tab.active {
+    border-color: transparent;
+
+    background: linear-gradient(
+        135deg,
+        var(--lang-accent),
+        var(--lang-accent-2)
+    );
+
+    color: white;
+}
+
+
+/* =========================================================
+   LISTA DE IDIOMAS
+========================================================= */
+.lang-list-wrap {
+    flex: 1;
+
+    padding: 12px 14px;
+
+    overflow-y: auto;
+
+    scrollbar-color:
+        var(--lang-surface-2)
+        transparent;
+
+    scrollbar-width: thin;
+}
+
+/* Grid */
+.lang-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(170px, 1fr));
+
+    gap: 4px;
+}
+
+/* Card idioma */
+.lang-item {
+    min-width: 0;
+
+    padding: 9px 12px;
+
+    border: 1px solid transparent;
+    border-radius: var(--lang-radius-sm);
+
+    background: transparent;
+    color: var(--lang-text);
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    text-align: left;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
+}
+
+/* Hover */
+.lang-item:hover {
+    background: var(--lang-surface-2);
+}
+
+/* Selecionado */
+.lang-item.selected {
+    border-color: rgba(79, 142, 247, 0.28);
+    background: rgba(79, 142, 247, 0.12);
+}
+
+/* Bandeira */
+.lang-flag {
+    font-size: 20px;
+    line-height: 1;
+
+    flex-shrink: 0;
+}
+
+/* Informacoes */
+.lang-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    overflow: hidden;
+}
+
+/* Nome e idioma */
+.lang-name,
+.lang-native {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lang-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.lang-native {
+    color: var(--lang-muted);
+    font-size: 11px;
+}
+
+/* Check */
+.lang-check {
+    width: 16px;
+    height: 16px;
+
+    margin-left: auto;
+
+    border-radius: 50%;
+
+    background: var(--lang-accent);
+    color: white;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    font-size: 9px;
+}
+
+/* Mostra check */
+.lang-item.selected .lang-check {
+    display: flex;
+}
+
+
+/* =========================================================
+   ESTADO VAZIO
+========================================================= */
+.empty-state {
+    padding: 48px 24px;
+
+    color: var(--lang-muted);
+
+    text-align: center;
+}
+
+.empty-state .empty-icon {
+    margin-bottom: 12px;
+
+    font-size: 36px;
+}
+
+.empty-state p {
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FOOTER MODAL
+========================================================= */
+.modal-footer {
+    padding: 14px 20px;
+
+    border-top: 1px solid var(--lang-border);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    flex-shrink: 0;
+}
+
+/* Texto */
+.footer-info {
+    color: var(--lang-muted);
+    font-size: 12px;
+}
+
+.footer-info strong {
+    color: var(--lang-text);
+}
+
+/* Botao reset */
+.btn-reset {
+    padding: 7px 16px;
+
+    border: 1px solid var(--lang-border);
+    border-radius: var(--lang-radius-sm);
+
+    background: transparent;
+    color: var(--lang-muted);
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+.btn-reset:hover {
+    background: var(--lang-surface-2);
+    color: var(--lang-text);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+@media (max-width: 520px) {
+
+    .accessibility-wrapper {
+        right: 10px;
+        bottom: 78px;
+    }
+
+    .lang-trigger {
+        min-width: 230px;
+        height: 40px;
+
+        padding: 0 10px;
+    }
+
+    #current-lang-label {
+        max-width: 94px;
+    }
+
+    .modal-header,
+    .search-wrap,
+    .region-tabs,
+    .modal-footer {
+        padding-right: 14px;
+        padding-left: 14px;
+    }
+
+    .lang-grid {
+        grid-template-columns: 1fr;
+    }
+}

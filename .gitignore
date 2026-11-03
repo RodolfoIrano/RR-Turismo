@@ -1,0 +1,24 @@
+# ---- Mobile (Expo / React Native)
+node_modules/
+.expo/
+dist/
+web-build/
+.env
+npm-debug.*
+.metro-health-check*
+
+# ---- Spring (Java)
+bin/
+target/
+fontes.txt
+*.log
+.classpath
+.project
+.settings/
+# Configuracao pessoal (senha do MySQL) - NUNCA vai para o Git
+application-local.properties
+
+# ---- Sistema / editor
+.DS_Store
+Thumbs.db
+desktop.ini

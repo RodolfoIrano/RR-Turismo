@@ -1,0 +1,375 @@
+/* =========================================================
+   PAGINA DE EDITAR PERFIL
+========================================================= */
+
+.perfil-edit-page {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    gap: 24px;
+    padding: 8px;
+    border-radius: 18px;
+    background:
+        linear-gradient(135deg, rgba(0, 110, 255, 0.06), rgba(56, 189, 248, 0.06)),
+        #f5f8fc;
+}
+
+
+/* =========================================================
+   MENU LATERAL DO PERFIL
+========================================================= */
+
+.perfil-sidebar {
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 18px;
+    background: linear-gradient(180deg, var(--azul6), var(--azul8));
+    box-shadow: 0 18px 45px rgba(0, 49, 120, 0.18);
+}
+
+.perfil-sidebar h2 {
+    margin-bottom: 18px;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.perfil-sidebar a {
+    display: block;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 11px 12px;
+    transition: background 0.2s;
+}
+
+.perfil-sidebar a:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   CONTEÚDO PRINCIPAL
+========================================================= */
+
+.perfil-content {
+    min-width: 0;
+}
+
+.perfil-hero-editor {
+    margin-bottom: 22px;
+}
+
+.perfil-hero-editor h1 {
+    color: #0f172a;
+    font-size: 36px;
+    font-weight: 800;
+}
+
+.perfil-hero-editor p {
+    margin-top: 6px;
+    color: #475467;
+    font-size: 15px;
+}
+
+.perfil-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* =========================================================
+   CARDS DE SEÇÃO
+========================================================= */
+
+.perfil-card {
+    position: relative;
+    overflow: hidden;
+    padding: 28px;
+    border: 1px solid #e4e9f2;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 12px 32px rgba(22, 34, 51, 0.07);
+}
+
+/* Barra colorida lateral */
+.perfil-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--azul3), #38bdf8);
+    border-radius: 0;
+}
+
+.perfil-card h2 {
+    color: #172033;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.perfil-card label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #344054;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.perfil-card input,
+.perfil-card textarea,
+.perfil-card select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d0d7e2;
+    border-radius: 12px;
+    color: #172033;
+    font-size: 14px;
+    outline: none;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.perfil-card input:focus,
+.perfil-card textarea:focus {
+    border-color: var(--azul3);
+    box-shadow: 0 0 0 3px rgba(0, 110, 255, 0.1);
+}
+
+.campo-bloqueado,
+.perfil-card input:disabled {
+    background: #eef2f7 !important;
+    color: #667085 !important;
+    cursor: not-allowed;
+}
+
+.locked-help,
+.field-hint {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.locked-help {
+    color: #f09433;
+}
+
+.field-hint {
+    color: #8c9ab0;
+}
+
+
+/* =========================================================
+   BANNER (separado, sem cobrir a foto)
+========================================================= */
+
+.banner-wrapper {
+    margin-bottom: 24px;
+}
+
+.banner-preview {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 16px;
+    background:
+        linear-gradient(135deg, rgba(0, 49, 120, 0.85), rgba(0, 110, 255, 0.65)),
+        linear-gradient(120deg, var(--azul8), #38bdf8);
+    box-shadow: 0 12px 32px rgba(0, 49, 120, 0.18);
+}
+
+.banner-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.upload-banner {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #172033;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+    transition: background 0.2s;
+}
+
+.upload-banner:hover {
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   FOTO DO PERFIL (ABAIXO do banner)
+========================================================= */
+
+.profile-photo-section {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.profile-photo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.profile-photo {
+    width: 130px;
+    height: 130px;
+    border: 5px solid #ffffff;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #eef2f7;
+    box-shadow: 0 12px 30px rgba(22, 34, 51, 0.18);
+}
+
+.upload-photo {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--azul3);
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.upload-photo:hover {
+    background: var(--azul4);
+    transform: translateY(-1px);
+}
+
+.foto-hint {
+    color: #8c9ab0;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   ÍCONES DE REDES SOCIAIS NO LABEL
+========================================================= */
+
+.rede-icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.rede-whatsapp  { background: #25D366; color: #fff; }
+.rede-instagram { background: linear-gradient(135deg, #f09433, #dc2743, #bc1888); color: #fff; }
+.rede-facebook  { background: #1877F2; color: #fff; }
+.rede-twitter   { background: #000000; color: #fff; }
+.rede-site      { background: var(--azul3); color: #fff; }
+
+
+/* =========================================================
+   GRID DO FORMULÁRIO
+========================================================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.form-grid-full {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   ÁREA DE SALVAR
+========================================================= */
+
+.save-area {
+    display: flex;
+    justify-content: flex-end;
+    margin: 8px 0 40px;
+}
+
+.save-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 28px;
+    border: 0;
+    border-radius: 14px;
+    background: var(--azul3);
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 800;
+    box-shadow: 0 14px 28px rgba(0, 110, 255, 0.22);
+    transition: background 0.2s, transform 0.15s;
+}
+
+.save-btn:hover {
+    background: var(--azul4);
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 900px) {
+    .perfil-edit-page {
+        grid-template-columns: 1fr;
+    }
+
+    .perfil-sidebar {
+        position: static;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 16px;
+    }
+
+    .perfil-sidebar h2 {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 560px) {
+    .profile-photo-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

@@ -1,0 +1,26 @@
+// ============================================================
+// 📄 O QUE ESTE ARQUIVO FAZ:
+// Igual ao use-color-scheme.ts, mas a versão usada quando o app
+// roda no NAVEGADOR (expo start --web) em vez do celular.
+// ============================================================
+import { useEffect, useState } from 'react';
+import { useColorScheme as useRNColorScheme } from 'react-native';
+
+/**
+ * To support static rendering, this value needs to be re-calculated on the client side for web
+ */
+export function useColorScheme() {
+  const [hasHydrated, setHasHydrated] = useState(false);
+
+  useEffect(() => {
+    setHasHydrated(true);
+  }, []);
+
+  const colorScheme = useRNColorScheme();
+
+  if (hasHydrated) {
+    return colorScheme === 'dark' ? 'dark' : 'light';
+  }
+
+  return 'light';
+}

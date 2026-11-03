@@ -1,0 +1,183 @@
+/* =========================================================
+   ÁREA DO USUÁRIO NO TOPO (todas as páginas)
+========================================================= */
+
+.topo-global {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 62px;
+    margin-bottom: 20px;
+    padding: 4px 2px;
+}
+
+.user-area {
+    position: relative;
+}
+
+/* Botão principal */
+.user-btn {
+    border: 1px solid rgba(0, 110, 255, 0.18);
+    background: linear-gradient(180deg, #ffffff, #f4f9ff);
+    color: #172033;
+    border-radius: 14px;
+    padding: 9px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(22, 34, 51, 0.1);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.user-btn:hover {
+    background: #eef6ff;
+    box-shadow: 0 10px 26px rgba(22, 34, 51, 0.14);
+}
+
+/* Avatar mini (foto ou placeholder) */
+.user-avatar-mini {
+    width: 34px;
+    height: 34px;
+    border: 2px solid #d9e2ef;
+    border-radius: 50%;
+    background: #f0f5ff;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* Nome do usuário */
+.user-name {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Seta */
+.user-chevron {
+    color: #667085;
+    font-size: 11px;
+    transition: transform 0.25s;
+}
+
+.user-btn[aria-expanded="true"] .user-chevron {
+    transform: rotate(180deg);
+}
+
+
+/* =========================================================
+   DROPDOWN DO PERFIL
+========================================================= */
+
+.perfil-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    z-index: 2000;
+    width: 220px;
+    display: none;
+    overflow: hidden;
+    border: 1px solid #e4e9f2;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 20px 48px rgba(22, 34, 51, 0.16);
+    animation: dropdownEntrar 0.18s ease;
+}
+
+@keyframes dropdownEntrar {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.perfil-dropdown.show {
+    display: block;
+}
+
+.perfil-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 13px 16px;
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.15s;
+}
+
+.perfil-dropdown a:hover {
+    background: #f5f8fc;
+}
+
+/* Separador antes do Sair */
+.perfil-dropdown .dropdown-sair {
+    color: #c23333;
+    border-top: 1px solid #f0f4f8;
+    margin-top: 4px;
+}
+
+.perfil-dropdown .dropdown-sair:hover {
+    background: #fff5f5;
+}
+
+/* Ícone dentro do dropdown */
+.perfil-dropdown a .dropdown-icone {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    background: #eef6ff;
+    color: var(--azul3);
+}
+
+.perfil-dropdown .dropdown-sair .dropdown-icone {
+    background: #fff0f0;
+    color: #c23333;
+}
+
+
+/* =========================================================
+   ESCONDE O BOTÃO AZUL ANTIGO DA PÁGINA INÍCIO
+========================================================= */
+
+.card > .topo {
+    display: none;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 560px) {
+    .topo-global {
+        justify-content: stretch;
+    }
+
+    .user-area,
+    .user-btn {
+        width: 100%;
+    }
+
+    .user-name {
+        max-width: none;
+        flex: 1;
+        text-align: left;
+    }
+
+    .perfil-dropdown {
+        width: 100%;
+    }
+}

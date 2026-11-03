@@ -1,0 +1,164 @@
+/* ================= CONTEÚDO ================= */
+.conteudo {
+    flex: 1;
+    padding: 2rem;
+}
+
+/* ================= TOPO ================= */
+.topo {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+
+.botao-principal {
+    background-color: var(--azul3);
+    border: none;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.botao-principal a {
+    color: white;
+}
+
+.botao-principal:hover {
+    background-color: var(--azul4);
+
+}
+
+/* ================= CARDS ================= */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.card-Inicio {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid var(--cinza9);
+}
+
+.card-Inicio h3 {
+    font-size: 20px;
+    color: black;
+}
+
+.card-Inicio .numero {
+    font-size: 1.8rem;
+    margin: 8px 0;
+    color: var(--cinza9);
+}
+
+.card-Inicio span {
+    font-size: 12px;
+    color: var(--verde1);
+}
+
+/* ================= TABELA ================= */
+.area-tabela {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid var(--cinza9);
+}
+
+.area-tabela h2 {
+    font-size: 2rem;
+    margin-bottom: 18px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--cinza4);
+    text-align: left;
+}
+
+th {
+    background: white;
+}
+
+/* ================= OCUPAÇÃO ================= */
+.barra-ocupacao {
+    width: 120px;
+    height: 8px;
+    background: var(--cinza2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.barra-ocupacao div {
+    height: 100%;
+    background: var(--verde1);
+}
+
+.status {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    background: white;
+    color: var(--verde1);
+}
+
+@media (max-width: 908px) {
+    .cards {
+        grid-template-columns: 2fr 2fr;
+    }
+
+    .topo {
+        justify-content: center;
+    }
+
+    .botao-principal {
+        width: 100%;
+    }
+
+    table {
+        font-size: 13px;
+    }
+
+    .card-Inicio {
+        width: 30rem;
+
+    }
+
+}
+
+@media (max-width: 880px) {
+    .cards {
+        grid-template-columns: repeat(1, 1fr);
+
+    }
+
+    .card-Inicio {
+        width: 30rem;
+        padding: 20px;
+    }
+
+    .botao-principal {
+
+        width: 20rem;
+
+    }
+
+
+
+
+}
