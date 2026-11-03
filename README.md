@@ -16,7 +16,7 @@ Os dois usam o **mesmo servidor, o mesmo banco de dados e o mesmo login**.
 
 **Opção A — com Git (recomendado):**
 ```bash
-git clone https://github.com/Rodolfoirano/RR-Turismo.git
+git clone https://github.com/RodolfoIrano/RR-Turismo.git
 cd RR-Turismo
 ```
 

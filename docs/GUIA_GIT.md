@@ -1,7 +1,7 @@
 # Guia do Git — subir o RR Turismo para o GitHub
 
 Objetivo: ter **um único link** com o Spring e o Mobile dentro, para entregar na inscrição da feira e para o professor.
-No fim o link será: `https://github.com/SEU-USUARIO/RR-Turismo`
+No fim o link será: `https://github.com/RodolfoIrano/RR-Turismo`
 
 ---
 
