@@ -90,4 +90,4 @@ RR-Turismo/
 - **Web (Spring):** site e criação das viagens — Rafael Rodrigues
 - **Mobile:** aplicativo do turista — Rodolfo Migueln Irano
 
-Guia para subir e atualizar este repositório: [`docs/GUIA_GIT.md`](docs/GUIA_GIT.md)
+
