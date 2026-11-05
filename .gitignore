@@ -22,3 +22,5 @@ application-local.properties
 .DS_Store
 Thumbs.db
 desktop.ini
+# JDK portatil (opcional, so no seu computador)
+jdk/

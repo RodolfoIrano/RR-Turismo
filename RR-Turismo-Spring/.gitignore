@@ -1,3 +1,5 @@
 bin/
 fontes.txt
 application-local.properties
+# JDK portatil (opcional, so no seu computador)
+jdk/

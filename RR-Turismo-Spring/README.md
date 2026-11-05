@@ -9,16 +9,25 @@ Este guia serve para **qualquer computador** (Windows, Mac ou Linux), do zero.
 
 ## 1. Instalar o que precisa
 
-### 1.1 Java (JDK 21)
+### 1.1 Java (JDK 17 ou superior)
 1. Baixe o **Temurin 21** em https://adoptium.net e instale (marque a opção de adicionar ao PATH / `JAVA_HOME`).
-2. Abra um terminal novo e confira:
+2. Abra um terminal **novo** e confira:
    ```
    java -version
    javac -version
    ```
-   Os dois precisam mostrar **21**. Se mostrar só `java` e der erro no `javac`, você instalou o JRE em vez do JDK.
+   Os dois precisam mostrar **17 ou mais** (o recomendado é o 21). Se o `javac` der erro, você instalou o JRE em vez do JDK.
 
-> Use o JDK **21**. Versões mais novas (23, 24, 25) podem falhar com o Lombok.
+#### Não consigo instalar o Java (computador da escola / sem administrador)
+Dá para usar o JDK **sem instalar**, só extraindo uma pasta:
+1. Baixe o JDK 21 em formato **.zip**: https://api.adoptium.net/v3/binary/latest/21/ga/windows/x64/jdk/hotspot/normal/eclipse
+   (ou em https://adoptium.net → *Temurin 21* → Windows, x64, **JDK**, arquivo **.zip**).
+2. Extraia o zip. Vai sair uma pasta com nome parecido com `jdk-21.0.x+y`.
+3. Dentro dessa pasta tem que existir `bin`, `lib` etc. Renomeie a pasta para **`jdk`** e coloque-a **dentro de `RR-Turismo-Spring`**, ao lado do `rodar.bat`.
+   O caminho final precisa ser: `RR-Turismo-Spring\jdk\bin\javac.exe`.
+4. Dê duplo clique no `rodar.bat`. Ele usa essa pasta `jdk` automaticamente (a pasta não vai para o GitHub).
+
+> Versões muito novas (24 ou mais) podem falhar com o Lombok. Prefira o JDK **21**.
 
 ### 1.2 MySQL 8
 1. Baixe o **MySQL Installer** em https://dev.mysql.com/downloads/installer/ (ou use XAMPP / MariaDB).
@@ -140,7 +149,7 @@ RR-Turismo-Spring/
 | `Access denied for user 'root'` | Seu MySQL tem senha: crie o `application-local.properties` (passo 2, caso B) ou corrija a senha dele. |
 | `Communications link failure` / `Connection refused` | MySQL desligado. Ligue o serviço do MySQL. |
 | `Port 9000 was already in use` | Já há um servidor rodando. Feche a janela antiga (ou o processo `java`). |
-| `release version 21 not supported` | Seu `javac` é mais antigo que 21. Instale o JDK 21. |
+| `release version 17 not supported` | Seu `javac` é mais antigo que 17 (ex.: Java 8 ou 11). Instale o JDK 21 e confira com `javac -version`. |
 | `Unsupported class file major version` | Você rodou pelo botão Run do VS Code. Use `rodar.bat` / `rodar.sh`. |
 | Código cheio de linhas vermelhas no VS Code, mas o servidor roda | É só o editor. `Ctrl+Shift+P` → **Java: Clean Java Language Server Workspace** → **Restart and delete**. Abra a pasta `RR-Turismo-Spring` direto (não a pasta de cima). |
 | Erro ao criar viagem com foto grande | O limite é 20 MB. Use uma foto menor. |

@@ -5,7 +5,7 @@ Os dois usam o **mesmo servidor, o mesmo banco de dados e o mesmo login**.
 
 | Parte | Pasta | Tecnologia | Quem usa |
 |---|---|---|---|
-| Site + API | [`RR-Turismo-Spring`](RR-Turismo-Spring) | Java 21, Spring Boot 3, JSP, MySQL | Guias/empresas criam as viagens |
+| Site + API | [`RR-Turismo-Spring`](RR-Turismo-Spring) | Java 17+, Spring Boot 3, JSP, MySQL | Guias/empresas criam as viagens |
 | Aplicativo | [`RR-Turismo-Mobile`](RR-Turismo-Mobile) | Expo SDK 58, React Native, TypeScript | Turistas compram e acompanham a viagem |
 | Banco | [`banco`](banco) | MySQL 8 | Criado automaticamente |
 | Documentos | [`docs`](docs) | — | Relatório da API do app |
@@ -30,13 +30,13 @@ cd RR-Turismo
 
 | Programa | Para quê | Onde baixar |
 |---|---|---|
-| **JDK 21** | Rodar o Spring | https://adoptium.net (Temurin 21) |
+| **JDK 17 ou superior** (recomendado 21) | Rodar o Spring | https://adoptium.net (Temurin 21) |
 | **MySQL 8** | Banco de dados | https://dev.mysql.com/downloads/installer/ |
 | **Node.js 20 ou superior** | Rodar o app | https://nodejs.org (versão LTS) |
 | **Android Studio** (emulador) | Rodar o app no computador | https://developer.android.com/studio |
 | **Expo Go** (opcional, no celular) | Abrir o app no celular | Play Store / App Store |
 
-Confira no terminal: `java -version` (deve mostrar 21), `node -v` (20 ou mais), e se o MySQL está ligado.
+Confira no terminal: `javac -version` (deve mostrar 17 ou mais), `node -v` (20 ou mais), e se o MySQL está ligado.
 
 ---
 
@@ -83,11 +83,11 @@ RR-Turismo/
 │   ├── components/ services/ hooks/ ...
 │   └── README.md              ← como rodar o app
 ├── banco/criar_banco.sql      ← script do banco (opcional)
-└── docs/                      ← relatório da API e guia do Git
+└── docs/                      ← relatório da API 
 ```
 
 ## Equipe
 - **Web (Spring):** site e criação das viagens — Rafael Rodrigues
-- **Mobile:** aplicativo do turista — Rodolfo Migueln Irano
+- **Mobile:** aplicativo do turista — Rodolfo Miguel Irano
 
 
