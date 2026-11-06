@@ -66,6 +66,30 @@ O app **descobre sozinho** o endereço do servidor. Não precisa editar nenhum a
 
 ---
 
+## Emulador e celular ao mesmo tempo (ex.: testar o radar)
+
+Dá para usar os dois juntos, e também só um deles. Os dois conectam no **mesmo servidor do app** (o Metro), por isso o jeito mais flexível é:
+
+1. Com o Spring ligado, no terminal dentro de `RR-Turismo-Mobile`:
+   ```bash
+   npm start
+   ```
+   Aparece um **QR code**. O servidor fica rodando.
+2. **Emulador:** com o emulador ligado, aperte a tecla **a** no mesmo terminal. O app abre no emulador.
+3. **Celular:** abra o Expo Go e escaneie o **QR code** do mesmo terminal.
+
+Pronto: os dois estão no app ao mesmo tempo. E você escolhe: só o emulador (aperte `a`), só o celular (escaneie o QR) ou os dois.
+
+> `npm run android` também liga o servidor e abre o emulador, e o QR code aparece do mesmo jeito. Só que ele **exige um emulador**: sem emulador dá erro. Por isso, prefira `npm start` + tecla `a`.
+
+**Testando o radar com guia e turista:**
+- No **emulador**, entre com a conta do **guia** (a que criou a viagem) e abra *Modo Guia*.
+- No **celular**, entre com uma conta de **turista**, compre/entre na viagem e abra *Minha viagem*.
+- O emulador usa uma localização **simulada**. Para ela ficar diferente da do celular, no emulador abra *Extended controls (⋯) → Location*, escolha um ponto no mapa e clique em **Send**.
+- O celular precisa alcançar o servidor: mesma rede Wi-Fi e porta 9000 liberada (README do Spring, seção 5).
+
+---
+
 ## Problemas comuns
 
 | Sintoma | Solução |
