@@ -23,7 +23,8 @@ echo Usando o compilador:
 
 if exist bin rmdir /s /q bin
 mkdir bin
-powershell -NoProfile -Command "Get-ChildItem -Recurse -Filter *.java src | ForEach-Object { $_.FullName.Replace('\','/') } | Set-Content -Encoding ascii fontes.txt"
+rem Lista os .java com caminho RELATIVO (assim pastas com espaco ou acento, como "Area de Trabalho", nao quebram).
+powershell -NoProfile -Command "Get-ChildItem -Recurse -Filter *.java src | Resolve-Path -Relative | ForEach-Object { $_.Replace('\','/') } | Set-Content -Encoding ascii fontes.txt"
 set PROC=
 "%JAVAC%" --help 2>&1 | findstr /C:"proc:full" >nul && set PROC=-proc:full
 "%JAVAC%" --release 17 -encoding UTF-8 -parameters %PROC% -cp "lib/*" -d bin @fontes.txt
