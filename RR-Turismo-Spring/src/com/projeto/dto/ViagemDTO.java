@@ -1,6 +1,8 @@
 package com.projeto.dto;
 
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.projeto.model.Viagem;
 
@@ -37,8 +39,14 @@ public class ViagemDTO {
     private int participantes;
     private String dataIda;
     private String dataVolta;
+    private List<String> imageUrls = new ArrayList<>(); // capa + fotos extras (carrossel do app)
 
     public static ViagemDTO de(Viagem viagem) {
+        return de(viagem, 0);
+    }
+
+    // "extras" = quantas fotos além da capa a viagem tem (tabela viagem_imagem).
+    public static ViagemDTO de(Viagem viagem, int extras) {
         ViagemDTO dto = new ViagemDTO();
         dto.id = String.valueOf(viagem.getId());
         dto.title = viagem.getNomedestino();
@@ -72,6 +80,14 @@ public class ViagemDTO {
                 ? "/api/viagens/" + viagem.getId() + "/imagem"
                 : null;
 
+        // Lista de todas as fotos: a capa e depois as extras (/imagem/1, /imagem/2...).
+        if (dto.imageUrl != null) {
+            dto.imageUrls.add(dto.imageUrl);
+            for (int n = 1; n <= extras; n++) {
+                dto.imageUrls.add("/api/viagens/" + viagem.getId() + "/imagem/" + n);
+            }
+        }
+
         dto.transporte = viagem.getTransporte();
         dto.hotel = viagem.getHotel();
         dto.assentos = viagem.getAssentos();
@@ -101,4 +117,5 @@ public class ViagemDTO {
     public int getParticipantes() { return participantes; }
     public String getDataIda() { return dataIda; }
     public String getDataVolta() { return dataVolta; }
+    public List<String> getImageUrls() { return imageUrls; }
 }

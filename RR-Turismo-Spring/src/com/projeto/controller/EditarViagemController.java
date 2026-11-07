@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.projeto.model.Cadastro;
 import com.projeto.model.Viagem;
 import com.projeto.service.EditarViagemService;
+import com.projeto.service.ImagensDaViagemService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -35,9 +37,12 @@ import jakarta.servlet.http.HttpSession;
 public class EditarViagemController {
 
     private final EditarViagemService editarViagemService;
+    private final ImagensDaViagemService imagensDaViagemService;
 
-    public EditarViagemController(EditarViagemService editarViagemService) {
+    public EditarViagemController(EditarViagemService editarViagemService,
+                                  ImagensDaViagemService imagensDaViagemService) {
         this.editarViagemService = editarViagemService;
+        this.imagensDaViagemService = imagensDaViagemService;
     }
 
     // Lista as viagens do usuário logado.
@@ -76,6 +81,7 @@ public class EditarViagemController {
     // Salva as alterações feitas na viagem (formulário de edição).
     @PostMapping({ "/atualizarviagem", "/atualizarViagem" })
     public String atualizarViagem(@ModelAttribute("viagem") Viagem viagem,
+                                  @RequestParam(name = "imagens", required = false) List<MultipartFile> imagens,
                                   HttpServletRequest request,
                                   HttpSession session,
                                   Model model) {
@@ -86,20 +92,19 @@ public class EditarViagemController {
             return "redirect:/editarviagem";
         }
 
-        MultipartFile file = viagem.getImagemFile();
-        if (file != null && !file.isEmpty()) {
-            try {
-                viagem.setImagem(file.getBytes());
-            } catch (IOException e) {
-                model.addAttribute("mensagemErro", "Erro ao atualizar a imagem. Tente novamente.");
-                model.addAttribute("viagem", viagem);
-                model.addAttribute("modoEdicao", true);
-                model.addAttribute("pagina", "criarViagem.jsp");
-                return "layout";
-            }
-        } else {
-            viagem.setImagem(original.getImagem());
+        // Se vieram fotos novas: a 1ª vira a capa e as outras substituem as extras.
+        // Se não veio nenhuma, mantém as fotos que a viagem já tinha.
+        List<byte[]> fotos;
+        try {
+            fotos = CriarViagemController.lerFotos(imagens, viagem.getImagemFile());
+        } catch (IOException e) {
+            model.addAttribute("mensagemErro", "Erro ao atualizar a imagem. Tente novamente.");
+            model.addAttribute("viagem", viagem);
+            model.addAttribute("modoEdicao", true);
+            model.addAttribute("pagina", "criarViagem.jsp");
+            return "layout";
         }
+        viagem.setImagem(fotos.isEmpty() ? original.getImagem() : fotos.get(0));
 
         String precoStr = request.getParameter("precoStr");
         if (precoStr != null && !precoStr.isEmpty()) {
@@ -115,6 +120,9 @@ public class EditarViagemController {
         Viagem atualizada = editarViagemService.salvar(viagem);
 
         if (atualizada != null && atualizada.getId() > 0) {
+            if (!fotos.isEmpty()) {
+                imagensDaViagemService.substituirExtras(atualizada.getId(), fotos.subList(1, fotos.size()));
+            }
             List<Viagem> viagens = editarViagemService.listarPorCriador(usuario);
             model.addAttribute("viagens", viagens);
             model.addAttribute("mensagemSucesso", "Viagem \"" + atualizada.getNomedestino() + "\" atualizada com sucesso!");
@@ -138,6 +146,7 @@ public class EditarViagemController {
         if (!pertenceAoUsuario(viagem, usuario)) {
             model.addAttribute("mensagemErro", "Viagem nao encontrada para este usuario.");
         } else {
+            imagensDaViagemService.apagarDaViagem(id);
             editarViagemService.deletar(id);
             model.addAttribute("mensagemSucesso", "Viagem \"" + viagem.getNomedestino() + "\" excluida com sucesso.");
         }

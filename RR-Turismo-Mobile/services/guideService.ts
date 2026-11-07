@@ -44,7 +44,7 @@ interface GuiaApi {
 }
 
 // Foto usada quando o guia ainda não colocou uma no site.
-const FOTO_PADRAO = "https://ui-avatars.com/api/?background=0B3D5C&color=fff&name=";
+const FOTO_PADRAO = "https://ui-avatars.com/api/?background=1E2A5E&color=fff&name=";
 
 // Transforma um texto separado por vírgulas numa lista.
 // Ex: "Português, Inglês" -> ["Português", "Inglês"]

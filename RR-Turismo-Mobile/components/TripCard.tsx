@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   card: {
     width: CARD_WIDTH,
     backgroundColor: colors.surface,
-    borderRadius: radius.lg,
+    borderRadius: radius.xl,
     marginRight: spacing.md,
     borderWidth: 1,
     borderColor: colors.border,
@@ -138,8 +138,8 @@ const styles = StyleSheet.create({
   imageWrapper: {
     position: "relative",
     overflow: "hidden",
-    borderTopLeftRadius: radius.lg,
-    borderTopRightRadius: radius.lg,
+    borderTopLeftRadius: radius.xl,
+    borderTopRightRadius: radius.xl,
   },
   image: { width: "100%", height: 140, backgroundColor: colors.backgroundMuted },
   // Espaço reservado exibido quando a foto de capa falha ao carregar.

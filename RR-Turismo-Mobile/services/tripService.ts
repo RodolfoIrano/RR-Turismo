@@ -37,6 +37,7 @@ interface ViagemApi {
   guideId: string | null;
   available: boolean;
   imageUrl: string | null;
+  imageUrls?: string[]; // capa + fotos extras (o site aceita até 5 fotos por viagem)
   transporte: string | null;
   hotel: string | null;
   assentos: number;
@@ -74,9 +75,13 @@ function paraTrip(viagem: ViagemApi): Trip {
     // O backend manda só o caminho da imagem (ex: "/api/viagens/3/imagem"),
     // então montamos a URL completa aqui. O "?" no final evita que o
     // app mostre uma versão antiga em cache depois de trocar a foto.
-    images: viagem.imageUrl
-      ? [`${URL_BASE_SERVIDOR}${viagem.imageUrl}?w=900`]
-      : [IMAGEM_PADRAO],
+    // "imageUrls" traz TODAS as fotos (capa + extras); se o servidor for antigo
+    // e só mandar "imageUrl", usamos a capa. Sem nenhuma foto: imagem padrão.
+    images: viagem.imageUrls && viagem.imageUrls.length > 0
+      ? viagem.imageUrls.map((url) => `${URL_BASE_SERVIDOR}${url}?w=900`)
+      : viagem.imageUrl
+        ? [`${URL_BASE_SERVIDOR}${viagem.imageUrl}?w=900`]
+        : [IMAGEM_PADRAO],
 
     // Campos que ainda não existem na tabela Viagem do site.
     // Preenchidos com o que dá para deduzir dos dados existentes,

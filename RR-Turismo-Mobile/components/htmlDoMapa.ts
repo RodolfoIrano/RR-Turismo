@@ -1,26 +1,25 @@
 // ============================================================
 // 📄 O QUE ESTE ARQUIVO FAZ:
-// Monta a PÁGINA HTML do mapa (Leaflet + OpenStreetMap) que roda
-// dentro da WebView. É usada pelo MiniMapa (local da viagem) e pelo
-// MapaAoVivo (guia e participantes).
+// Monta a PÁGINA HTML do mapa (Leaflet) que roda dentro da WebView.
+// É usada pelo MiniMapa (local da viagem) e pelo MapaAoVivo (guia e
+// participantes).
 //
-// Foi feita para NÃO ficar em branco quando algo falha:
-//  - a biblioteca Leaflet tem 3 endereços (unpkg, cdnjs, jsdelivr)
-//    e tenta um depois do outro;
-//  - as imagens do mapa têm 2 provedores (Carto e OpenStreetMap) e
-//    troca sozinho se o primeiro não carregar;
-//  - se TUDO falhar, avisa o app (postMessage) para mostrar uma
-//    mensagem clara em vez de uma tela vazia.
+// Foi feita para NÃO ficar cinza/quebrada:
+//  - o Leaflet vem EMBUTIDO no app (leafletEmbutido.ts), sem baixar
+//    de nenhum site;
+//  - as imagens do mapa têm 2 provedores (Carto e Esri). Se o primeiro
+//    não carregar (erro ou demora), troca sozinho para o segundo;
+//  - se TUDO falhar, mostra uma mensagem clara e avisa o app
+//    (postMessage) em vez de deixar uma tela vazia.
 //
 // Funções que o app chama por injectJavaScript:
 //   atualizar(pontos)  -> desenha/move os marcadores
 //   ajustar()          -> enquadra todos os marcadores na tela
+//   focar(id)          -> centraliza em um marcador (zoom de rua)
 // ============================================================
+import { LEAFLET_CSS, LEAFLET_JS } from "./leafletEmbutido";
 
-export const HTML_DO_MAPA = `<!DOCTYPE html>
-<html><head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<style>
+const ESTILO_DO_MAPA = `
   html,body,#mapa{height:100%;margin:0;padding:0;background:#dfe7ee}
   .pino{border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px rgba(0,0,0,.25);}
   /* "VOCÊ": bolinha azul com halo pulsando, igual ao GPS do celular */
@@ -33,55 +32,67 @@ export const HTML_DO_MAPA = `<!DOCTYPE html>
   .rotulo{background:rgba(11,31,42,.88);color:#fff;border:0;border-radius:6px;font:600 11px sans-serif;padding:2px 6px}
   #aviso{position:absolute;left:8px;right:8px;top:8px;z-index:9999;background:#fff3cd;color:#664d03;
          font:600 12px sans-serif;padding:8px 10px;border-radius:8px;display:none}
-</style>
-</head><body><div id="mapa"></div><div id="aviso"></div>
-<script>
+`;
+
+const SCRIPT_DO_MAPA = `
   function avisarApp(msg){ try{ window.ReactNativeWebView.postMessage(msg); }catch(e){} }
   function mostrarAviso(t){ var a=document.getElementById('aviso'); a.textContent=t; a.style.display='block'; }
+  function esconderAviso(){ document.getElementById('aviso').style.display='none'; }
 
-  var mapa=null, marcadores={}, primeiraVez=true, pendente=null;
+  var mapa=null, marcadores={}, primeiraVez=true;
 
-  // ---- 1) carrega a biblioteca Leaflet (3 endereços) ----
-  var FONTES_JS=[
-    ['https://unpkg.com/leaflet@1.9.4/dist/leaflet.js','https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'],
-    ['https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js','https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css'],
-    ['https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js','https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css']
-  ];
-  function carregarLeaflet(i){
-    if(i>=FONTES_JS.length){ avisarApp('erro:leaflet'); return; }
-    var css=document.createElement('link'); css.rel='stylesheet'; css.href=FONTES_JS[i][1]; document.head.appendChild(css);
-    var s=document.createElement('script'); s.src=FONTES_JS[i][0];
-    s.onload=iniciarMapa;
-    s.onerror=function(){ carregarLeaflet(i+1); };
-    document.head.appendChild(s);
-  }
-
-  // ---- 2) cria o mapa com 2 provedores de imagem ----
+  // ---- imagens do mapa: 2 provedores (troca sozinho se um falhar) ----
+  // OBS: o Carto (basemaps.cartocdn.com) passou a EXIGIR chave de API e devolve
+  // imagens com o texto "API KEY REQUIRED" - por isso NÃO é mais usado.
   var PROVEDORES=[
-    {url:'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', sub:'abcd', attr:'© OpenStreetMap © CARTO'},
+    {url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', sub:'abc', attr:'Tiles © Esri'},
     {url:'https://tile.openstreetmap.org/{z}/{x}/{y}.png', sub:'abc', attr:'© OpenStreetMap'}
   ];
-  var provedorAtual=0, camada=null, erros=0, carregou=false;
+  var camada=null, erros=0, carregou=false, relogio=null, desistiu=false;
+
   function usarProvedor(i){
-    if(i>=PROVEDORES.length){ avisarApp('erro:tiles'); mostrarAviso('Não foi possível baixar as imagens do mapa. Confira a internet.'); return; }
-    if(camada) mapa.removeLayer(camada);
-    provedorAtual=i; erros=0;
+    if(desistiu) return;
+    if(relogio){ clearTimeout(relogio); relogio=null; }
+    if(i>=PROVEDORES.length){
+      desistiu=true;
+      avisarApp('erro:tiles');
+      mostrarAviso('Não foi possível baixar as imagens do mapa. Confira a internet do celular/emulador.');
+      return;
+    }
+    if(camada){ mapa.removeLayer(camada); }
+    erros=0;
     var p=PROVEDORES[i];
     camada=L.tileLayer(p.url,{maxZoom:19,maxNativeZoom:19,subdomains:p.sub,attribution:p.attr});
-    camada.on('tileload',function(){ carregou=true; });
-    camada.on('tileerror',function(){ erros++; if(!carregou && erros>=4) usarProvedor(provedorAtual+1); });
+    camada.on('tileload',function(){
+      if(!carregou){ carregou=true; esconderAviso(); }
+      if(relogio){ clearTimeout(relogio); relogio=null; }
+    });
+    camada.on('tileerror',function(){ erros++; if(!carregou && erros>=3) usarProvedor(i+1); });
     camada.addTo(mapa);
-  }
-  function iniciarMapa(){
-    mapa=L.map('mapa',{zoomControl:true}).setView([-14.2,-51.9],4);
-    usarProvedor(0);
-    avisarApp('pronto');
-    if(pendente){ atualizar(pendente); pendente=null; }
+    // se em 7 s nenhuma imagem chegou, tenta o próximo provedor
+    relogio=setTimeout(function(){ if(!carregou) usarProvedor(i+1); },7000);
   }
 
-  // ---- 3) funções chamadas pelo app ----
+  function iniciarMapa(){
+    try{
+      mapa=L.map('mapa',{zoomControl:true}).setView([-14.2,-51.9],4);
+      mostrarAviso('Carregando o mapa...');
+      usarProvedor(0);
+      // WebView às vezes inicia com tamanho 0: recalcula o tamanho depois de aparecer.
+      setTimeout(function(){ mapa.invalidateSize(); },300);
+      setTimeout(function(){ mapa.invalidateSize(); },1200);
+      window.addEventListener('resize',function(){ mapa.invalidateSize(); });
+      avisarApp('pronto');
+      if(window.__pendente){ atualizar(window.__pendente); window.__pendente=null; }
+    }catch(e){
+      avisarApp('erro:leaflet');
+      mostrarAviso('Erro ao iniciar o mapa: '+e.message);
+    }
+  }
+
+  // ---- funções chamadas pelo app ----
   function atualizar(pontos){
-    if(!mapa){ pendente=pontos; return; }
+    if(!mapa){ window.__pendente=pontos; return; }
     var vivos={};
     pontos.forEach(function(p){
       vivos[p.id]=true;
@@ -118,7 +129,18 @@ export const HTML_DO_MAPA = `<!DOCTYPE html>
     mapa.setView(marcadores[id].getLatLng(), 19, {animate:true});
   }
 
-  carregarLeaflet(0);
-  // se em 12 s o mapa não abriu, avisa o app
-  setTimeout(function(){ if(!mapa) avisarApp('erro:leaflet'); },12000);
-</script></body></html>`;
+  iniciarMapa();
+`;
+
+// A página inteira: Leaflet embutido + estilo + script do mapa.
+export const HTML_DO_MAPA = `<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="referrer" content="origin">
+<style>${LEAFLET_CSS}</style>
+<style>${ESTILO_DO_MAPA}</style>
+</head><body><div id="mapa"></div><div id="aviso"></div>
+<script>${LEAFLET_JS}</script>
+<script>${SCRIPT_DO_MAPA}</script>
+</body></html>`;

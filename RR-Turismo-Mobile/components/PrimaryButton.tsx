@@ -48,7 +48,7 @@ export default function PrimaryButton({
       {loading ? (
         <ActivityIndicator color={isOutline ? colors.primary : colors.textInverse} />
       ) : (
-        <Text style={[typography.button, isOutline && { color: colors.primary }]}>{label}</Text>
+        <Text style={[typography.button, { textAlign: "center" }, isOutline && { color: colors.primary }]}>{label}</Text>
       )}
     </TouchableOpacity>
   );

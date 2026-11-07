@@ -101,7 +101,7 @@ export default function CartaoDoGuia({ guideId, guide, carregando }: Props) {
 const styles = StyleSheet.create({
   cartao: {
     backgroundColor: colors.surface,
-    borderRadius: radius.lg,
+    borderRadius: radius.xl,
     padding: spacing.lg,
     gap: spacing.md,
     borderWidth: 1,
