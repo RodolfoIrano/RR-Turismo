@@ -73,7 +73,19 @@
                                 </c:choose>
                             </div>
                         </header>
-                        <input type="file" id="imagemFile" name="imagemFile" accept="image/*" multiple>
+                        <input type="file" id="imagemFile" name="imagens" accept="image/*" multiple>
+
+                        <%-- Foto por LINK (ex.: do Google Imagens): o servidor baixa a imagem e ela entra na lista igual às do computador --%>
+                        <div class="cv-link-imagem">
+                            <label for="linkImagem" class="cv-link-rotulo">Ou use o link de uma imagem</label>
+                            <div class="cv-link-linha">
+                                <input type="text" id="linkImagem" placeholder="Cole aqui o link da imagem (ex.: do Google)" autocomplete="off">
+                                <button type="button" id="btnAddLink" class="cv-link-botao">Adicionar por link</button>
+                            </div>
+                            <p class="info cv-link-dica">Dica: no Google Imagens, clique com o botão direito na foto e escolha
+                                <b>Copiar endereço da imagem</b>. Depois é só colar aqui.</p>
+                        </div>
+
                         <div id="preview"></div>
                     </section>
 

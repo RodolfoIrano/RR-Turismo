@@ -17,6 +17,7 @@ import com.projeto.model.Cadastro;
 import com.projeto.model.Viagem;
 import com.projeto.service.CadastroService;
 import com.projeto.service.EditarViagemService;
+import com.projeto.service.ImagensDaViagemService;
 import com.projeto.service.PerfilUsuarioService;
 import com.projeto.util.RedimensionadorDeImagem;
 
@@ -42,10 +43,13 @@ public class ViagemApiController {
     private final EditarViagemService editarViagemService;
     private final CadastroService cadastroService;
     private final PerfilUsuarioService perfilUsuarioService;
+    private final ImagensDaViagemService imagensDaViagemService;
 
     public ViagemApiController(EditarViagemService editarViagemService,
                                 CadastroService cadastroService,
-                                PerfilUsuarioService perfilUsuarioService) {
+                                PerfilUsuarioService perfilUsuarioService,
+                                ImagensDaViagemService imagensDaViagemService) {
+        this.imagensDaViagemService = imagensDaViagemService;
         this.editarViagemService = editarViagemService;
         this.cadastroService = cadastroService;
         this.perfilUsuarioService = perfilUsuarioService;
@@ -55,7 +59,7 @@ public class ViagemApiController {
     @GetMapping("/viagens")
     public ResponseEntity<List<ViagemDTO>> listarViagens() {
         List<ViagemDTO> viagens = editarViagemService.listarTodas().stream()
-                .map(ViagemDTO::de)
+                .map(this::paraDto)
                 .toList();
         return ResponseEntity.ok(viagens);
     }
@@ -67,7 +71,7 @@ public class ViagemApiController {
         if (viagem == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ViagemDTO.de(viagem));
+        return ResponseEntity.ok(paraDto(viagem));
     }
 
     // Serve a imagem da viagem (guardada como BLOB no banco).
@@ -81,6 +85,25 @@ public class ViagemApiController {
         // "w" = largura máxima pedida pelo app (versão leve para o celular).
         RedimensionadorDeImagem.Imagem img = RedimensionadorDeImagem.servir("viagem-" + id, viagem.getImagem(), w);
         return ResponseEntity.ok().contentType(img.tipo()).body(img.bytes());
+    }
+
+    // Serve a foto EXTRA número "n" da viagem (1 = 2ª foto, 2 = 3ª...). A capa é /viagens/{id}/imagem.
+    @GetMapping("/viagens/{id}/imagem/{n}")
+    public ResponseEntity<byte[]> imagemExtraViagem(@PathVariable("id") int id,
+                                                    @PathVariable("n") int n,
+                                                    @RequestParam(name = "w", defaultValue = "0") int w) {
+        byte[] dados = imagensDaViagemService.buscarExtra(id, n);
+        if (dados == null || dados.length == 0) {
+            return ResponseEntity.notFound().build();
+        }
+        RedimensionadorDeImagem.Imagem img =
+                RedimensionadorDeImagem.servir("viagem-" + id + "-" + n + "-" + dados.length, dados, w);
+        return ResponseEntity.ok().contentType(img.tipo()).body(img.bytes());
+    }
+
+    // Converte a viagem para o formato do app, já com a lista de fotos.
+    private ViagemDTO paraDto(Viagem viagem) {
+        return ViagemDTO.de(viagem, imagensDaViagemService.quantidadeDeExtras(viagem.getId()));
     }
 
     // Dados do guia (usuário que criou as viagens).
@@ -118,7 +141,7 @@ public class ViagemApiController {
             return ResponseEntity.notFound().build();
         }
         List<ViagemDTO> viagens = editarViagemService.listarPorCriador(criador.get()).stream()
-                .map(ViagemDTO::de)
+                .map(this::paraDto)
                 .toList();
         return ResponseEntity.ok(viagens);
     }

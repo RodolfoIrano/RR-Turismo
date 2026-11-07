@@ -584,3 +584,41 @@ select:focus {
     .container { padding: 20px 14px; }
     .cv-secao-topo { gap: 10px; }
 }
+
+/* ===== Foto por LINK (Google Imagens etc.) ===== */
+.cv-link-imagem {
+    margin-top: 14px;
+    padding: 14px 16px;
+    border: 1px dashed #c4cbd6;
+    border-radius: 12px;
+    background: rgba(120, 140, 170, 0.06);
+}
+.cv-link-rotulo {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+.cv-link-linha {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.cv-link-linha input[type="text"] {
+    flex: 1 1 260px;
+    min-width: 0;
+}
+.cv-link-botao {
+    flex: 0 0 auto;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #1f6feb;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .15s ease, opacity .15s ease;
+}
+.cv-link-botao:hover { transform: translateY(-1px); }
+.cv-link-botao:disabled { opacity: .6; cursor: wait; transform: none; }
+.cv-link-dica { margin: 8px 0 0; }

@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="/css/perfilPublico.css?v=2">
     </c:if>
     <link rel="stylesheet" href="/css/inicio.css">
-    <link rel="stylesheet" href="/css/criarViagem.css?v=2">
+    <link rel="stylesheet" href="/css/criarViagem.css?v=3">
     <link rel="stylesheet" href="/css/editarViagem.css">
 </head>
 
@@ -223,7 +223,7 @@
 
     <script type="text/javascript"
         src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script src="/js/criarViagem.js?v=9"></script>
+    <script src="/js/criarViagem.js?v=10"></script>
     <script src="/js/editarViagem.js"></script>
     <script src="/js/acessibilidade.js?v=10"></script>
 

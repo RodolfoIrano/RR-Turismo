@@ -5,23 +5,23 @@
 // Abre quando o usuário toca num card de viagem.
 // ============================================================
 import React, { useEffect, useRef, useState } from "react";
-import { View, ScrollView, StyleSheet, FlatList, TouchableOpacity, Dimensions, type HostInstance } from "react-native";
+import { View, ScrollView, StyleSheet, TouchableOpacity, type HostInstance } from "react-native";
 import { Text } from "../../components/TextoTraduzido";
-// Ver comentário em components/TripCard.tsx sobre o uso do
-// <Image> do expo-image (cache melhor + onError para diagnóstico).
-import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter, Stack } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../../constants/colors";
 import { radius, spacing } from "../../constants/spacing";
 import { typography } from "../../constants/typography";
+import { shadows } from "../../constants/shadows";
 import Rating from "../../components/Rating";
 import PriceDisplay from "../../components/PriceDisplay";
 import MiniMapa from "../../components/MiniMapa";
 import InfoDaViagem from "../../components/InfoDaViagem";
 import CartaoDoGuia from "../../components/CartaoDoGuia";
 import CarrosselDeViagens from "../../components/CarrosselDeViagens";
+import GaleriaDeFotos from "../../components/GaleriaDeFotos";
+import Aparece from "../../components/auth/Aparece";
 import { carregarGuiaOuErro } from "../../services/guideService";
 import { useTraducao } from "../../traducoes/TraducaoContext";
 import FavoriteButton from "../../components/FavoriteButton";
@@ -34,8 +34,6 @@ import { useFavorites } from "../../contexts/FavoritesContext";
 import { useCart } from "../../contexts/CartContext";
 import { useCatalogo } from "../../contexts/CatalogoContext";
 import { Trip, Guide } from "../../types";
-
-const { width } = Dimensions.get("window");
 
 // ============================================================
 // DETALHES DA VIAGEM (/trip/[id])
@@ -110,17 +108,7 @@ export default function TripDetails() {
   // Controla o feedback visual depois de adicionar a viagem ao carrinho
   const [added, setAdded] = useState(false);
 
-  // Guarda quais fotos da galeria falharam ao carregar, pra
-  // mostrar um "espaço reservado" (ícone + fundo cinza) no lugar
-  // delas, em vez de deixar um vazio branco feio na tela.
-  // Guarda qual foto da galeria está sendo exibida no momento
-  // (usado pra destacar a bolinha certa no indicador de fotos).
-  const [fotoAtualIndice, setFotoAtualIndice] = useState(0);
-
-  // Guarda quais fotos da galeria falharam ao carregar, pra
-  // mostrar um "espaço reservado" (ícone + fundo cinza) no lugar
-  // delas, em vez de deixar um vazio branco feio na tela.
-  const [fotosComErro, setFotosComErro] = useState<Set<string>>(new Set());
+  // (A galeria de fotos cuida sozinha da foto atual e das fotos com erro.)
 
   // ==========================================================
   // REFS DA ANIMAÇÃO DO CARRINHO
@@ -306,83 +294,13 @@ export default function TripDetails() {
         {/* ==================================================
             GALERIA DE IMAGENS
             --------------------------------------------------
-            Exibe todas as imagens da viagem horizontalmente.
-            O pagingEnabled faz cada imagem ocupar uma página
-            completa da galeria.
+            Todas as fotos da viagem (até 5), com setinhas,
+            bolinhas e um aviso "deslize" - ver GaleriaDeFotos.
             ================================================== */}
         <View>
-          <FlatList
-            data={trip.images}
-            keyExtractor={(_, idx) => String(idx)}
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            // Detecta em qual foto o usuário está, pra atualizar
-            // a bolinha ativa do indicador embaixo da galeria.
-            onMomentumScrollEnd={(evento) => {
-              const indice = Math.round(evento.nativeEvent.contentOffset.x / width);
-              setFotoAtualIndice(indice);
-            }}
-            renderItem={({ item }) =>
-              fotosComErro.has(item) ? (
-                // Espaço reservado exibido quando a foto falha ao
-                // carregar (em vez de deixar um vazio branco feio).
-                <View style={[styles.imagemFallback, { width, height: 300 }]}>
-                  <Ionicons name="image-outline" size={40} color={colors.textMuted} />
-                  <Text style={styles.imagemFallbackTexto}>Foto indisponível</Text>
-                </View>
-              ) : (
-                <Image
-                  source={{ uri: item }}
-                  style={{ width, height: 300 }}
-                  contentFit="cover"
-                  onError={(erro) => {
-                    console.warn(`[TripDetails] Falha ao carregar imagem:`, item, erro);
-                    // Marca esta foto como "com erro", pra próxima
-                    // vez renderizar o espaço reservado em vez de
-                    // tentar (e falhar) carregar de novo.
-                    setFotosComErro((atual) => new Set(atual).add(item));
-                  }}
-                />
-              )
-            }
-          />
+          <GaleriaDeFotos fotos={trip.images} altura={340} />
 
-          {/* ================================================
-              INDICADOR DE FOTOS (bolinhas + contador)
-              ------------------------------------------------
-              Só aparece quando a viagem tem MAIS DE UMA foto -
-              com uma foto só, o indicador não acrescenta nada e
-              só ocuparia espaço à toa.
-              ================================================ */}
-          {trip.images.length > 1 && (
-            <>
-              <View style={styles.pontosContainer}>
-                {trip.images.map((_, indice) => (
-                  <View
-                    key={indice}
-                    style={[
-                      styles.ponto,
-                      indice === fotoAtualIndice && styles.pontoAtivo,
-                    ]}
-                  />
-                ))}
-              </View>
-
-              <View style={styles.contadorFotos}>
-                <Text style={styles.contadorFotosTexto}>
-                  {fotoAtualIndice + 1}/{trip.images.length}
-                </Text>
-              </View>
-            </>
-          )}
-
-          {/* O botão de voltar já vem pronto no cabeçalho nativo
-              (configurado lá em cima, no Stack.Screen com o botão
-              do carrinho) - por isso NÃO colocamos um segundo botão
-              de voltar aqui em cima da imagem. Ter os dois juntos
-              ficava redundante e feio, especialmente quando a foto
-              não carrega (o botão ficava "boiando" sozinho). */}
+          {/* O botão de voltar já vem pronto no cabeçalho nativo. */}
 
           {/* Botão flutuante para favoritar a viagem */}
           <View style={styles.favoriteFloating}>
@@ -401,19 +319,28 @@ export default function TripDetails() {
 
           {/* Categoria (etiqueta) */}
           {!!trip.category && (
-            <View style={styles.etiqueta}>
-              <Text style={styles.etiquetaTexto}>{trip.category}</Text>
-            </View>
+            <Aparece atraso={60}>
+              <View style={styles.etiqueta}>
+                <Ionicons name="pricetag" size={12} color={colors.secondary} />
+                <Text style={styles.etiquetaTexto}>{trip.category}</Text>
+              </View>
+            </Aparece>
           )}
 
           {/* Título da viagem */}
-          <Text style={typography.h1}>{trip.title}</Text>
+          <Aparece atraso={120}>
+            <Text style={styles.titulo}>{trip.title}</Text>
+          </Aparece>
 
           {/* Localização da viagem */}
-          <View style={styles.row}>
-            <Ionicons name="location-outline" size={16} color={colors.textSecondary} />
-            <Text style={[typography.bodyMuted, { marginLeft: 4 }]}>{trip.location}</Text>
-          </View>
+          <Aparece atraso={180}>
+            <View style={styles.row}>
+              <View style={styles.iconeLocal}>
+                <Ionicons name="location" size={14} color={colors.secondary} />
+              </View>
+              <Text style={[typography.bodyMuted, { flex: 1 }]}>{trip.location}</Text>
+            </View>
+          </Aparece>
 
           {/* GUIA (obrigatório): nome sempre visível e clicável. */}
           <TouchableOpacity
@@ -439,14 +366,14 @@ export default function TripDetails() {
           {/* =================================================
               DETALHES (datas, duração, vagas, transporte, hotel)
               ================================================= */}
-          <Section title={t.viagem.detalhes}>
+          <Section icone="information-circle-outline" atraso={240} title={t.viagem.detalhes}>
             <InfoDaViagem trip={trip} />
           </Section>
 
           {/* =================================================
               DESCRIÇÃO COMPLETA (resumida, com "Ler mais")
               ================================================= */}
-          <Section title={t.viagem.sobre}>
+          <Section icone="document-text-outline" atraso={280} title={t.viagem.sobre}>
             <Text style={typography.body} numberOfLines={descricaoAberta ? undefined : 6}>
               {trip.description || t.viagem.naoInformado}
             </Text>
@@ -460,7 +387,7 @@ export default function TripDetails() {
           {/* =================================================
               MINI MAPA: onde fica o local da viagem
               ================================================= */}
-          <Section title={t.mapa.titulo}>
+          <Section icone="map-outline" atraso={320} title={t.mapa.titulo}>
             <MiniMapa consultas={[`${trip.destination}, ${trip.location}`, trip.location, trip.destination]} />
           </Section>
 
@@ -468,7 +395,7 @@ export default function TripDetails() {
               REGRAS DA VIAGEM (só se existirem)
               ================================================= */}
           {trip.rules.length > 0 && (
-            <Section title="Regras">
+            <Section icone="list-outline" atraso={340} title="Regras">
               {trip.rules.map((rule) => (
                 <Text key={rule} style={[typography.bodyMuted, { marginBottom: 4 }]}>• {rule}</Text>
               ))}
@@ -478,7 +405,7 @@ export default function TripDetails() {
           {/* =================================================
               O GUIA: perfil que ele preencheu no site
               ================================================= */}
-          <Section title={t.guia.seuGuia}>
+          <Section icone="person-outline" atraso={360} title={t.guia.seuGuia}>
             <CartaoDoGuia guideId={trip.guideId} guide={guideExibido} carregando={buscandoGuia} />
           </Section>
 
@@ -486,7 +413,7 @@ export default function TripDetails() {
               OUTRAS VIAGENS DO MESMO GUIA (carrossel)
               ================================================= */}
           {outrasViagens.length > 0 && (
-            <Section title={`${t.viagem.outrasDoGuia} ${guideExibido?.name ?? t.guia.guiaTuristico}`}>
+            <Section icone="compass-outline" atraso={380} title={`${t.viagem.outrasDoGuia} ${guideExibido?.name ?? t.guia.guiaTuristico}`}>
               <CarrosselDeViagens trips={outrasViagens} />
             </Section>
           )}
@@ -494,7 +421,7 @@ export default function TripDetails() {
           {/* =================================================
               POLÍTICA DE CANCELAMENTO
               ================================================= */}
-          <Section title={t.viagem.cancelamento}>
+          <Section icone="shield-checkmark-outline" atraso={400} title={t.viagem.cancelamento}>
             <Text style={typography.bodyMuted}>{trip.cancellationPolicy}</Text>
           </Section>
         </View>
@@ -516,6 +443,7 @@ export default function TripDetails() {
             label={esgotada ? t.viagem.esgotadaBotao : added ? t.viagem.adicionado : t.viagem.adicionar}
             onPress={handleAddToCart}
             disabled={esgotada}
+            style={{ borderRadius: radius.lg }}
           />
         </View>
       </View>
@@ -545,21 +473,29 @@ export default function TripDetails() {
 // ============================================================
 function Section({
   title,
+  icone,
+  atraso = 0,
   children,
 }: {
   title: string;
+  icone: React.ComponentProps<typeof Ionicons>["name"];
+  atraso?: number;
   children: React.ReactNode;
 }) {
   return (
-    <View style={styles.section}>
-      <Text style={typography.h2}>
-        {title}
-      </Text>
+    <Aparece atraso={atraso} style={styles.section}>
+      {/* Cabeçalho da seção: ícone num quadradinho colorido + título */}
+      <View style={styles.sectionCabecalho}>
+        <View style={styles.sectionIcone}>
+          <Ionicons name={icone} size={18} color={colors.secondary} />
+        </View>
+        <Text style={styles.sectionTitulo}>{title}</Text>
+      </View>
 
-      <View style={{ marginTop: spacing.sm }}>
+      <View style={{ marginTop: spacing.md }}>
         {children}
       </View>
-    </View>
+    </Aparece>
   );
 }
 
@@ -644,14 +580,41 @@ const styles = StyleSheet.create({
   },
 
   // Área principal das informações: folha branca com cantos
-  // arredondados "subindo" um pouco sobre a foto.
+  // bem arredondados "subindo" sobre a foto.
   content: {
-    padding: spacing.lg,
-    marginTop: -24,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    paddingHorizontal: spacing.xl,
+    paddingTop: spacing.xl,
+    paddingBottom: spacing.xxl,
+    marginTop: -32,
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
     backgroundColor: colors.background,
   },
+
+  // Título grande da viagem
+  titulo: { fontSize: 27, fontWeight: "800", color: colors.primary, lineHeight: 33 },
+  // Bolinha com o ícone de localização
+  iconeLocal: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: "rgba(44,177,188,0.14)",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: spacing.sm,
+  },
+
+  // Cabeçalho de cada seção (ícone + título)
+  sectionCabecalho: { flexDirection: "row", alignItems: "center", gap: spacing.sm + 2 },
+  sectionIcone: {
+    width: 34,
+    height: 34,
+    borderRadius: 12,
+    backgroundColor: "rgba(44,177,188,0.14)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sectionTitulo: { flex: 1, fontSize: 18, fontWeight: "800", color: colors.primary },
 
   // Linha utilizada para informações como localização
   row: {
@@ -700,11 +663,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "flex-start",
     gap: spacing.xs,
-    marginTop: spacing.sm,
-    paddingVertical: spacing.xs,
-    paddingHorizontal: spacing.md,
+    marginTop: spacing.md,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md + 2,
     borderRadius: radius.full,
-    backgroundColor: colors.backgroundMuted,
+    backgroundColor: "rgba(44,177,188,0.12)",
   },
   guiaChipTexto: { color: colors.secondary, fontWeight: "700", fontSize: 14 },
   guideAvatarVazio: { backgroundColor: colors.border, alignItems: "center", justifyContent: "center" },
@@ -718,24 +681,29 @@ const styles = StyleSheet.create({
 
   // Etiqueta da categoria acima do título
   etiqueta: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
     alignSelf: "flex-start",
-    backgroundColor: colors.primary,
+    backgroundColor: "rgba(44,177,188,0.14)",
     borderRadius: radius.full,
     paddingHorizontal: spacing.md,
-    paddingVertical: 4,
-    marginBottom: spacing.sm,
+    paddingVertical: 5,
+    marginBottom: spacing.md,
   },
-  etiquetaTexto: { color: colors.textInverse, fontSize: 12, fontWeight: "700" },
+  etiquetaTexto: { color: colors.secondary, fontSize: 12, fontWeight: "800", letterSpacing: 0.3 },
   lerMais: { color: colors.secondary, fontWeight: "700", marginTop: spacing.xs },
 
-  // Rodapé fixo: preço à esquerda, botão à direita
+  // Rodapé flutuante: preço à esquerda, botão à direita
   footer: {
     flexDirection: "row",
     alignItems: "center",
     gap: spacing.lg,
-    padding: spacing.lg,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.lg,
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
     backgroundColor: colors.surface,
+    ...shadows.elevated,
   },
 });

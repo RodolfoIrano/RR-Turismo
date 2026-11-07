@@ -52,7 +52,7 @@
     // Retorna uma Promise com o novo File já reduzido
     // ================================================
     function redimensionarImagem(arquivo) {
-        return new Promise(function (resolve) {
+        return new Promise(function (resolve, reject) {
             const reader = new FileReader();
 
             reader.onload = function (e) {
@@ -88,7 +88,16 @@
                     }, "image/jpeg", QUALIDADE);
                 };
 
+                // Se o navegador não conseguir abrir o arquivo como imagem, avisa em vez de travar.
+                img.onerror = function () {
+                    reject(new Error("Não foi possível abrir essa imagem. Tente outro arquivo."));
+                };
+
                 img.src = e.target.result;
+            };
+
+            reader.onerror = function () {
+                reject(new Error("Não foi possível ler esse arquivo."));
             };
 
             reader.readAsDataURL(arquivo);
@@ -293,6 +302,8 @@
         Promise.all(promessas).then(function (imagensReduzidas) {
             listaImagens = listaImagens.concat(imagensReduzidas);
             renderizarPreviews();
+        }).catch(function (erro) {
+            mostrarMensagemErro(erro.message);
         });
 
         this.value = "";
@@ -304,10 +315,81 @@
             redimensionarImagem(this.files[0]).then(function (imagemReduzida) {
                 listaImagens[indexParaSubstituir] = imagemReduzida;
                 renderizarPreviews();
+            }).catch(function (erro) {
+                mostrarMensagemErro(erro.message);
             });
             this.value = "";
         }
     });
+
+    // ================================================
+    // IMAGENS — adicionar por LINK (ex.: do Google Imagens)
+    // ------------------------------------------------
+    // O navegador não pode baixar imagens de outros sites direto
+    // (bloqueio CORS), então pedimos ao nosso servidor (/imagem-por-link),
+    // que baixa e devolve a imagem. Depois ela é tratada IGUAL a uma
+    // foto escolhida no computador: reduzida para 800px e mostrada na lista.
+    // ================================================
+    const linkImagemInput = document.getElementById("linkImagem");
+    const btnAddLink      = document.getElementById("btnAddLink");
+
+    async function adicionarImagemPorLink() {
+        const link = (linkImagemInput.value || "").trim();
+        if (!link) {
+            mostrarMensagemErro("Cole o link da imagem antes de clicar em adicionar.");
+            return;
+        }
+        if (listaImagens.length >= 5) {
+            mostrarMensagemErro("O limite máximo é de 5 imagens.");
+            return;
+        }
+
+        const textoOriginal = btnAddLink.textContent;
+        btnAddLink.disabled = true;
+        btnAddLink.textContent = "Baixando...";
+
+        try {
+            let blob;
+            if (/^data:image\//i.test(link)) {
+                // Imagem "embutida" no próprio link (data:image/...): não precisa do servidor.
+                blob = await (await fetch(link)).blob();
+            } else {
+                const resposta = await fetch("/imagem-por-link?url=" + encodeURIComponent(link));
+                if (!resposta.ok) {
+                    throw new Error((await resposta.text()) || "Não consegui baixar essa imagem.");
+                }
+                blob = await resposta.blob();
+                if (!blob.type || blob.type.indexOf("image/") !== 0) {
+                    // Voltou uma página em vez de imagem (ex.: sessão expirada).
+                    throw new Error("Não consegui baixar essa imagem. Entre no site de novo e tente outra vez.");
+                }
+            }
+
+            const extensao = (blob.type.split("/")[1] || "jpg").replace("jpeg", "jpg");
+            const arquivo = new File([blob], "imagem-do-link." + extensao, { type: blob.type });
+            const reduzida = await redimensionarImagem(arquivo);
+
+            listaImagens.push(reduzida);
+            renderizarPreviews();
+            linkImagemInput.value = "";
+        } catch (erro) {
+            mostrarMensagemErro(erro.message || "Não consegui adicionar essa imagem.");
+        } finally {
+            btnAddLink.disabled = false;
+            btnAddLink.textContent = textoOriginal;
+        }
+    }
+
+    if (btnAddLink && linkImagemInput) {
+        btnAddLink.addEventListener("click", adicionarImagemPorLink);
+        // Enter no campo do link adiciona a imagem (sem enviar o formulário inteiro).
+        linkImagemInput.addEventListener("keydown", function (ev) {
+            if (ev.key === "Enter") {
+                ev.preventDefault();
+                adicionarImagemPorLink();
+            }
+        });
+    }
 
     // ================================================
     // MÁSCARA DE PREÇO
@@ -652,10 +734,13 @@
             return;
         }
 
-        // Coloca só a primeira imagem (já redimensionada) no input para enviar
+        // Coloca TODAS as imagens (já redimensionadas, de 1 a 5) no input para enviar.
+        // A primeira é a capa; as outras viram o carrossel no app.
         if (listaImagens.length > 0) {
             const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(listaImagens[0]);
+            listaImagens.forEach(function (arquivo) {
+                dataTransfer.items.add(arquivo);
+            });
             inputImagens.files = dataTransfer.files;
         }
 
