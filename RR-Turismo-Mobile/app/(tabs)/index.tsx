@@ -478,7 +478,7 @@ const styles = StyleSheet.create({
   // dos textos.
   bannerOverlay: {
     flex: 1,
-    backgroundColor: "rgba(11,61,92,0.55)",
+    backgroundColor: "rgba(0,17,70,0.55)",
     padding: spacing.lg,
     justifyContent: "flex-end",
   },

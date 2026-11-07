@@ -153,13 +153,13 @@ export default function TelaAuth({ aba, retornarPara, titulo, subtitulo, childre
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: "#F4F8FB" }}
+      style={{ flex: 1, backgroundColor: "#F4F7F6" }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
       {/* Fundo decorativo */}
-      <CirculoFlutuante tamanho={280} cor="rgba(44,177,188,0.16)" estilo={{ top: -90, right: -90 }} duracao={4200} />
+      <CirculoFlutuante tamanho={280} cor="rgba(26,86,219,0.14)" estilo={{ top: -90, right: -90 }} duracao={4200} />
       <CirculoFlutuante tamanho={220} cor="rgba(255,122,61,0.12)" estilo={{ bottom: 40, left: -80 }} duracao={5000} />
-      <CirculoFlutuante tamanho={150} cor="rgba(11,61,92,0.08)" estilo={{ top: 260, left: -40 }} duracao={3800} />
+      <CirculoFlutuante tamanho={150} cor="rgba(30,42,94,0.08)" estilo={{ top: 260, left: -40 }} duracao={3800} />
 
       <ScrollView
         contentContainerStyle={styles.container}
@@ -227,14 +227,14 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     padding: spacing.xl,
     borderWidth: 1,
-    borderColor: "rgba(11,61,92,0.06)",
+    borderColor: "rgba(30,42,94,0.07)",
     ...shadows.elevated,
   },
 
   // Abas
   abas: {
     flexDirection: "row",
-    backgroundColor: "#EEF3F7",
+    backgroundColor: "#ECEFF8",
     borderRadius: 16,
     padding: 4,
     marginBottom: spacing.xl,

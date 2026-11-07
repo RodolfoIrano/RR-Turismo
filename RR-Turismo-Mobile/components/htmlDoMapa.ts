@@ -42,9 +42,11 @@ const SCRIPT_DO_MAPA = `
   var mapa=null, marcadores={}, primeiraVez=true;
 
   // ---- imagens do mapa: 2 provedores (troca sozinho se um falhar) ----
+  // OBS: o Carto (basemaps.cartocdn.com) passou a EXIGIR chave de API e devolve
+  // imagens com o texto "API KEY REQUIRED" - por isso NÃO é mais usado.
   var PROVEDORES=[
-    {url:'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', sub:'abcd', attr:'© OpenStreetMap © CARTO'},
-    {url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', sub:'abc', attr:'Tiles © Esri'}
+    {url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', sub:'abc', attr:'Tiles © Esri'},
+    {url:'https://tile.openstreetmap.org/{z}/{x}/{y}.png', sub:'abc', attr:'© OpenStreetMap'}
   ];
   var camada=null, erros=0, carregou=false, relogio=null, desistiu=false;
 

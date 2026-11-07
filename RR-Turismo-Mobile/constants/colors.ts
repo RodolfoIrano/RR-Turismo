@@ -14,14 +14,14 @@
 // ============================================================
 
 export const colors = {
-  primary: "#0B3D5C",       // azul escuro - elementos principais (header, botões primários)
-  primaryDark: "#072A40",   // variação mais escura, usada em pressed states
-  primaryMuted: "#9FB7C9",  // azul claro - textos/ícones inativos sobre fundo azul (ex: abas não selecionadas)
-  secondary: "#2CB1BC",     // azul turquesa - detalhes, ícones, links
+  primary: "#1E2A5E",       // azul marinho do site (mesmo dos cards escuros do painel) - elementos principais (header, botões primários)
+  primaryDark: "#001146",   // variação mais escura, usada em pressed states
+  primaryMuted: "#A9B6E5",  // azul claro - textos/ícones inativos sobre fundo azul (ex: abas não selecionadas)
+  secondary: "#1A56DB",     // azul vivo do site - detalhes, ícones, links
   accent: "#FF7A3D",        // laranja - preços, botões de destaque, ofertas
 
   background: "#FFFFFF",
-  backgroundMuted: "#F4F7F9", // cinza claro - fundos de tela
+  backgroundMuted: "#F4F7F6", // cinza claro - fundos de tela
   surface: "#FFFFFF",
 
   text: "#1B2733",
