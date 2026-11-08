@@ -163,9 +163,12 @@ function PilhaDeTelas() {
               name="settings/index"
               options={{
                 headerShown: true,
-                title: traduzir("Idioma"),
+                title: traduzir("Configurações"),
               }}
             />
+            <Stack.Screen name="settings/idioma" options={{ headerShown: true, title: traduzir("Idioma") }} />
+            <Stack.Screen name="settings/editar-perfil" options={{ headerShown: true, title: traduzir("Editar perfil") }} />
+            <Stack.Screen name="ajuda/index" options={{ headerShown: true, title: traduzir("Assistente de ajuda") }} />
     </Stack>
   );
 }

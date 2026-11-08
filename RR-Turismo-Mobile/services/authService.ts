@@ -6,7 +6,8 @@
 // ============================================================
 import { ValidadorDeSenha } from "../validacoes/ValidadorDeSenha";
 import { User } from "../types";
-import { apiFetch, apiFetchMultipart, salvarToken, obterToken, removerToken, BASE_URL } from "./api";
+import * as FileSystem from "expo-file-system/legacy";
+import { apiFetch, salvarToken, obterToken, removerToken, BASE_URL } from "./api";
 
 // ============================================================
 // AUTH SERVICE
@@ -144,6 +145,17 @@ export async function atualizarFotoPerfil(uriDaImagem: string): Promise<void> {
   await enviarImagemPerfil("/perfil/foto", "foto", uriDaImagem);
 }
 
+// Troca o NOME do usuário (POST /api/perfil/nome) e devolve o usuário atualizado.
+export async function atualizarNomePerfil(nome: string): Promise<User> {
+  const limpo = nome.trim();
+  if (limpo.length < 2) throw new Error("O nome precisa ter pelo menos 2 letras.");
+  const usuarioApi = await apiFetch<UsuarioApi>("/perfil/nome", {
+    method: "POST",
+    body: JSON.stringify({ nome: limpo }),
+  });
+  return paraUser(usuarioApi);
+}
+
 // Envia o BANNER (imagem de capa/fundo do perfil) para o backend,
 // reaproveitando a mesma coluna "banner" que o site já usa.
 export async function atualizarBannerPerfil(uriDaImagem: string): Promise<void> {
@@ -151,21 +163,40 @@ export async function atualizarBannerPerfil(uriDaImagem: string): Promise<void> 
 }
 
 // Lógica comum de upload de imagem do perfil (foto e banner).
+//
+// IMPORTANTE (SDK 58): o "fetch" do Expo NÃO aceita mais o truque antigo
+// formData.append(campo, { uri, name, type }) - dava erro de API ao trocar
+// foto/capa. O jeito certo de enviar um arquivo local é o uploadAsync do
+// expo-file-system, que lê o arquivo direto do celular e monta o multipart.
 async function enviarImagemPerfil(rota: string, campo: string, uriDaImagem: string): Promise<void> {
-  const formData = new FormData();
+  const token = await obterToken();
   const nomeArquivo = uriDaImagem.split("/").pop() ?? `${campo}.jpg`;
   const extensao = nomeArquivo.split(".").pop()?.toLowerCase();
-  const tipoMime = extensao === "png" ? "image/png" : "image/jpeg";
+  const tipoMime = extensao === "png" ? "image/png" : extensao === "webp" ? "image/webp" : "image/jpeg";
 
-  // React Native aceita esse formato "especial" de objeto para
-  // representar um arquivo local dentro de um FormData.
-  formData.append(campo, {
-    uri: uriDaImagem,
-    name: nomeArquivo,
-    type: tipoMime,
-  } as unknown as Blob);
+  let resposta: FileSystem.FileSystemUploadResult;
+  try {
+    resposta = await FileSystem.uploadAsync(`${BASE_URL}${rota}`, uriDaImagem, {
+      httpMethod: "POST",
+      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+      fieldName: campo,
+      mimeType: tipoMime,
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
+  } catch {
+    throw new Error("Não foi possível enviar a imagem. Verifique a conexão com o servidor e tente de novo.");
+  }
 
-  await apiFetchMultipart(rota, formData);
+  if (resposta.status < 200 || resposta.status >= 300) {
+    let mensagem = `Erro no envio da imagem (${resposta.status}).`;
+    try {
+      const corpo = JSON.parse(resposta.body);
+      if (corpo?.erro) mensagem = corpo.erro;
+    } catch {
+      // resposta sem JSON - mantém a mensagem padrão
+    }
+    throw new Error(mensagem);
+  }
 }
 
 // Monta a "source" (uri + headers) da foto de perfil do usuário

@@ -38,13 +38,16 @@ public class WebConfig implements WebMvcConfigurer {
                         "/api/**");
 
         // Login por token (app Mobile) - protege /api/** exceto as rotas
-        // públicas: login/cadastro (/api/auth/**), o catálogo de viagens
+        // públicas: login/cadastro/logout (mas NÃO o /api/auth/me, que precisa
+        // do token para dizer quem está logado), o catálogo de viagens
         // e guias (/api/viagens/**, /api/guias/**), e a calculadora de
         // desconto (/api/desconto/**, que não expõe dado nenhum).
         registry.addInterceptor(tokenAuthInterceptor)
                 .addPathPatterns("/api/**")
                 .excludePathPatterns(
-                        "/api/auth/**",
+                        "/api/auth/login",
+                        "/api/auth/register",
+                        "/api/auth/logout",
                         "/api/viagens/**",
                         "/api/guias/**",
                         "/api/desconto/**");

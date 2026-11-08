@@ -10,11 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.projeto.dto.UsuarioDTO;
 import com.projeto.model.Cadastro;
 import com.projeto.model.PerfilUsuario;
 import com.projeto.security.TokenAuthInterceptor;
@@ -124,6 +126,32 @@ public class PerfilApiController {
         perfilUsuarioService.salvar(perfil);
 
         return ResponseEntity.ok(Map.of("mensagem", "Banner atualizado com sucesso."));
+    }
+
+    // Troca o NOME exibido do usuario (tela "Editar perfil" do app).
+    // So mexe no nome: e-mail e senha continuam intactos.
+    @PostMapping("/nome")
+    public ResponseEntity<?> atualizarNome(
+            @RequestAttribute(TokenAuthInterceptor.ATRIBUTO_USUARIO_ID) Integer usuarioId,
+            @RequestBody Map<String, String> corpo) {
+
+        String nome = corpo == null ? null : corpo.get("nome");
+        nome = nome == null ? "" : nome.trim().replaceAll("\\s+", " ");
+        if (nome.length() < 2 || nome.length() > 80) {
+            return ResponseEntity.badRequest().body(Map.of("erro", "O nome deve ter entre 2 e 80 caracteres."));
+        }
+
+        Optional<Cadastro> usuario = cadastroService.buscarPorId(usuarioId);
+        if (usuario.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        usuario.get().setNome(nome);
+        cadastroService.salvar(usuario.get());
+
+        PerfilUsuario perfil = perfilUsuarioService.buscarOuCriar(usuario.get());
+        return ResponseEntity.ok(UsuarioDTO.de(usuario.get(),
+                perfil.getFoto() != null, perfil.getBanner() != null));
     }
 
     // Validações comuns aos uploads de imagem (tamanho e tipo do arquivo).
