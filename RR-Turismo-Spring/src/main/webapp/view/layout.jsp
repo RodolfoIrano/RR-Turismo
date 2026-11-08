@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="/css/inicio.css">
     <link rel="stylesheet" href="/css/criarViagem.css?v=3">
     <link rel="stylesheet" href="/css/editarViagem.css">
+    <%-- catalogo.css fica por último para não ser sobrescrito pelos estilos das outras páginas --%>
+    <link rel="stylesheet" href="/css/catalogo.css?v=5">
 </head>
 
 <body>
@@ -61,9 +63,17 @@
 
                 <nav class="menu" id="menuLateral">
                     <a href="/inicio"       data-path="/inicio"       data-extra-path="/">Inicio</a>
-                    <a href="/criarviagem"  data-path="/criarviagem"  data-extra-path="/cadastrarviagem">Criar nova viagem</a>
-                    <a href="/editarviagem" data-path="/editarviagem">Editar viagem</a>
-                    <a href="/reservas"     data-path="/reservas">Reservas</a>
+                    <%-- Opções de criação/gestão: só para quem entrou como GUIA --%>
+                    <c:if test="${not empty sessionScope.usuarioLogado and sessionScope.usuarioLogado.guia}">
+                        <a href="/criarviagem"  data-path="/criarviagem"  data-extra-path="/cadastrarviagem">Criar nova viagem</a>
+                        <a href="/editarviagem" data-path="/editarviagem">Editar viagem</a>
+                        <a href="/reservas"     data-path="/reservas">Reservas</a>
+                    </c:if>
+                    <%-- Visitante (sem login): atalhos para entrar / criar conta --%>
+                    <c:if test="${empty sessionScope.usuarioLogado}">
+                        <a href="/entrar"   data-path="/entrar">Entrar</a>
+                        <a href="/cadastro" data-path="/cadastro">Criar conta</a>
+                    </c:if>
                 </nav>
             </div>
 
@@ -95,6 +105,7 @@
 
                 </div>
 
+                <c:if test="${not empty sessionScope.usuarioLogado}">
                 <div class="user-area">
 
                     <button class="user-btn" id="userBtn" type="button" aria-expanded="false">
@@ -126,6 +137,15 @@
                         </a>
                     </div>
                 </div>
+                </c:if>
+
+                <%-- Visitante: botões de entrar --%>
+                <c:if test="${empty sessionScope.usuarioLogado}">
+                    <div class="topo-visitante">
+                        <a class="botao-catalogo botao-catalogo-topo-claro" href="/entrar">Entrar</a>
+                        <a class="botao-catalogo" href="/cadastro">Criar conta</a>
+                    </div>
+                </c:if>
             </div>
 
             <!-- MENSAGENS DE FEEDBACK -->
