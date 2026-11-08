@@ -31,6 +31,8 @@ interface AuthContextData {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (name: string, email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  // Troca os dados do usuário já logado (ex: depois de editar o nome no perfil).
+  atualizarUsuario: (novo: User) => void;
 }
 
 const AuthContext = createContext<AuthContextData | undefined>(undefined);
@@ -87,7 +89,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated: !!user, loading, restaurandoSessao, signIn, signUp, signOut }}
+      value={{ user, isAuthenticated: !!user, loading, restaurandoSessao, signIn, signUp, signOut, atualizarUsuario: setUser }}
     >
       {children}
     </AuthContext.Provider>

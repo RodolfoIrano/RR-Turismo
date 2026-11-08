@@ -1,101 +1,168 @@
 // ============================================================
 // 📄 O QUE ESTE ARQUIVO FAZ:
-// Tela de CONFIGURAÇÕES. Hoje só tem a troca de idioma, com
-// bandeira + sigla + nome de cada opção (mesma lista usada no
-// seletor rápido do cabeçalho - ver components/SeletorIdioma.tsx).
+// Tela de CONFIGURAÇÕES: uma lista de opções (Editar perfil,
+// Idioma, Minhas reservas, Favoritos, Ajuda, Fale conosco, Sobre).
+// Cada linha abre a sua própria tela.
 // ============================================================
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "../../components/TextoTraduzido";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
 import { colors } from "../../constants/colors";
 import { radius, spacing } from "../../constants/spacing";
 import { typography } from "../../constants/typography";
 
+import { useAuth } from "../../contexts/AuthContext";
 import { useTraducao } from "../../traducoes/TraducaoContext";
-import { IDIOMAS } from "../../traducoes/idiomasDisponiveis";
+import { buscarInfoIdioma } from "../../traducoes/idiomasDisponiveis";
+import Aparece from "../../components/auth/Aparece";
 
-export default function Settings() {
-  const { t, idioma, mudarIdioma, traduzindo } = useTraducao();
+type Icone = keyof typeof Ionicons.glyphMap;
+
+export default function Configuracoes() {
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
+  const { idioma } = useTraducao();
+  const info = buscarInfoIdioma(idioma);
 
   return (
-    <SafeAreaView style={styles.safe} edges={["top"]}>
-      <View style={styles.header}>
-        <Text style={typography.h1}>{t.configuracoesIdioma.titulo}</Text>
-      </View>
+    <SafeAreaView style={styles.safe} edges={["bottom"]}>
+      <ScrollView contentContainerStyle={styles.conteudo} showsVerticalScrollIndicator={false}>
 
-      <View style={styles.section}>
-        <Text style={[typography.bodyMuted, styles.sectionLabel]}>
-          {t.configuracoesIdioma.escolher}
-        </Text>
-
-        {IDIOMAS.map((info) => {
-          const selecionado = info.codigo === idioma;
-          return (
-            <TouchableOpacity
-              key={info.codigo}
-              style={styles.opcao}
-              onPress={() => mudarIdioma(info.codigo)}
-              accessibilityRole="button"
-            >
-              <Text style={styles.bandeira}>{info.bandeira}</Text>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.sigla}>{info.sigla}</Text>
-                <Text style={typography.bodyMuted}>{info.nome}</Text>
-              </View>
-              {selecionado && (
-                <Ionicons name="checkmark-circle" size={20} color={colors.primary} />
-              )}
-            </TouchableOpacity>
-          );
-        })}
-
-        {traduzindo && (
-          <Text style={[typography.caption, { marginTop: spacing.sm }]}>
-            Traduzindo os textos do app...
-          </Text>
+        {isAuthenticated && (
+          <Aparece atraso={40}>
+            <Grupo titulo="Conta">
+              <Linha
+                icone="person-circle-outline"
+                titulo="Editar perfil"
+                detalhe="Nome, foto de perfil e capa"
+                aoTocar={() => router.push("/settings/editar-perfil")}
+              />
+              <Linha
+                icone="briefcase-outline"
+                titulo="Minhas reservas"
+                detalhe="Suas viagens reservadas"
+                aoTocar={() => router.push("/bookings")}
+              />
+              <Linha
+                icone="heart-outline"
+                titulo="Favoritos"
+                detalhe="Viagens que você salvou"
+                aoTocar={() => router.push("/(tabs)/favorites")}
+                ultima
+              />
+            </Grupo>
+          </Aparece>
         )}
-      </View>
+
+        <Aparece atraso={120}>
+          <Grupo titulo="Preferências">
+            <Linha
+              icone="language-outline"
+              titulo="Idioma"
+              detalhe={`${info.bandeira}  ${info.nome}`}
+              aoTocar={() => router.push("/settings/idioma")}
+              ultima
+            />
+          </Grupo>
+        </Aparece>
+
+        <Aparece atraso={200}>
+          <Grupo titulo="Ajuda">
+            <Linha
+              icone="chatbubbles-outline"
+              titulo="Assistente de ajuda"
+              detalhe="Tire dúvidas sobre o app"
+              aoTocar={() => router.push("/ajuda")}
+            />
+            <Linha
+              icone="mail-outline"
+              titulo="Fale conosco"
+              detalhe="Entre em contato com a equipe"
+              aoTocar={() => router.push("/(tabs)/contato")}
+            />
+            <Linha
+              icone="information-circle-outline"
+              titulo="Sobre o RR Turismo"
+              detalhe="Conheça o projeto"
+              aoTocar={() => router.push("/(tabs)/sobre")}
+              ultima
+            />
+          </Grupo>
+        </Aparece>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
+// Bloco com título (ex: "Conta") e as linhas dentro de um cartão.
+function Grupo({ titulo, children }: { titulo: string; children: React.ReactNode }) {
+  return (
+    <View style={styles.grupo}>
+      <Text style={styles.grupoTitulo}>{titulo}</Text>
+      <View style={styles.cartao}>{children}</View>
+    </View>
+  );
+}
+
+// Uma opção: ícone num quadradinho colorido + título + detalhe + seta.
+function Linha({
+  icone, titulo, detalhe, aoTocar, ultima,
+}: { icone: Icone; titulo: string; detalhe?: string; aoTocar: () => void; ultima?: boolean }) {
+  return (
+    <TouchableOpacity
+      style={[styles.linha, !ultima && styles.linhaComDivisor]}
+      onPress={aoTocar}
+      activeOpacity={0.7}
+      accessibilityRole="button"
+    >
+      <View style={styles.icone}>
+        <Ionicons name={icone} size={20} color={colors.secondary} />
+      </View>
+      <View style={{ flex: 1 }}>
+        <Text style={styles.linhaTitulo}>{titulo}</Text>
+        {!!detalhe && <Text style={typography.caption}>{detalhe}</Text>}
+      </View>
+      <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
+    </TouchableOpacity>
+  );
+}
+
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  header: {
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.sm,
-    paddingBottom: spacing.md,
-  },
-  section: {
-    paddingHorizontal: spacing.lg,
-  },
-  sectionLabel: {
-    marginBottom: spacing.sm,
-  },
-  opcao: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.md,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.md,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.border,
-    marginBottom: spacing.sm,
-  },
-  bandeira: {
-    fontSize: 26,
-  },
-  sigla: {
-    fontWeight: "700",
+  safe: { flex: 1, backgroundColor: colors.backgroundMuted },
+  conteudo: { padding: spacing.lg, paddingBottom: spacing.xxxl },
+  grupo: { marginBottom: spacing.xl },
+  grupoTitulo: {
     fontSize: 13,
+    fontWeight: "800",
     color: colors.textSecondary,
-    letterSpacing: 0.5,
+    textTransform: "uppercase",
+    letterSpacing: 0.8,
+    marginBottom: spacing.sm,
+    marginLeft: spacing.xs,
   },
+  cartao: {
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    paddingHorizontal: spacing.lg,
+    shadowColor: "#001146",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.07,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  linha: { flexDirection: "row", alignItems: "center", gap: spacing.md, paddingVertical: spacing.md + 2 },
+  linhaComDivisor: { borderBottomWidth: 1, borderBottomColor: colors.border },
+  icone: {
+    width: 38,
+    height: 38,
+    borderRadius: 12,
+    backgroundColor: "rgba(26,86,219,0.12)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  linhaTitulo: { fontSize: 15, fontWeight: "700", color: colors.text },
 });

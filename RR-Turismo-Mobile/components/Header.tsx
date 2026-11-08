@@ -56,15 +56,6 @@ export default function Header() {
           <Text style={styles.bandeiraAtual}>{infoIdiomaAtual.bandeira}</Text>
         </TouchableOpacity>
 
-        {/* Tradutor de voz: fale ou digite e veja a tradução. */}
-        <TouchableOpacity
-          accessibilityLabel="Tradutor de voz"
-          style={styles.iconButton}
-          onPress={() => router.push("/tradutor")}
-        >
-          <Ionicons name="mic-outline" size={22} color={colors.textInverse} />
-        </TouchableOpacity>
-
         <TouchableOpacity
           accessibilityLabel="Carrinho"
           style={styles.iconButton}
