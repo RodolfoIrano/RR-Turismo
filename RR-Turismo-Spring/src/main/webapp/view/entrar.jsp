@@ -7,7 +7,7 @@
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <link rel="stylesheet" href="css/entrar.css?v=2">
+                <link rel="stylesheet" href="css/entrar.css?v=3">
                 <link rel="stylesheet" href="css/variaveis.css">
                 <link rel="stylesheet" href="css/padrao.css">
             </head>
@@ -29,14 +29,14 @@
                         </div>
 
                         <h1>Acesse sua conta</h1>
-                        <p class="descricao">Entre para gerenciar suas viagens</p>
+                        <p class="descricao">Entre para salvar favoritos e comprar viagens</p>
 
 
                         <form action="/loginUser" method="post">
 
                             <div class="campo">
                                 <input type="text" id="email" name="email" placeholder="" required>
-                                <label for="emailProfissional">E-mail Profissional:</label>
+                                <label for="emailProfissional">E-mail:</label>
                             </div>
 
                             <div class="campo" id="campoSenha">

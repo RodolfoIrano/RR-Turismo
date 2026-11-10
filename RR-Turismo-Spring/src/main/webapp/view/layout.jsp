@@ -39,9 +39,9 @@
     <link rel="stylesheet" href="/css/criarViagem.css?v=3">
     <link rel="stylesheet" href="/css/editarViagem.css">
     <%-- catalogo.css fica por último para não ser sobrescrito pelos estilos das outras páginas --%>
-    <link rel="stylesheet" href="/css/catalogo.css?v=6">
+    <link rel="stylesheet" href="/css/catalogo.css?v=7">
     <%-- site.css: topo, rodapé, banner, chat e responsivo (também usado no painel) --%>
-    <link rel="stylesheet" href="/css/site.css?v=7">
+    <link rel="stylesheet" href="/css/site.css?v=8">
     <link rel="icon" href="/imagens/logo_preta.png">
 </head>
 
@@ -91,20 +91,24 @@
                 </div>
 
                 <nav class="menu" id="menuLateral">
-                    <span class="menu-titulo">Painel</span>
-                    <a href="/inicio"       data-path="/inicio"       data-extra-path="/"><i>&#127968;</i>Início</a>
-                    <a href="/criarviagem"  data-path="/criarviagem"  data-extra-path="/cadastrarviagem"><i>&#10133;</i>Criar nova viagem</a>
-                    <a href="/editarviagem" data-path="/editarviagem"><i>&#9998;</i>Editar viagem</a>
-                    <a href="/reservas"     data-path="/reservas"><i>&#127903;</i>Reservas</a>
+                    <a href="/inicio" data-path="/inicio" data-extra-path="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Início</a>
 
-                    <span class="menu-titulo">Conta</span>
-                    <a href="/perfil"       data-path="/perfil"><i>&#128100;</i>Meu perfil</a>
-                    <a href="/editarperfil" data-path="/editarperfil"><i>&#9881;</i>Configurações</a>
+                    <%-- "Minhas viagens" abre uma gaveta com as duas opções --%>
+                    <div class="menu-grupo" id="grupoViagens">
+                        <button type="button" class="menu-grupo-btn" aria-expanded="false" aria-controls="gavetaViagens">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>Minhas viagens<span class="menu-seta" aria-hidden="true"></span>
+                        </button>
+                        <div class="menu-gaveta" id="gavetaViagens">
+                            <div>
+                                <a href="/criarviagem"  data-path="/criarviagem" data-extra-path="/cadastrarviagem">Criar viagem</a>
+                                <a href="/editarviagem" data-path="/editarviagem">Editar viagens</a>
+                            </div>
+                        </div>
+                    </div>
 
-                    <span class="menu-titulo">Ajuda</span>
-                    <a href="/favoritos"    data-path="/favoritos"><i>&#9829;</i>Favoritos</a>
-                    <a href="/sobre-nos"    data-path="/sobre-nos"><i>&#8505;</i>Sobre nós</a>
-                    <a href="/fale-conosco" data-path="/fale-conosco"><i>&#128172;</i>Fale conosco</a>
+                    <a href="/favoritos"    data-path="/favoritos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.5-9.2C1 8 3 4.5 6.5 4.5c2 0 3.5 1.1 5.5 3 2-1.9 3.5-3 5.5-3C21 4.5 23 8 21.5 11.8 19.5 16.4 12 21 12 21z"/></svg>Favoritos</a>
+                    <a href="/sobre-nos"    data-path="/sobre-nos"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>Sobre nós</a>
+                    <a href="/fale-conosco" data-path="/fale-conosco"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg>Fale conosco</a>
                 </nav>
             </div>
 
@@ -331,7 +335,7 @@
 
     <script src="/js/padrao.js?v=4" charset="UTF-8"></script>
     <script src="/js/perfil.js?v=2" charset="UTF-8"></script>
-    <script src="/js/site.js?v=1" charset="UTF-8"></script>
+    <script src="/js/site.js?v=2" charset="UTF-8"></script>
     <script src="/js/chatSite.js?v=1" charset="UTF-8"></script>
 
     <c:if test="${pagina == 'editarPerfil.jsp'}">

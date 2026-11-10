@@ -3,12 +3,12 @@
 
 <%--
   📄 O QUE ESTE ARQUIVO FAZ:
-  Página inicial PÚBLICA do site. De cima para baixo:
-    1) (só guia/empresa) faixa com atalhos do painel;
-    2) BANNER GRANDE que passa as viagens em destaque, com a busca (e
+  Página inicial PÚBLICA do site (visitante e viajante). Guia/empresa veem a
+  home do painel (inicioPainel.jsp). De cima para baixo:
+    1) BANNER GRANDE que passa as viagens em destaque, com a busca (e
        botão de microfone) por cima;
-    3) três frases de confiança;
-    4) catálogo: filtro por categoria, botão grade/lista e os cartões.
+    2) três frases de confiança;
+    3) catálogo: filtro por categoria, botão grade/lista e os cartões.
   Os dados vêm do InicioController (viagens, destaques, categorias).
 
   ✏️ ONDE MUDAR O QUÊ:
@@ -19,27 +19,6 @@
 --%>
 
 <div class="catalogo">
-
-    <%-- ===== FAIXA DO GUIA/EMPRESA (só no painel) ===== --%>
-    <c:if test="${not empty sessionScope.usuarioLogado and (sessionScope.usuarioLogado.guia or sessionScope.usuarioLogado.empresa)}">
-        <section class="painel-guia">
-            <div>
-                <span class="painel-guia-etiqueta"><c:choose><c:when test="${sessionScope.usuarioLogado.guia}">Painel do guia</c:when><c:otherwise>Painel da empresa</c:otherwise></c:choose></span>
-                <h2>Olá, <c:out value="${empty sessionScope.usuarioLogado.nome ? sessionScope.usuarioLogado.email : sessionScope.usuarioLogado.nome}" />!</h2>
-                <p>
-                    <c:choose>
-                        <c:when test="${minhasViagens == 1}">Você tem 1 viagem publicada.</c:when>
-                        <c:otherwise>Você tem <c:out value="${minhasViagens}" /> viagens publicadas.</c:otherwise>
-                    </c:choose>
-                </p>
-            </div>
-            <div class="painel-guia-acoes">
-                <a class="botao-catalogo" href="/criarviagem">+ Criar nova viagem</a>
-                <a class="botao-catalogo botao-catalogo-claro" href="/editarviagem">Editar minhas viagens</a>
-                <a class="botao-catalogo botao-catalogo-claro" href="/reservas">Reservas</a>
-            </div>
-        </section>
-    </c:if>
 
     <%-- ===== BANNER GRANDE ===== --%>
     <c:set var="faltam" value="${3 - destaques.size()}" />
@@ -95,8 +74,8 @@
             </c:if>
         </div>
 
-        <button type="button" class="banner-seta ant" aria-label="Slide anterior">&#10094;</button>
-        <button type="button" class="banner-seta prox" aria-label="Próximo slide">&#10095;</button>
+        <button type="button" class="banner-seta ant" aria-label="Slide anterior">&#8249;</button>
+        <button type="button" class="banner-seta prox" aria-label="Próximo slide">&#8250;</button>
 
         <%-- Busca por cima do banner (igual ao app) --%>
         <form class="banner-busca" method="get" action="/inicio#viagens" role="search">

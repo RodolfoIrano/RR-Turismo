@@ -37,10 +37,10 @@
     background: linear-gradient(135deg, var(--azul6), var(--azul8));
     color: #fff;
 }
-.painel-guia h2, .catalogo-convite h3 { margin: 4px 0; color: #fff; font-weight: 800; font-size: 22px; }
-.painel-guia p, .catalogo-convite p { margin: 0; opacity: .85; font-size: 15px; }
+.painel-guia h2, .catalogo-convite h3 { margin: 4px 0; color: #fff; font-weight: 700; font-size: 19px; }
+.painel-guia p, .catalogo-convite p { margin: 0; opacity: .85; font-size: 14px; }
 .painel-guia-etiqueta {
-    font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 800; opacity: .8;
+    font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; opacity: .8;
 }
 .painel-guia-acoes { display: flex; gap: 12px; flex-wrap: wrap; }
 .painel-guia .botao-catalogo:not(.botao-catalogo-claro),
@@ -48,9 +48,9 @@
 
 /* ---------- topo + busca ---------- */
 .catalogo-topo { display: flex; flex-direction: column; gap: 8px; }
-.catalogo-etiqueta { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 800; color: var(--azul4); }
-.catalogo-topo h1 { margin: 0; font-weight: 800; font-size: clamp(28.8px, 3vw, 41.6px); color: var(--azul8); }
-.catalogo-topo p { margin: 0; color: #5b6475; font-size: 16px; }
+.catalogo-etiqueta { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--azul4); }
+.catalogo-topo h1 { margin: 0; font-weight: 700; font-size: clamp(24px, 3vw, 31px); color: var(--azul8); }
+.catalogo-topo p { margin: 0; color: #5b6475; font-size: 15px; }
 
 .catalogo-busca {
     display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;
@@ -61,12 +61,12 @@
     border-radius: 14px;
     border: 1px solid #d5dbe6;
     background: var(--cor-card);
-    font-size: 15px;
+    font-size: 14px;
 }
 .catalogo-busca input[type="search"]:focus { outline: 2px solid var(--azul3); border-color: transparent; }
 .catalogo-busca button {
     padding: 14px 28px; border: none; border-radius: 14px; cursor: pointer;
-    background: var(--azul8); color: #fff; font-weight: 700; font-size: 15px;
+    background: var(--azul8); color: #fff; font-weight: 700; font-size: 14px;
 }
 .catalogo-busca button:hover { background: var(--azul4); }
 
@@ -106,23 +106,23 @@
 .viagem-card-categoria {
     position: absolute; left: 12px; top: 12px;
     background: rgba(255,255,255,.92); color: var(--azul8);
-    font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 999px;
+    font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px;
 }
 .viagem-card-categoria-solta { position: static; display: inline-block; align-self: flex-start; background: rgba(10,65,231,.1); color: var(--azul4); }
 .viagem-card-esgotada {
     position: absolute; right: 12px; top: 12px;
     background: var(--vermelho-claro); color: #fff;
-    font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 999px;
+    font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px;
 }
 
 .viagem-card-corpo { padding: 17.6px 20px 20px; display: flex; flex-direction: column; gap: 5.6px; flex: 1; }
-.viagem-card-corpo h3 { margin: 0; font-weight: 800; font-size: 18.4px; color: var(--azul8); }
+.viagem-card-corpo h3 { margin: 0; font-weight: 700; font-size: 16px; color: var(--azul8); }
 .viagem-card-local, .viagem-card-data { margin: 0; font-size: 14px; color: #5b6475; }
 .viagem-card-rodape {
     margin-top: auto; padding-top: 12px;
     display: flex; justify-content: space-between; align-items: baseline;
 }
-.viagem-card-rodape strong { font-weight: 800; font-size: 19.2px; color: var(--azul4); }
+.viagem-card-rodape strong { font-weight: 700; font-size: 17px; color: var(--azul4); }
 .viagem-card-rodape span { font-size: 13px; color: #5b6475; }
 
 .catalogo-vazio {
@@ -132,7 +132,7 @@
 .catalogo-vazio h3, .catalogo-vazio p { margin: 0; }
 
 /* ---------- detalhes da viagem ---------- */
-.detalhe-voltar { color: var(--azul4); font-weight: 700; font-size: 16px; text-decoration: none; align-self: flex-start; }
+.detalhe-voltar { color: var(--azul4); font-weight: 700; font-size: 15px; text-decoration: none; align-self: flex-start; }
 .detalhe-voltar:hover { text-decoration: underline; }
 
 .detalhe-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; align-items: start; }
@@ -157,20 +157,20 @@
     display: flex; flex-direction: column; gap: 12px;
     box-shadow: 0 8px 24px rgba(0, 17, 70, .08);
 }
-.detalhe-info h1 { margin: 0; font-weight: 800; font-size: 30.4px; color: var(--azul8); }
-.detalhe-preco { margin: 4px 0; font-size: 32px; font-weight: 800; color: var(--azul4); }
+.detalhe-info h1 { margin: 0; font-weight: 700; font-size: 26px; color: var(--azul8); }
+.detalhe-preco { margin: 4px 0; font-size: 27px; font-weight: 700; color: var(--azul4); }
 .detalhe-preco small { font-size: 13px; font-weight: 600; color: #5b6475; }
 .detalhe-lista { list-style: none; margin: 0; padding: 0; }
-.detalhe-lista li { font-size: 15px; display: flex; justify-content: space-between; gap: 16px; padding: 11.2px 0; border-bottom: 1px solid #e6eaf2; }
+.detalhe-lista li { font-size: 14px; display: flex; justify-content: space-between; gap: 16px; padding: 11.2px 0; border-bottom: 1px solid #e6eaf2; }
 .detalhe-lista li span { color: #5b6475; }
 .detalhe-lista li strong { font-weight: 700; color: var(--azul8); }
 .detalhe-reserva { background: rgba(10, 65, 231, .08); border-radius: 16px; padding: 16px 17.6px; }
-.detalhe-reserva strong { font-size: 15px; font-weight: 800; color: var(--azul8); }
+.detalhe-reserva strong { font-size: 14px; font-weight: 700; color: var(--azul8); }
 .detalhe-reserva p { margin: 4px 0 0; font-size: 14px; color: #3d4659; }
 
 .detalhe-descricao { background: var(--cor-card); border-radius: 24px; padding: 28px; box-shadow: 0 8px 24px rgba(0, 17, 70, .08); }
-.detalhe-descricao h2 { margin-top: 0; margin-bottom: 8px; font-size: 22px; font-weight: 800; color: var(--azul8); }
-.detalhe-descricao p { font-size: 16px; white-space: pre-line; line-height: 1.7; margin-bottom: 0; }
+.detalhe-descricao h2 { margin-top: 0; margin-bottom: 8px; font-size: 19px; font-weight: 700; color: var(--azul8); }
+.detalhe-descricao p { font-size: 15px; white-space: pre-line; line-height: 1.7; margin-bottom: 0; }
 
 @media (max-width: 900px) {
     .detalhe-layout { grid-template-columns: 1fr; }

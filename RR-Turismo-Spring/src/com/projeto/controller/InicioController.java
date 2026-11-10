@@ -19,13 +19,12 @@ import jakarta.servlet.http.HttpSession;
 
 // ============================================================
 // 📄 O QUE ESTE ARQUIVO FAZ:
-// PÁGINA INICIAL do site (/ e /inicio). Agora é PÚBLICA: qualquer
+// PÁGINA INICIAL do site (/ e /inicio). Para visitante e viajante é PÚBLICA: qualquer
 // visitante vê o catálogo de viagens (igual ao app), podendo buscar
 // por texto e filtrar por categoria - sem precisar entrar na conta.
 //
-// Quem entra como GUIA (cadastro com "Guia" marcado) vê, além do
-// catálogo, atalhos para criar/editar viagens e reservas (ver
-// layout.jsp e inicio.jsp).
+// Quem entra como GUIA ou EMPRESA vê outra home (inicioPainel.jsp): um
+// resumo com números e a tabela das suas viagens, SEM banner e SEM catálogo.
 // ============================================================
 @Controller
 public class InicioController {
@@ -43,6 +42,13 @@ public class InicioController {
     public String inicio(@RequestParam(name = "q", required = false) String q,
                          @RequestParam(name = "categoria", required = false) String categoria,
                          Model model, HttpSession session) {
+
+        // GUIA / EMPRESA logados veem a home do PAINEL (resumo das suas viagens),
+        // sem banner nem catálogo. Os demais veem o catálogo público abaixo.
+        Object logado = session.getAttribute("usuarioLogado");
+        if (logado instanceof Cadastro dono && (dono.isGuia() || dono.isEmpresa())) {
+            return homeDoPainel(dono, model);
+        }
 
         List<Viagem> todas = editarViagemService.listarTodas();
 
@@ -81,13 +87,27 @@ public class InicioController {
         model.addAttribute("busca", busca);
         model.addAttribute("categoriaSelecionada", filtroCategoria);
 
-        // Atalhos do guia: quantas viagens ele já criou.
-        Object logado = session.getAttribute("usuarioLogado");
-        if (logado instanceof Cadastro usuario && (usuario.isGuia() || usuario.isEmpresa())) {
-            model.addAttribute("minhasViagens", editarViagemService.listarPorCriador(usuario).size());
-        }
-
         model.addAttribute("pagina", "inicio.jsp");
+        return "layout";
+    }
+
+    // Home do painel: números e tabela só das viagens criadas por quem está logado.
+    private String homeDoPainel(Cadastro dono, Model model) {
+        List<Viagem> minhas = editarViagemService.listarPorCriador(dono).stream()
+                .sorted(Comparator.comparingInt(Viagem::getId).reversed())
+                .toList();
+
+        int totalVagas = minhas.stream().mapToInt(Viagem::getAssentos).sum();
+        int totalParticipantes = minhas.stream().mapToInt(Viagem::getParticipantes).sum();
+
+        model.addAttribute("minhasViagens", minhas.stream()
+                .map(v -> CartaoViagemDTO.de(v, 0)).toList());
+        model.addAttribute("totalViagens", minhas.size());
+        model.addAttribute("totalVagas", totalVagas);
+        model.addAttribute("totalParticipantes", totalParticipantes);
+        model.addAttribute("totalLivres", Math.max(totalVagas - totalParticipantes, 0));
+        model.addAttribute("ocupacao", totalVagas == 0 ? 0 : Math.round(100f * totalParticipantes / totalVagas));
+        model.addAttribute("pagina", "inicioPainel.jsp");
         return "layout";
     }
 

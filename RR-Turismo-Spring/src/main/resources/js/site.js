@@ -17,7 +17,7 @@
 (function () {
     "use strict";
 
-    var TEMPO_BANNER_MS = 6000;
+    var TEMPO_BANNER_MS = 5000;
     var PREFIXO_FAVORITOS = "rr_favoritos_";
 
     function pronto(fn) {
@@ -92,10 +92,10 @@
         if (prox) prox.addEventListener("click", function () { ir(atual + 1); iniciar(); });
         pontos.forEach(function (p, i) { p.addEventListener("click", function () { ir(i); iniciar(); }); });
 
-        banner.addEventListener("mouseenter", parar);
-        banner.addEventListener("mouseleave", iniciar);
-        banner.addEventListener("focusin", parar);
-        banner.addEventListener("focusout", iniciar);
+        
+        
+        
+        
 
         // Arrastar o dedo no celular troca o slide.
         var xIni = null;
@@ -229,7 +229,24 @@
         });
     }
 
+    /* ---------------- GAVETA "Minhas viagens" (menu lateral do painel) ---------------- */
+    function iniciarGaveta() {
+        var grupo = document.getElementById("grupoViagens");
+        if (!grupo) return;
+        var botao = grupo.querySelector(".menu-grupo-btn");
+        function abrir(sim) {
+            grupo.classList.toggle("aberto", sim);
+            botao.setAttribute("aria-expanded", sim ? "true" : "false");
+        }
+        // Já abre sozinha se a página atual for "Criar viagem" ou "Editar viagens".
+        var temAtivo = !!grupo.querySelector("a.ativo");
+        grupo.classList.toggle("tem-ativo", temAtivo);
+        abrir(temAtivo);
+        botao.addEventListener("click", function () { abrir(!grupo.classList.contains("aberto")); });
+    }
+
     pronto(function () {
+        try { iniciarGaveta(); } catch (e) { console.error(e); }
         try { iniciarMenus(); } catch (e) { console.error(e); }
         try { iniciarBanner(); } catch (e) { console.error(e); }
         try { iniciarFavoritos(); } catch (e) { console.error(e); }
