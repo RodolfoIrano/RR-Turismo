@@ -15,7 +15,97 @@ border-radius:1.5rem;
 box-shadow:var(--sombra-card);
 width:38rem;
 text-align:center;
-max-height: 70rem;
+max-height:none;
+margin:2rem 1rem;
+max-width:calc(100% - 2rem);
+}
+
+/* ---------- PASSO 1: ESCOLHER TIPO DE CONTA ---------- */
+
+.escolha-perfil{
+display:flex;
+flex-direction:column;
+gap:1.4rem;
+}
+
+.opcao-perfil{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:.6rem;
+padding:2rem 1.6rem;
+border:2px solid #d5dbe6;
+border-radius:1.4rem;
+background:#fff;
+cursor:pointer;
+transition:border-color .2s, box-shadow .2s, transform .2s;
+}
+
+.opcao-perfil:hover,
+.opcao-perfil:focus-visible{
+border-color:var(--azul4);
+box-shadow:0 10px 26px rgba(10,65,231,.16);
+transform:translateY(-2px);
+outline:none;
+}
+
+.opcao-perfil strong{
+font-size:1.8rem;
+font-weight:800;
+color:var(--azul8);
+}
+
+.opcao-perfil span{
+font-size:1.4rem;
+color:#5b6475;
+}
+
+.opcao-perfil .opcao-icone{
+font-size:3.2rem;
+line-height:1;
+}
+
+/* ---------- PASSO 2 ---------- */
+
+.voltar-escolha{
+display:block;
+margin:0 0 1.4rem;
+padding:0;
+border:none;
+background:none;
+color:var(--azul4);
+font-size:1.4rem;
+font-weight:700;
+cursor:pointer;
+}
+
+.voltar-escolha:hover{
+text-decoration:underline;
+}
+
+.boas-vindas{
+margin-bottom:2rem;
+padding:1.4rem 1.6rem;
+border-radius:1.2rem;
+background:rgba(10,65,231,.08);
+color:#1a2540;
+font-size:1.4rem;
+line-height:1.5;
+text-align:left;
+}
+
+.boas-vindas strong{
+display:block;
+margin-bottom:.4rem;
+font-size:1.6rem;
+font-weight:800;
+color:var(--azul8);
+}
+
+.dica-tipo{
+margin-bottom:1.4rem;
+font-size:1.3rem;
+color:#5b6475;
 }
 
 /* LOGO */
@@ -156,3 +246,5 @@ font-weight:bold;
 .entrar a:hover{
 text-decoration:underline;
 }
+
+[hidden]{display:none!important}

@@ -5,6 +5,8 @@
 <c:set var="usuario" value="${perfil.usuario}" />
 <c:set var="nomePerfil" value="${empty usuario.nome ? usuario.email : usuario.nome}" />
 <c:set var="isGuia" value="${usuario.guia}" />
+<%-- viajante = nem guia nem empresa (só compra viagens) --%>
+<c:set var="isViajante" value="${not usuario.guia and not usuario.empresa}" />
 
 <div class="public-profile-page">
 
@@ -35,6 +37,7 @@
             <span>
                 <c:choose>
                     <c:when test="${isGuia}">&#10004; Guia Verificado</c:when>
+                    <c:when test="${isViajante}">&#9992; Viajante</c:when>
                     <c:otherwise>&#10004; Empresa Verificada</c:otherwise>
                 </c:choose>
             </span>
@@ -66,6 +69,7 @@
     </section>
 
     <!-- ESTATÍSTICAS -->
+    <c:if test="${not isViajante}">
     <section class="stats-public">
         <div class="stat-card">
             <h2>0</h2>
@@ -80,12 +84,14 @@
             <p>Avaliações</p>
         </div>
     </section>
+    </c:if>
 
     <!-- SOBRE (título muda conforme tipo) -->
     <section class="public-section">
         <h2>
             <c:choose>
                 <c:when test="${isGuia}">Sobre o Guia</c:when>
+                <c:when test="${isViajante}">Sobre mim</c:when>
                 <c:otherwise>Sobre a Empresa</c:otherwise>
             </c:choose>
         </h2>

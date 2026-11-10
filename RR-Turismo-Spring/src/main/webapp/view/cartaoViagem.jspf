@@ -1,0 +1,42 @@
+<%--
+  📄 O QUE ESTE ARQUIVO FAZ:
+  É o "molde" do CARTÃO de uma viagem (foto, categoria, nome, local, data,
+  preço, vagas e o coração de favoritos). Cada página que lista viagens
+  (início, favoritos, "outras viagens do guia") só repete este molde.
+  Quem usa precisa ter uma variável "v" (CartaoViagemDTO) no c:forEach.
+
+  ✏️ ONDE MUDAR O QUÊ: o visual do cartão fica em css/catalogo.css e
+  css/site.css (procure "viagem-card").
+--%>
+<article class="viagem-card-item" data-id="${v.id}">
+    <a class="viagem-card" href="/viagens/${v.id}">
+        <div class="viagem-card-foto">
+            <c:if test="${not empty v.capa}">
+                <img src="${v.capa}?w=700" alt="<c:out value='${v.titulo}' />" loading="lazy" onerror="this.remove()">
+            </c:if>
+            <c:if test="${not empty v.categoria}">
+                <span class="viagem-card-categoria"><c:out value="${v.categoria}" /></span>
+            </c:if>
+            <c:if test="${v.esgotada}">
+                <span class="viagem-card-esgotada">Esgotada</span>
+            </c:if>
+        </div>
+        <div class="viagem-card-corpo">
+            <h3><c:out value="${v.titulo}" /></h3>
+            <p class="viagem-card-local"><span class="icone-pino" aria-hidden="true">&#9679;</span> <c:out value="${v.local}" /></p>
+            <p class="viagem-card-data"><c:out value="${v.periodo}" /></p>
+            <div class="viagem-card-rodape">
+                <strong><c:out value="${v.preco}" /></strong>
+                <span>
+                    <c:choose>
+                        <c:when test="${v.esgotada}">Sem vagas</c:when>
+                        <c:otherwise><c:out value="${v.vagas}" /> vagas</c:otherwise>
+                    </c:choose>
+                </span>
+            </div>
+        </div>
+    </a>
+    <button type="button" class="coracao" data-id="${v.id}" aria-pressed="false" aria-label="Salvar nos favoritos">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.5-9.2C1 8 3 4.5 6.5 4.5c2 0 3.5 1.1 5.5 3 2-1.9 3.5-3 5.5-3C21 4.5 23 8 21.5 11.8 19.5 16.4 12 21 12 21z"/></svg>
+    </button>
+</article>

@@ -8,6 +8,23 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.projeto.interceptor.LoginInterceptor;
 import com.projeto.security.TokenAuthInterceptor;
 
+// ============================================================
+// 📄 O QUE ESTE ARQUIVO FAZ:
+// Define QUEM PRECISA ESTAR LOGADO para abrir cada endereço, e
+// libera o acesso do app Mobile ao servidor (CORS).
+//
+// Existem dois "porteiros":
+//   - LoginInterceptor ........ protege as páginas do SITE (sessão).
+//   - TokenAuthInterceptor .... protege as rotas /api/** do APP (token).
+//
+// ✏️ ONDE MUDAR O QUÊ:
+//   - Tornar uma página do site PÚBLICA (sem login) → coloque o endereço
+//     na lista excludePathPatterns do loginInterceptor (ex.: "/", "/inicio",
+//     "/viagens/**" já são públicos).
+//   - Tornar uma rota da API pública → lista excludePathPatterns do
+//     tokenAuthInterceptor, mais abaixo.
+//   - Quais origens podem chamar a API → método addCorsMappings.
+// ============================================================
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -27,6 +44,14 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(
+                        "/",
+                        "/inicio",
+                        "/viagens/**",
+                        "/sobre-nos",
+                        "/fale-conosco",
+                        "/favoritos",
+                        "/privacidade",
+                        "/termos",
                         "/entrar",
                         "/loginUser",
                         "/cadastro",

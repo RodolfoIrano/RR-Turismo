@@ -10,6 +10,13 @@ import com.projeto.model.Cadastro;
 import com.projeto.model.Viagem;
 import com.projeto.repository.CriarViagemRepository;
 
+// ============================================================
+// 📄 O QUE ESTE ARQUIVO FAZ:
+// Regras de negócio da tela EDITAR VIAGEM do site: lista as viagens
+// (todas ou só as de um criador), busca uma pela id e salva as
+// alterações. Quem chama é o EditarViagemController.
+// Os dados vêm/vão para o banco pelo CriarViagemRepository.
+// ============================================================
 @Service
 public class EditarViagemService {
 
