@@ -89,7 +89,7 @@ public class PerfilApiController {
 
         PerfilUsuario perfil = perfilUsuarioService.buscarOuCriar(usuario.get());
         try {
-            perfil.setFoto(arquivo.getBytes());
+            perfil.setFoto(com.projeto.util.RedimensionadorDeImagem.prepararParaSalvar(arquivo.getBytes(), 900, 150_000));
         } catch (IOException e) {
             return ResponseEntity.internalServerError().body(Map.of("erro", "Erro ao processar a imagem."));
         }
@@ -118,7 +118,7 @@ public class PerfilApiController {
 
         PerfilUsuario perfil = perfilUsuarioService.buscarOuCriar(usuario.get());
         try {
-            perfil.setBanner(arquivo.getBytes());
+            perfil.setBanner(com.projeto.util.RedimensionadorDeImagem.prepararParaSalvar(arquivo.getBytes(), 1600, 300_000));
         } catch (IOException e) {
             return ResponseEntity.internalServerError().body(Map.of("erro", "Erro ao processar a imagem."));
         }

@@ -122,9 +122,9 @@ public class PerfilUsuarioController {
         }
         try {
             if (foto) {
-                perfil.setFoto(arquivo.getBytes());
+                perfil.setFoto(com.projeto.util.RedimensionadorDeImagem.prepararParaSalvar(arquivo.getBytes(), 900, 150_000));
             } else {
-                perfil.setBanner(arquivo.getBytes());
+                perfil.setBanner(com.projeto.util.RedimensionadorDeImagem.prepararParaSalvar(arquivo.getBytes(), 1600, 300_000));
             }
         } catch (IOException e) {
             throw new IllegalStateException("Erro ao salvar imagem do perfil.", e);

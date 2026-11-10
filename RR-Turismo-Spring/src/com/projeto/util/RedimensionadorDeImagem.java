@@ -103,4 +103,71 @@ public class RedimensionadorDeImagem {
             return plano; // qualquer problema: manda a original
         }
     }
+
+    // ------------------------------------------------------------
+    // PREPARAR PARA SALVAR NO BANCO (usado nos uploads)
+    // ------------------------------------------------------------
+    // Foto de celular chega com vários MB. O MySQL do XAMPP aceita
+    // pacotes de só 1 MB por padrão (max_allowed_packet); acima disso o
+    // salvamento falha e a pessoa volta para a tela inicial. Por isso,
+    // toda foto enviada é reduzida ANTES de ir para o banco: largura
+    // máxima + JPEG, até ficar abaixo de LIMITE_BYTES_SALVAR.
+    // ✏️ Quer fotos maiores/menores? Mude o valor passado por quem chama
+    //    (larguraMax) ou LIMITE_BYTES_SALVAR logo abaixo.
+    // Se o Java não conseguir ler o formato (ex: WebP), devolve a original.
+    public static final int LIMITE_BYTES_SALVAR = 450_000; // ~450 KB (o MySQL "dobra" o tamanho ao gravar binário)
+
+    public static byte[] prepararParaSalvar(byte[] original, int larguraMax) {
+        return prepararParaSalvar(original, larguraMax, LIMITE_BYTES_SALVAR);
+    }
+
+    // limiteBytes: tamanho máximo desejado. No PERFIL, foto e banner vão juntos no
+    // MESMO comando de salvar (limite do MySQL = 1 MB), por isso cada um recebe um
+    // limite menor (foto 150 KB + banner 300 KB).
+    public static byte[] prepararParaSalvar(byte[] original, int larguraMax, int limiteBytes) {
+        if (original == null || original.length == 0) return original;
+        try {
+            BufferedImage origem = ImageIO.read(new ByteArrayInputStream(original));
+            if (origem == null) return original;
+            if (origem.getWidth() <= larguraMax && original.length <= limiteBytes) return original;
+
+            int largura = Math.min(origem.getWidth(), larguraMax);
+            float qualidade = 0.85f;
+            byte[] melhor = original;
+            for (int tentativa = 0; tentativa < 8; tentativa++) {
+                int altura = Math.max(1, (int) Math.round((double) origem.getHeight() * largura / origem.getWidth()));
+                byte[] jpg = codificarJpeg(origem, largura, altura, qualidade);
+                melhor = jpg;
+                if (jpg.length <= limiteBytes) break;
+                qualidade = Math.max(0.5f, qualidade - 0.1f);
+                largura = (int) (largura * 0.85);
+            }
+            return melhor;
+        } catch (Exception e) {
+            return original;
+        }
+    }
+
+    private static byte[] codificarJpeg(BufferedImage origem, int largura, int altura, float qualidade) throws java.io.IOException {
+        BufferedImage destino = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = destino.createGraphics();
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, largura, altura);
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.drawImage(origem, 0, 0, largura, altura, null);
+        g.dispose();
+
+        ImageWriter escritor = ImageIO.getImageWritersByFormatName("jpeg").next();
+        ImageWriteParam parametros = escritor.getDefaultWriteParam();
+        parametros.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+        parametros.setCompressionQuality(qualidade);
+        ByteArrayOutputStream saida = new ByteArrayOutputStream();
+        try (MemoryCacheImageOutputStream fluxo = new MemoryCacheImageOutputStream(saida)) {
+            escritor.setOutput(fluxo);
+            escritor.write(null, new IIOImage(destino, null, null), parametros);
+        } finally {
+            escritor.dispose();
+        }
+        return saida.toByteArray();
+    }
 }

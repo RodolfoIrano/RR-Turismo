@@ -41,7 +41,7 @@
     <%-- catalogo.css fica por último para não ser sobrescrito pelos estilos das outras páginas --%>
     <link rel="stylesheet" href="/css/catalogo.css?v=7">
     <%-- site.css: topo, rodapé, banner, chat e responsivo (também usado no painel) --%>
-    <link rel="stylesheet" href="/css/site.css?v=8">
+    <link rel="stylesheet" href="/css/site.css?v=14">
     <link rel="icon" href="/imagens/logo_preta.png">
 </head>
 
@@ -142,6 +142,7 @@
                     </button>
                 </div>
 
+                <div class="topo-direita">
                 <div class="user-area">
                     <button class="user-btn" id="userBtn" type="button" aria-expanded="false">
                         <img class="user-avatar-mini" src="/perfil/foto" alt=""
@@ -156,6 +157,7 @@
                         <a href="/editarperfil"><span class="dropdown-icone" aria-hidden="true">&#9998;</span>Editar Perfil</a>
                         <a href="/sair" class="dropdown-sair"><span class="dropdown-icone" aria-hidden="true">&#8594;</span>Sair</a>
                     </div>
+                </div>
                 </div>
             </div>
 
@@ -187,25 +189,27 @@
                 <nav class="site-nav" id="siteNav" aria-label="Menu principal">
                     <a href="/inicio"       data-path="/inicio" data-extra-path="/">Início</a>
                     <a href="/favoritos"    data-path="/favoritos">&#9829; Favoritos</a>
-                    <a href="/sobre-nos"    data-path="/sobre-nos">Sobre nós</a>
-                    <a href="/fale-conosco" data-path="/fale-conosco">Fale conosco</a>
-                    <c:if test="${logado}">
-                        <a href="/editarperfil" data-path="/editarperfil">Configurações</a>
-                    </c:if>
                 </nav>
 
                 <div class="site-acoes">
-                    <button class="lang-trigger" id="langTrigger" type="button" aria-expanded="false"
-                        aria-controls="langModal" onclick="LangSelector.open()">
-                        <span class="globe-icon" aria-hidden="true">&#127760;</span>
-                        <span id="current-lang-flag">BR</span>
-                        <span id="current-lang-label">Portugu&ecirc;s (BR)</span>
-                        <svg class="chevron" viewBox="0 0 24 24" width="14" height="14" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            aria-hidden="true">
-                            <polyline points="6 9 12 15 18 9" />
-                        </svg>
-                    </button>
+                    <a class="carrinho-icone" href="/carrinho" aria-label="Carrinho (${qtdCarrinho} ${qtdCarrinho == 1 ? 'viagem' : 'viagens'})" title="Carrinho">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L21 7H6"/></svg>
+                        <c:if test="${qtdCarrinho > 0}"><span class="carrinho-badge">${qtdCarrinho}</span></c:if>
+                    </a>
+
+                    <%-- ENGRENAGEM: Sobre nós, Fale conosco e Sair --%>
+                    <div class="engrenagem-area">
+                        <button class="engrenagem-btn" id="engrenagemBtn" type="button" aria-label="Configurações" aria-expanded="false" title="Configurações">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        </button>
+                        <div class="perfil-dropdown" id="dropdownEngrenagem">
+                            <a href="/sobre-nos"><span class="dropdown-icone" aria-hidden="true">&#8505;</span>Sobre nós</a>
+                            <a href="/fale-conosco"><span class="dropdown-icone" aria-hidden="true">&#128172;</span>Fale conosco</a>
+                            <c:if test="${logado}">
+                                <a href="/sair" class="dropdown-sair"><span class="dropdown-icone" aria-hidden="true">&#8594;</span>Sair</a>
+                            </c:if>
+                        </div>
+                    </div>
 
                     <c:choose>
                         <c:when test="${logado}">
@@ -218,9 +222,9 @@
                                 </button>
                                 <div class="perfil-dropdown" id="dropdownPerfil">
                                     <a href="/perfil"><span class="dropdown-icone" aria-hidden="true">&#128100;</span>Ver Perfil</a>
-                                    <a href="/editarperfil"><span class="dropdown-icone" aria-hidden="true">&#9881;</span>Configurações</a>
+                                    <a href="/editarperfil"><span class="dropdown-icone" aria-hidden="true">&#9998;</span>Editar Perfil</a>
                                     <a href="/favoritos"><span class="dropdown-icone" aria-hidden="true">&#9829;</span>Favoritos</a>
-                                    <a href="/sair" class="dropdown-sair"><span class="dropdown-icone" aria-hidden="true">&#8594;</span>Sair</a>
+                                    <a href="/minhas-compras"><span class="dropdown-icone" aria-hidden="true">&#128717;</span>Minhas compras</a>
                                 </div>
                             </div>
                         </c:when>
@@ -233,6 +237,16 @@
             </div>
         </div>
     </header>
+
+    <%-- IDIOMA: botão pequeno fixo no canto de baixo (saiu do cabeçalho) --%>
+    <div class="idioma-flutuante">
+        <button class="lang-trigger" id="langTrigger" type="button" aria-expanded="false"
+            aria-controls="langModal" onclick="LangSelector.open()" aria-label="Idioma">
+            <span class="globe-icon" aria-hidden="true">&#127760;</span>
+            <span id="current-lang-flag">BR</span>
+            <span id="current-lang-label">Portugu&ecirc;s (BR)</span>
+        </button>
+    </div>
 
     <main class="conteudo site-conteudo">
         <!-- MENSAGENS DE FEEDBACK -->
@@ -335,7 +349,7 @@
 
     <script src="/js/padrao.js?v=4" charset="UTF-8"></script>
     <script src="/js/perfil.js?v=2" charset="UTF-8"></script>
-    <script src="/js/site.js?v=2" charset="UTF-8"></script>
+    <script src="/js/site.js?v=4" charset="UTF-8"></script>
     <script src="/js/chatSite.js?v=1" charset="UTF-8"></script>
 
     <c:if test="${pagina == 'editarPerfil.jsp'}">
