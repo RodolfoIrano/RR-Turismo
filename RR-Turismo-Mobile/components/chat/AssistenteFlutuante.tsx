@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
     backgroundColor: colors.primary,
   },
-  titulo: { color: colors.textInverse, fontSize: 16, fontWeight: "800" },
+  titulo: { color: colors.textInverse, fontSize: 16, fontWeight: "700" },
   linhaOnline: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: 2 },
   pontoPequeno: { width: 8, height: 8, borderRadius: 4, backgroundColor: "#4ADE80" },
   subtitulo: { color: colors.primaryMuted, fontSize: 12 },

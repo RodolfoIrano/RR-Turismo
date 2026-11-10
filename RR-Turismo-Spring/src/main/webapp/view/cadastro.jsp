@@ -1,3 +1,20 @@
+<%--
+  📄 O QUE ESTE ARQUIVO FAZ:
+  Página CRIAR CONTA. Funciona em 2 passos:
+    1) A pessoa escolhe: "Quero viajar" (viajante, só compra viagens) ou
+       "Sou guia ou empresa" (quer criar e divulgar viagens).
+    2) Aparece o formulário certo, com uma frase de boas-vindas:
+         - Viajante ........ nome, e-mail e senha (não é guia nem empresa);
+         - Guia/Empresa .... marca se é Guia ou Empresa (física/online) e
+                             pede CNPJ/Cadastur, como antes.
+  Quem se cadastra como guia ou empresa ganha o PAINEL no site; viajante
+  usa o site com menu no topo.
+
+  ✏️ ONDE MUDAR O QUÊ:
+    - Textos dos dois botões do passo 1 ...... bloco "escolha-perfil"
+    - Frases de boas-vindas .................. js/login.js (BOAS_VINDAS)
+    - Visual ................................. css/login.css
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="jakarta.tags.core" %>
         <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -7,7 +24,7 @@
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <link rel="stylesheet" href="css/login.css?v=3">
+                <link rel="stylesheet" href="css/login.css?v=9">
                 <link rel="stylesheet" href="css/variaveis.css">
                 <link rel="stylesheet" href="css/padrao.css">
 
@@ -25,7 +42,29 @@
                         </div>
 
                         <h1>Crie sua conta</h1>
-                        <p class="descricao">Plataforma para Agências e Guias Turísticos</p>
+
+                        <%-- ===== PASSO 1: escolher o tipo de conta ===== --%>
+                        <div id="passoEscolha">
+                            <p class="descricao">Como você quer usar o RR Turismo?</p>
+                            <div class="escolha-perfil">
+                                <button type="button" class="opcao-perfil" data-perfil="viajante">
+                                    <span class="opcao-icone" aria-hidden="true">&#9992;</span>
+                                    <strong>Quero viajar</strong>
+                                    <span>Sou viajante e só quero comprar viagens</span>
+                                </button>
+                                <button type="button" class="opcao-perfil" data-perfil="guia">
+                                    <span class="opcao-icone" aria-hidden="true">&#129517;</span>
+                                    <strong>Sou guia ou empresa</strong>
+                                    <span>Quero criar e divulgar as minhas viagens</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <%-- ===== PASSO 2: formulário ===== --%>
+                        <div id="passoForm" hidden>
+                        <button type="button" class="voltar-escolha" id="voltarEscolha">&larr; Trocar tipo de conta</button>
+                        <div class="boas-vindas" id="boasVindas" role="status"></div>
+                        <p class="dica-tipo" id="dicaTipo" hidden>Marque abaixo se você é <strong>Empresa</strong> ou <strong>Guia</strong> para continuar.</p>
 
                         <form:form action="/cadastrarusuario" modelAttribute="usuario">
 
@@ -95,12 +134,13 @@
                             </button>
 
                         </form:form>
+                        </div>
 
                         <p class="entrar">
                             J&aacute; possui conta? <a href="/entrar">Fazer login</a>
                         </p>
                     </section>
                 </main>
-                <script src="/js/login.js?v=3"></script>
+                <script src="/js/login.js?v=5"></script>
             </body>
             </html>

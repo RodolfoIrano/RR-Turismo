@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.background,
   },
-  nome: { fontSize: 22, fontWeight: "800", color: colors.primary, marginTop: spacing.sm },
+  nome: { fontSize: 22, fontWeight: "700", color: colors.primary, marginTop: spacing.sm },
   chipGuia: {
     flexDirection: "row",
     alignItems: "center",
@@ -159,5 +159,5 @@ const styles = StyleSheet.create({
     borderRadius: radius.full,
     backgroundColor: "rgba(26,86,219,0.12)",
   },
-  chipGuiaTexto: { color: colors.secondary, fontSize: 12, fontWeight: "800" },
+  chipGuiaTexto: { color: colors.secondary, fontSize: 12, fontWeight: "700" },
 });

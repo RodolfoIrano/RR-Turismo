@@ -628,7 +628,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
   },
   pilulaAtiva: { backgroundColor: colors.primary, borderColor: colors.primary },
-  pilulaTitulo: { fontWeight: "800", color: colors.primary, fontSize: 15 },
+  pilulaTitulo: { fontWeight: "700", color: colors.primary, fontSize: 15 },
   pilulaValor: { fontSize: 12, color: colors.textSecondary },
 
   cupomCaixa: { flexDirection: "row", gap: spacing.sm, alignItems: "center" },

@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   numero: { flex: 1, alignItems: "center", gap: 2 },
-  numeroValor: { fontSize: 22, fontWeight: "800", color: colors.primary },
+  numeroValor: { fontSize: 22, fontWeight: "700", color: colors.primary },
   numeroRotulo: { fontSize: 12, color: colors.textSecondary, fontWeight: "600" },
   divisor: { width: 1, height: 36, backgroundColor: colors.border },
 
@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  fileiraTexto: { fontSize: 17, fontWeight: "800", color: colors.primary },
+  fileiraTexto: { fontSize: 17, fontWeight: "700", color: colors.primary },
   fileiraLista: { paddingHorizontal: spacing.lg, paddingBottom: spacing.sm },
   vazio: { paddingHorizontal: spacing.lg },
 

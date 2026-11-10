@@ -70,7 +70,7 @@ export default function AtalhosInstitucionais() {
 
 const styles = StyleSheet.create({
   bloco: { paddingHorizontal: spacing.lg, marginTop: spacing.xl },
-  titulo: { fontSize: 20, fontWeight: "800", color: colors.primary, marginBottom: spacing.md },
+  titulo: { fontSize: 20, fontWeight: "700", color: colors.primary, marginBottom: spacing.md },
   linha: { flexDirection: "row", gap: spacing.md },
   cartao: {
     flex: 1,
@@ -90,6 +90,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 4,
   },
-  cartaoTitulo: { fontSize: 16, fontWeight: "800", color: colors.primary },
+  cartaoTitulo: { fontSize: 16, fontWeight: "700", color: colors.primary },
   cartaoTexto: { fontSize: 13, lineHeight: 18, color: colors.textSecondary },
 });

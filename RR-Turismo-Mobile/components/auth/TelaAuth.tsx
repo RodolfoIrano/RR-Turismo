@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
   abaTexto: { fontSize: 14, fontWeight: "700", color: colors.textSecondary },
   abaTextoAtiva: { color: colors.primary },
 
-  titulo: { fontSize: 24, fontWeight: "800", color: colors.primary },
+  titulo: { fontSize: 24, fontWeight: "700", color: colors.primary },
   subtitulo: { fontSize: 14, color: colors.textSecondary, marginTop: 4, marginBottom: spacing.xl },
 
   erro: {

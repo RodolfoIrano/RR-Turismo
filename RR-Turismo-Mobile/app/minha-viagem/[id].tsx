@@ -238,5 +238,5 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     ...shadows.elevated,
   },
-  sosTexto: { color: colors.textInverse, fontSize: 17, fontWeight: "800" },
+  sosTexto: { color: colors.textInverse, fontSize: 17, fontWeight: "700" },
 });

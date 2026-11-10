@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.full,
     backgroundColor: "rgba(26,86,219,0.12)",
   },
-  atalhoTexto: { color: colors.secondary, fontSize: 13, fontWeight: "800" },
+  atalhoTexto: { color: colors.secondary, fontSize: 13, fontWeight: "700" },
   sugestoes: { flexDirection: "row", flexWrap: "wrap", gap: spacing.sm, marginTop: spacing.sm },
   sugestao: {
     paddingVertical: spacing.sm,

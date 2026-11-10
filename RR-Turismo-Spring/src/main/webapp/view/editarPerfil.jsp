@@ -11,6 +11,7 @@
         <a href="#secao-dados">
             <c:choose>
                 <c:when test="${sessionScope.usuarioLogado.guia}">Dados do Guia</c:when>
+                <c:when test="${not sessionScope.usuarioLogado.guia and not sessionScope.usuarioLogado.empresa}">Meus dados</c:when>
                 <c:otherwise>Dados da Empresa</c:otherwise>
             </c:choose>
         </a>
@@ -82,7 +83,8 @@
                 <h2>
                     <c:choose>
                         <c:when test="${sessionScope.usuarioLogado.guia}">Dados do Guia</c:when>
-                        <c:otherwise>Dados da Empresa</c:otherwise>
+                        <c:when test="${not sessionScope.usuarioLogado.guia and not sessionScope.usuarioLogado.empresa}">Meus dados</c:when>
+                <c:otherwise>Dados da Empresa</c:otherwise>
                     </c:choose>
                 </h2>
 
@@ -92,6 +94,7 @@
                         <label>
                             <c:choose>
                                 <c:when test="${sessionScope.usuarioLogado.guia}">Nome do Guia</c:when>
+                                <c:when test="${not sessionScope.usuarioLogado.guia and not sessionScope.usuarioLogado.empresa}">Nome</c:when>
                                 <c:otherwise>Nome da Empresa</c:otherwise>
                             </c:choose>
                         </label>
@@ -99,13 +102,15 @@
                         <small class="locked-help">Vem do cadastro — não é editável aqui.</small>
                     </div>
 
+                    <c:if test="${sessionScope.usuarioLogado.guia}">
                     <div>
                         <label>CADASTUR</label>
                         <form:input path="usuario.cadastur" disabled="true" cssClass="campo-bloqueado" />
                         <small class="locked-help">Vem do cadastro — não é editável aqui.</small>
                     </div>
+                    </c:if>
 
-                    <c:if test="${not sessionScope.usuarioLogado.guia}">
+                    <c:if test="${sessionScope.usuarioLogado.empresa}">
                         <div>
                             <label>CNPJ</label>
                             <form:input path="usuario.cnpj" disabled="true" cssClass="campo-bloqueado" />
@@ -139,6 +144,7 @@
                 <h2>
                     <c:choose>
                         <c:when test="${sessionScope.usuarioLogado.guia}">Sobre o Guia</c:when>
+                        <c:when test="${not sessionScope.usuarioLogado.guia and not sessionScope.usuarioLogado.empresa}">Sobre mim</c:when>
                         <c:otherwise>Sobre a Empresa</c:otherwise>
                     </c:choose>
                 </h2>
@@ -243,6 +249,7 @@
                         <small class="field-hint">Separe as especialidades por vírgula</small>
                     </div>
 
+                    <c:if test="${sessionScope.usuarioLogado.guia or sessionScope.usuarioLogado.empresa}">
                     <div>
                         <label>Clientes Atendidos</label>
                         <input type="number" value="0" disabled class="campo-bloqueado" title="Gerado automaticamente pelo sistema">
@@ -254,6 +261,7 @@
                         <input type="number" value="0" disabled class="campo-bloqueado" title="Gerado automaticamente pelo sistema">
                         <small class="locked-help">Calculado automaticamente.</small>
                     </div>
+                    </c:if>
 
                 </div>
             </section>
