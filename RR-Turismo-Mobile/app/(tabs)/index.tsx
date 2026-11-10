@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: radius.xl,
     borderBottomRightRadius: radius.xl,
   },
-  saudacao: { fontSize: 24, fontWeight: "800", color: colors.textInverse },
+  saudacao: { fontSize: 24, fontWeight: "700", color: colors.textInverse },
   saudacaoSub: { fontSize: 15, color: colors.primaryMuted, marginTop: 2 },
 
   // Espaçamento padrão das seções

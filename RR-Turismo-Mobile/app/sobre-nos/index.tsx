@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     backgroundColor: "rgba(0,17,70,0.72)",
   },
-  fotoNomes: { color: colors.textInverse, fontSize: 22, fontWeight: "800" },
+  fotoNomes: { color: colors.textInverse, fontSize: 22, fontWeight: "700" },
   fotoCurso: { color: colors.primaryMuted, fontSize: 13, marginTop: 2 },
 
   cartao: {
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  cartaoTitulo: { fontSize: 17, fontWeight: "800", color: colors.primary },
+  cartaoTitulo: { fontSize: 17, fontWeight: "700", color: colors.primary },
   texto: { fontSize: 15, lineHeight: 22, color: colors.textSecondary },
   itemLista: { flexDirection: "row", gap: spacing.sm },
 
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   },
   destaqueTexto: { color: colors.textInverse, fontSize: 16, lineHeight: 24, fontWeight: "600" },
 
-  secaoTitulo: { fontSize: 17, fontWeight: "800", color: colors.primary, marginTop: spacing.xl, marginBottom: spacing.md },
+  secaoTitulo: { fontSize: 17, fontWeight: "700", color: colors.primary, marginTop: spacing.xl, marginBottom: spacing.md },
   valores: { flexDirection: "row", flexWrap: "wrap", gap: spacing.md },
   valor: {
     flexGrow: 1,

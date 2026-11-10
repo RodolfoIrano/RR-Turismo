@@ -106,7 +106,7 @@ export default function EditarPerfil() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   formulario: { paddingHorizontal: spacing.xl, marginTop: spacing.xl },
-  rotulo: { fontSize: 13, fontWeight: "800", color: colors.primary, marginBottom: 6, marginTop: spacing.lg },
+  rotulo: { fontSize: 13, fontWeight: "700", color: colors.primary, marginBottom: 6, marginTop: spacing.lg },
   campo: {
     flexDirection: "row",
     alignItems: "center",

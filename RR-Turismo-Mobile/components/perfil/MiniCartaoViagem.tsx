@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   foto: { width: "100%", height: 100, backgroundColor: colors.backgroundMuted },
   texto: { padding: spacing.md },
-  titulo: { fontSize: 14, fontWeight: "800", color: colors.primary },
+  titulo: { fontSize: 14, fontWeight: "700", color: colors.primary },
   linha: { flexDirection: "row", alignItems: "center", gap: 4, marginTop: 4 },
   detalhe: { flex: 1, fontSize: 12, color: colors.textSecondary },
 });

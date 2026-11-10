@@ -592,7 +592,7 @@ const styles = StyleSheet.create({
   },
 
   // Título grande da viagem
-  titulo: { fontSize: 27, fontWeight: "800", color: colors.primary, lineHeight: 33 },
+  titulo: { fontSize: 27, fontWeight: "700", color: colors.primary, lineHeight: 33 },
   // Bolinha com o ícone de localização
   iconeLocal: {
     width: 24,
@@ -614,7 +614,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  sectionTitulo: { flex: 1, fontSize: 18, fontWeight: "800", color: colors.primary },
+  sectionTitulo: { flex: 1, fontSize: 18, fontWeight: "700", color: colors.primary },
 
   // Linha utilizada para informações como localização
   row: {
@@ -691,7 +691,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginBottom: spacing.md,
   },
-  etiquetaTexto: { color: colors.secondary, fontSize: 12, fontWeight: "800", letterSpacing: 0.3 },
+  etiquetaTexto: { color: colors.secondary, fontSize: 12, fontWeight: "700", letterSpacing: 0.3 },
   lerMais: { color: colors.secondary, fontWeight: "700", marginTop: spacing.xs },
 
   // Rodapé flutuante: preço à esquerda, botão à direita

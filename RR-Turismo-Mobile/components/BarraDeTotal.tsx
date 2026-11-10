@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: radius.xl,
     ...shadows.elevated,
   },
-  total: { fontSize: 22, fontWeight: "800", color: colors.primary },
+  total: { fontSize: 22, fontWeight: "700", color: colors.primary },
   antigo: { fontSize: 12, color: colors.textMuted, textDecorationLine: "line-through" },
   botao: { paddingHorizontal: spacing.xl },
 });

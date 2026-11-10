@@ -62,5 +62,5 @@ const styles = StyleSheet.create({
   },
   desabilitado: { opacity: 0.65 },
   conteudo: { flexDirection: "row", alignItems: "center", gap: 8 },
-  texto: { color: colors.textInverse, fontSize: 15, fontWeight: "800", letterSpacing: 0.6 },
+  texto: { color: colors.textInverse, fontSize: 15, fontWeight: "700", letterSpacing: 0.6 },
 });

@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  topoTitulo: { color: colors.textInverse, fontSize: 22, fontWeight: "800" },
+  topoTitulo: { color: colors.textInverse, fontSize: 22, fontWeight: "700" },
   topoTexto: { color: colors.primaryMuted, fontSize: 14, lineHeight: 20, textAlign: "center" },
 
   canais: { gap: spacing.md, marginTop: spacing.lg },
@@ -416,7 +416,7 @@ const styles = StyleSheet.create({
   },
   canalZap: { backgroundColor: "#1FA855" },
   canalEmail: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border },
-  canalTitulo: { color: "#FFFFFF", fontSize: 16, fontWeight: "800" },
+  canalTitulo: { color: "#FFFFFF", fontSize: 16, fontWeight: "700" },
   canalSub: { color: "rgba(255,255,255,0.85)", fontSize: 13 },
 
   cartao: {
@@ -427,7 +427,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
   },
-  cartaoTitulo: { fontSize: 18, fontWeight: "800", color: colors.primary, marginBottom: spacing.lg },
+  cartaoTitulo: { fontSize: 18, fontWeight: "700", color: colors.primary, marginBottom: spacing.lg },
   avisoErros: {
     flexDirection: "row",
     alignItems: "center",
@@ -471,7 +471,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: colors.secondary,
   },
-  botaoEmailTexto: { color: colors.secondary, fontWeight: "800", fontSize: 15 },
+  botaoEmailTexto: { color: colors.secondary, fontWeight: "700", fontSize: 15 },
 
   sucessoIcone: {
     alignSelf: "center",
@@ -483,10 +483,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  sucessoTitulo: { textAlign: "center", fontSize: 20, fontWeight: "800", color: colors.primary, marginBottom: spacing.sm },
+  sucessoTitulo: { textAlign: "center", fontSize: 20, fontWeight: "700", color: colors.primary, marginBottom: spacing.sm },
   sucessoTexto: { textAlign: "center", fontSize: 14, lineHeight: 21, color: colors.textSecondary, marginBottom: spacing.lg },
 
-  secao: { fontSize: 17, fontWeight: "800", color: colors.primary, marginTop: spacing.xl, marginBottom: spacing.md },
+  secao: { fontSize: 17, fontWeight: "700", color: colors.primary, marginTop: spacing.xl, marginBottom: spacing.md },
   cartaoFaq: {
     backgroundColor: colors.surface,
     borderRadius: radius.xl,
@@ -500,5 +500,5 @@ const styles = StyleSheet.create({
   faqResposta: { fontSize: 14, lineHeight: 21, color: colors.textSecondary, paddingBottom: spacing.md },
 
   linkSobre: { flexDirection: "row", alignItems: "center", gap: 6, alignSelf: "center", marginTop: spacing.xl },
-  linkSobreTexto: { color: colors.secondary, fontWeight: "800", fontSize: 14 },
+  linkSobreTexto: { color: colors.secondary, fontWeight: "700", fontSize: 14 },
 });

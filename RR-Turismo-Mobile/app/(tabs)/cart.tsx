@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  qtd: { minWidth: 30, textAlign: "center", fontWeight: "800", color: colors.text },
+  qtd: { minWidth: 30, textAlign: "center", fontWeight: "700", color: colors.text },
 
   vazioAcao: { padding: spacing.xl },
   explorar: {

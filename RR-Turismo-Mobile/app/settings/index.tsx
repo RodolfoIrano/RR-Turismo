@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   grupo: { marginBottom: spacing.xl },
   grupoTitulo: {
     fontSize: 13,
-    fontWeight: "800",
+    fontWeight: "700",
     color: colors.textSecondary,
     textTransform: "uppercase",
     letterSpacing: 0.8,

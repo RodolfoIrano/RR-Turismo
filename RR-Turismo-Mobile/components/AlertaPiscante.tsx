@@ -55,7 +55,7 @@ export default function AlertaPiscante({ mensagem, cor = colors.danger, textoFec
 
 const styles = StyleSheet.create({
   tela: { flex: 1, alignItems: "center", justifyContent: "center", padding: spacing.xl, gap: spacing.xl },
-  mensagem: { color: colors.textInverse, fontSize: 26, fontWeight: "800", textAlign: "center" },
+  mensagem: { color: colors.textInverse, fontSize: 26, fontWeight: "700", textAlign: "center" },
   botao: {
     backgroundColor: colors.textInverse,
     paddingVertical: spacing.md,

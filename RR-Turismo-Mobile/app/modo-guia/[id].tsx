@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
   },
   bolinha: { width: 14, height: 14, borderRadius: radius.full },
   blocoAjuda: { backgroundColor: colors.danger, borderRadius: radius.lg, padding: spacing.lg, gap: spacing.md },
-  tituloAjuda: { color: colors.textInverse, fontWeight: "800", fontSize: 16 },
+  tituloAjuda: { color: colors.textInverse, fontWeight: "700", fontSize: 16 },
   linhaAjuda: { flexDirection: "row", alignItems: "center", gap: spacing.md },
   nomeAjuda: { color: colors.textInverse, fontWeight: "700" },
   msgAjuda: { color: colors.overlayLight },
@@ -293,5 +293,5 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
     borderRadius: radius.md,
   },
-  reunirTexto: { color: colors.textInverse, fontWeight: "800", fontSize: 15 },
+  reunirTexto: { color: colors.textInverse, fontWeight: "700", fontSize: 15 },
 });
