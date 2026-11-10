@@ -17,7 +17,7 @@
 (function () {
     "use strict";
 
-    var TEMPO_BANNER_MS = 5000;
+    var TEMPO_BANNER_MS = 3000;
     var PREFIXO_FAVORITOS = "rr_favoritos_";
 
     function pronto(fn) {
@@ -253,5 +253,24 @@
         try { iniciarRodape(); } catch (e) { console.error(e); }
         try { iniciarVisao(); } catch (e) { console.error(e); }
         try { iniciarVoz(); } catch (e) { console.error(e); }
+    });
+})();
+
+
+/* ENGRENAGEM do cabeçalho (Sobre nós / Fale conosco / Sair): abre e fecha o menu */
+(function () {
+    var botao = document.getElementById('engrenagemBtn');
+    var menu = document.getElementById('dropdownEngrenagem');
+    if (!botao || !menu) return;
+    botao.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var aberto = menu.classList.toggle('show');
+        botao.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+    });
+    document.addEventListener('click', function (e) {
+        if (!menu.contains(e.target) && e.target !== botao) {
+            menu.classList.remove('show');
+            botao.setAttribute('aria-expanded', 'false');
+        }
     });
 })();

@@ -61,6 +61,8 @@
                     <a href="/inicio?categoria=<c:out value='${cat}' />#viagens"><c:out value="${cat}" /></a>
                 </c:forEach>
                 <a href="/favoritos">Meus favoritos</a>
+                <a href="/carrinho">Meu carrinho</a>
+                <a href="/minhas-compras">Minhas compras</a>
             </div>
         </div>
 

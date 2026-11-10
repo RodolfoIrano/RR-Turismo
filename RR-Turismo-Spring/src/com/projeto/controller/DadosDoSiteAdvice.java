@@ -11,7 +11,7 @@ import com.projeto.service.EditarViagemService;
 // ============================================================
 // 📄 O QUE ESTE ARQUIVO FAZ:
 // Entrega para TODAS as páginas do site (as que usam layout.jsp) a
-// lista de categorias de viagem que existem hoje (Praia, Aventura...).
+// lista de categorias de viagem que existem hoje (e o número do carrinho) (Praia, Aventura...).
 // O rodapé usa essa lista para montar os links "Explore por categoria"
 // sozinho: criou uma viagem com categoria nova, o link aparece.
 //
@@ -25,7 +25,9 @@ import com.projeto.service.EditarViagemService;
         SiteInstitucionalController.class,
         PerfilUsuarioController.class,
         CriarViagemController.class,
-        EditarViagemController.class
+        EditarViagemController.class,
+        CarrinhoController.class,
+        CheckoutController.class
 })
 public class DadosDoSiteAdvice {
 
@@ -33,6 +35,12 @@ public class DadosDoSiteAdvice {
 
     public DadosDoSiteAdvice(EditarViagemService editarViagemService) {
         this.editarViagemService = editarViagemService;
+    }
+
+    // Número do selinho do carrinho (topo do site): total de pessoas nas viagens do carrinho.
+    @ModelAttribute("qtdCarrinho")
+    public int qtdCarrinho(jakarta.servlet.http.HttpSession session) {
+        return CarrinhoController.contar(session);
     }
 
     @ModelAttribute("categoriasRodape")

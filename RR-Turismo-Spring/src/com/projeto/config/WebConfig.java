@@ -47,6 +47,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/",
                         "/inicio",
                         "/viagens/**",
+                        "/guias/**",
                         "/sobre-nos",
                         "/fale-conosco",
                         "/favoritos",

@@ -117,12 +117,12 @@ public class CriarViagemController {
         if (imagens != null) {
             for (MultipartFile f : imagens) {
                 if (f != null && !f.isEmpty() && fotos.size() < ImagensDaViagemService.MAXIMO_DE_FOTOS) {
-                    fotos.add(f.getBytes());
+                    fotos.add(com.projeto.util.RedimensionadorDeImagem.prepararParaSalvar(f.getBytes(), 1600));
                 }
             }
         }
         if (fotos.isEmpty() && unica != null && !unica.isEmpty()) {
-            fotos.add(unica.getBytes());
+            fotos.add(com.projeto.util.RedimensionadorDeImagem.prepararParaSalvar(unica.getBytes(), 1600));
         }
         return fotos;
     }

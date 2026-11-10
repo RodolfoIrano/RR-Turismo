@@ -81,14 +81,39 @@
                     </strong>
                 </li>
                 <c:if test="${not empty viagem.guiaNome}">
-                    <li><span>Guia</span><strong><c:out value="${viagem.guiaNome}" /></strong></li>
+                    <li><span>Guia</span><strong><a class="texto-link" href="/guias/${viagem.guiaId}"><c:out value="${viagem.guiaNome}" /></a></strong></li>
                 </c:if>
             </ul>
 
-            <div class="detalhe-reserva">
-                <strong>Quer reservar?</strong>
-                <p>As reservas são feitas pelo aplicativo RR Turismo. Procure esta viagem no app e toque em “Adicionar ao carrinho”.</p>
-            </div>
+            <%-- COMPRA: quantidade + "Comprar agora" / "Adicionar ao carrinho" (CarrinhoController) --%>
+            <c:choose>
+                <c:when test="${viagem.esgotada}">
+                    <div class="detalhe-reserva"><strong>Viagem esgotada</strong><p>Não há mais vagas. Veja outras viagens do mesmo guia logo abaixo.</p></div>
+                </c:when>
+                <c:when test="${sessionScope.usuarioLogado.guia or sessionScope.usuarioLogado.empresa}">
+                    <%-- Guia e empresa publicam viagens; quem compra é o viajante. --%>
+                </c:when>
+                <c:when test="${empty sessionScope.usuarioLogado}">
+                    <div class="detalhe-reserva">
+                        <strong>Quer reservar?</strong>
+                        <p>Entre na sua conta para adicionar ao carrinho e pagar.</p>
+                    </div>
+                    <a class="botao-catalogo" href="/entrar">Entrar para comprar</a>
+                </c:when>
+                <c:otherwise>
+                    <form method="post" action="/carrinho/adicionar" class="detalhe-compra">
+                        <input type="hidden" name="viagemId" value="${viagem.id}">
+                        <label for="qtdPessoas">Quantas pessoas?</label>
+                        <select id="qtdPessoas" name="qtd">
+                            <c:forEach begin="1" end="${viagem.vagas < 10 ? viagem.vagas : 10}" var="n">
+                                <option value="${n}">${n} ${n == 1 ? 'pessoa' : 'pessoas'}</option>
+                            </c:forEach>
+                        </select>
+                        <button type="submit" name="comprarAgora" value="true" class="botao-catalogo">Comprar agora</button>
+                        <button type="submit" class="botao-catalogo botao-catalogo-azul-claro">Adicionar ao carrinho</button>
+                    </form>
+                </c:otherwise>
+            </c:choose>
 
             <a class="botao-catalogo botao-catalogo-azul-claro" target="_blank" rel="noopener"
                href="https://wa.me/5516992416492?text=Ol%C3%A1!%20Tenho%20uma%20d%C3%BAvida%20sobre%20a%20viagem%20%23${viagem.id}%20no%20RR%20Turismo">Tirar dúvida no WhatsApp</a>
@@ -119,13 +144,13 @@
     <%-- ===== GUIA RESPONSÁVEL ===== --%>
     <c:if test="${not empty viagem.guiaNome}">
         <section class="detalhe-descricao guia-cartao">
-            <img src="/api/guias/${viagem.guiaId}/foto?w=200" alt="" onerror="this.onerror=null;this.src='/imagens/user-placeholder.svg'">
+            <a href="/guias/${viagem.guiaId}" aria-label="Ver perfil de ${viagem.guiaNome}"><img src="/api/guias/${viagem.guiaId}/foto?w=200" alt="" onerror="this.onerror=null;this.src='/imagens/user-placeholder.svg'"></a>
             <div>
                 <span class="catalogo-etiqueta">Guia responsável</span>
-                <h2><c:out value="${viagem.guiaNome}" /></h2>
-                <p>Quem organiza e acompanha esta viagem. Dúvidas antes de reservar? É só chamar a equipe.</p>
+                <h2><a href="/guias/${viagem.guiaId}"><c:out value="${viagem.guiaNome}" /></a></h2>
+                <p>Quem organiza e acompanha esta viagem. Veja o perfil, as especialidades e as outras viagens dele.</p>
             </div>
-            <a class="botao-catalogo" href="/fale-conosco">Falar com a equipe</a>
+            <a class="botao-catalogo" href="/guias/${viagem.guiaId}">Ver perfil do guia</a>
         </section>
     </c:if>
 

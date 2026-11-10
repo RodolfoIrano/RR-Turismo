@@ -130,7 +130,27 @@
         </section>
     </c:if>
 
+    <!-- VIAGENS DO GUIA / EMPRESA (só aparece no perfil público aberto por /guias/{id}) -->
+    <c:if test="${perfilDeOutraPessoa}">
+        <section class="public-section public-viagens">
+            <h2>Viagens de <c:out value="${nomePerfil}" /></h2>
+            <c:choose>
+                <c:when test="${empty viagensDoGuia}">
+                    <p>Este perfil ainda não tem viagens publicadas.</p>
+                </c:when>
+                <c:otherwise>
+                    <div class="catalogo-grade">
+                        <c:forEach var="v" items="${viagensDoGuia}">
+                            <%@ include file="cartaoViagem.jspf" %>
+                        </c:forEach>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+        </section>
+    </c:if>
+
     <!-- CONTATO: ícones bonitos -->
+    <c:if test="${not empty perfil.whatsapp or not empty perfil.instagram or not empty perfil.facebook or not empty perfil.twitter or not empty perfil.site}">
     <section class="public-section">
         <h2>Entre em Contato</h2>
         <div class="contact-buttons">
@@ -215,5 +235,6 @@
 
         </div>
     </section>
+    </c:if>
 
 </div>

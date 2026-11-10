@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.projeto.dto.CartaoViagemDTO;
 import com.projeto.model.Cadastro;
 import com.projeto.model.Viagem;
+import com.projeto.service.CadastroService;
 import com.projeto.service.EditarViagemService;
 import com.projeto.service.ImagensDaViagemService;
+import com.projeto.service.PerfilUsuarioService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -20,6 +22,7 @@ import jakarta.servlet.http.HttpSession;
 // 📄 O QUE ESTE ARQUIVO FAZ:
 // Página PÚBLICA de detalhes de uma viagem (/viagens/{id}): galeria
 // de fotos, descrição, preço, datas, vagas e o guia responsável.
+// Também tem o perfil público do guia (/guias/{id}).
 // Qualquer visitante pode ver (não precisa de login). Se quem está
 // vendo é o guia dono da viagem, aparece o botão "Editar viagem".
 // ============================================================
@@ -28,11 +31,35 @@ public class ViagemPublicaController {
 
     private final EditarViagemService editarViagemService;
     private final ImagensDaViagemService imagensDaViagemService;
+    private final CadastroService cadastroService;
+    private final PerfilUsuarioService perfilUsuarioService;
 
     public ViagemPublicaController(EditarViagemService editarViagemService,
-                                   ImagensDaViagemService imagensDaViagemService) {
+                                   ImagensDaViagemService imagensDaViagemService,
+                                   CadastroService cadastroService,
+                                   PerfilUsuarioService perfilUsuarioService) {
         this.editarViagemService = editarViagemService;
         this.imagensDaViagemService = imagensDaViagemService;
+        this.cadastroService = cadastroService;
+        this.perfilUsuarioService = perfilUsuarioService;
+    }
+
+    // Perfil PÚBLICO de um guia/empresa (/guias/{id}): foto, sobre, contatos
+    // e as viagens dele. Viajantes comuns NÃO têm perfil público (privacidade).
+    @GetMapping("/guias/{id}")
+    public String perfilDoGuia(@PathVariable("id") int id, Model model) {
+        Cadastro guia = cadastroService.buscarPorId(id).orElse(null);
+        if (guia == null || !(guia.isGuia() || guia.isEmpresa())) {
+            return "redirect:/inicio";
+        }
+        model.addAttribute("perfil", perfilUsuarioService.buscarOuCriar(guia));
+        model.addAttribute("viagensDoGuia", editarViagemService.listarPorCriador(guia).stream()
+                .sorted(Comparator.comparingInt(Viagem::getId).reversed())
+                .map(v -> CartaoViagemDTO.de(v, 0))
+                .toList());
+        model.addAttribute("perfilDeOutraPessoa", true);
+        model.addAttribute("pagina", "perfilPublico.jsp");
+        return "layout";
     }
 
     @GetMapping("/viagens/{id}")
