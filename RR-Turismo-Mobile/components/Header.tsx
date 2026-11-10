@@ -1,8 +1,16 @@
 // ============================================================
 // 📄 O QUE ESTE ARQUIVO FAZ:
 // Este é o CABEÇALHO azul que aparece no topo da tela Início.
-// Tem a logo, o nome "RR TURISMO", e os botões de favoritos e
-// carrinho (com o número de itens). Tocar na logo leva pro perfil.
+// Tem a logo e, à direita, os botões de favoritos (coração), idioma
+// (bandeira) e carrinho (com o número de itens). Tocar na logo leva
+// pro perfil.
+//
+// ✏️ ONDE MUDAR O QUÊ:
+//   - Tamanho da logo ............ styles.logo (mude width e height juntos)
+//   - Imagem da logo ............. assets/images/RRTurismoClaroRecortada.png
+//   - Cor de fundo do cabeçalho .. styles.container → colors.primary
+//   - Botões da direita .......... bloco <View style={styles.actions}>
+//   - Tamanho dos botões redondos  styles.iconButton (width/height)
 // ============================================================
 import React, { useState } from "react";
 import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
@@ -13,6 +21,7 @@ import { colors } from "../constants/colors";
 import { radius, spacing } from "../constants/spacing";
 import { typography } from "../constants/typography";
 import { useCart } from "../contexts/CartContext";
+import { useFavorites } from "../contexts/FavoritesContext";
 import { useTraducao } from "../traducoes/TraducaoContext";
 import { buscarInfoIdioma } from "../traducoes/idiomasDisponiveis";
 import SeletorIdioma from "./SeletorIdioma";
@@ -24,6 +33,7 @@ import SeletorIdioma from "./SeletorIdioma";
 export default function Header() {
   const router = useRouter();
   const { itemCount } = useCart();
+  const { favorites } = useFavorites();
   const { idioma } = useTraducao();
   const infoIdiomaAtual = buscarInfoIdioma(idioma);
 
@@ -46,6 +56,21 @@ export default function Header() {
       </TouchableOpacity>
 
       <View style={styles.actions}>
+        {/* Favoritos: atalho para as viagens salvas (antes ficava na
+            barra de baixo). O número mostra quantas já foram salvas. */}
+        <TouchableOpacity
+          accessibilityLabel="Favoritos"
+          style={styles.iconButton}
+          onPress={() => router.push("/favoritos")}
+        >
+          <Ionicons name="heart-outline" size={22} color={colors.textInverse} />
+          {favorites.length > 0 && (
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>{favorites.length}</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+
         {/* Botão de idioma - mostra a bandeira do idioma atual.
             Toca pra abrir o seletor (globo + bandeiras + busca). */}
         <TouchableOpacity
@@ -82,7 +107,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm,
+    paddingVertical: spacing.md,
     // Fundo azul institucional (mesma cor do site) em vez de branco.
     backgroundColor: colors.primary,
   },
@@ -90,17 +115,19 @@ const styles = StyleSheet.create({
   // Texto "RR TURISMO" em branco, para contrastar com o fundo azul.
   brandText: { ...typography.h3, color: colors.textInverse },
 
-  // ⭐ TAMANHO DA LOGO — mude os números "width" e "height" abaixo
-  // para deixar a logo maior ou menor (os dois precisam ficar
-  // sempre com o MESMO valor, pra não distorcer a imagem).
+  // ⭐ TAMANHO DA LOGO — para deixar maior ou menor, mude "width" e
+  // "height" juntos, mantendo a proporção de 1.8 (largura ÷ 1.8 = altura).
   // A imagem já está recortada e inclui o nome "RR Turismo".
   logo: {
-    width: 96,         // 👈 largura da logo (em pixels)
-    aspectRatio: 1.8,  // proporção da imagem; a altura segue sozinha
+    width: 104,        // 👈 largura da logo (em pixels)
+    height: 58,        // 👈 altura (largura ÷ 1.8)
   },
-  actions: { flexDirection: "row", gap: spacing.sm },
+  actions: { flexDirection: "row", gap: spacing.sm, alignItems: "center" },
   iconButton: {
-    padding: spacing.sm,
+    width: 42,
+    height: 42,
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: radius.full,
     // Um azul um pouco mais escuro que o fundo, só para o botão se
     // destacar sutilmente (em vez do cinza usado sobre fundo branco).

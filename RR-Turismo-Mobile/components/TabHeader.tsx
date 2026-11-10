@@ -1,7 +1,7 @@
 // ============================================================
 // 📄 O QUE ESTE ARQUIVO FAZ:
 // É o CABEÇALHO com a setinha de voltar (←), usado no topo das
-// abas Explorar, Favoritos, Carrinho e Perfil.
+// abas Explorar, Carrinho e Perfil e da tela Favoritos.
 // ============================================================
 import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";

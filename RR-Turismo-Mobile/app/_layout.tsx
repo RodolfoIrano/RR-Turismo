@@ -5,12 +5,14 @@
 // favoritos, catálogo de viagens, idioma). Praticamente tudo
 // passa por aqui primeiro quando o app abre.
 // ============================================================
+import { View } from "react-native";
 import { Stack } from "expo-router";
 import { AuthProvider } from "../contexts/AuthContext";
 import { FavoritesProvider } from "../contexts/FavoritesContext";
 import { CartProvider } from "../contexts/CartContext";
 import { CatalogoProvider } from "../contexts/CatalogoContext";
 import { TraducaoProvider, useTraducao } from "../traducoes/TraducaoContext";
+import AssistenteFlutuante from "../components/chat/AssistenteFlutuante";
 
 // ============================================================
 // LAYOUT RAIZ
@@ -53,7 +55,13 @@ export default function RootLayout() {
             O header fica oculto por padrão e é ativado individualmente
             nas telas que precisam exibir uma barra de navegação.
           */}
-          <PilhaDeTelas />
+          <View style={{ flex: 1 }}>
+            <PilhaDeTelas />
+
+            {/* Bolinha flutuante do assistente de ajuda (logo do RR Turismo).
+                Aparece por cima de todas as telas, menos login/cadastro. */}
+            <AssistenteFlutuante />
+          </View>
         </CartProvider>
       </FavoritesProvider>
       </CatalogoProvider>
@@ -169,6 +177,9 @@ function PilhaDeTelas() {
             <Stack.Screen name="settings/idioma" options={{ headerShown: true, title: traduzir("Idioma") }} />
             <Stack.Screen name="settings/editar-perfil" options={{ headerShown: true, title: traduzir("Editar perfil") }} />
             <Stack.Screen name="ajuda/index" options={{ headerShown: true, title: traduzir("Assistente de ajuda") }} />
+            <Stack.Screen name="favoritos/index" options={{ headerShown: false }} />
+            <Stack.Screen name="fale-conosco/index" options={{ headerShown: true, title: traduzir("Fale conosco") }} />
+            <Stack.Screen name="sobre-nos/index" options={{ headerShown: true, title: traduzir("Sobre nós") }} />
     </Stack>
   );
 }

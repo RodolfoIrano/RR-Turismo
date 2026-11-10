@@ -1,7 +1,14 @@
 // ============================================================
 // 📄 O QUE ESTE ARQUIVO FAZ:
 // Configura a BARRA DE ABAS lá embaixo (Início/Explorar/
-// Favoritos/Carrinho/Perfil) - cores, ícones e nomes de cada aba.
+// Carrinho/Perfil) - cores, ícones e nomes de cada aba.
+//
+// ✏️ ONDE MUDAR O QUÊ:
+//   - Adicionar/remover uma aba ... um bloco <Tabs.Screen name="..."> por aba.
+//     "name" é o nome do arquivo em app/(tabs)/. Com href: null a tela
+//     existe, mas NÃO aparece na barra (é o caso de Favoritos).
+//   - Ícone e nome de cada aba .... dentro de options → title / tabBarIcon
+//   - Cor da barra e dos ícones ... screenOptions → tabBarStyle / tabBarActiveTintColor
 // ============================================================
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,7 +20,7 @@ import { useTraducao } from "../../traducoes/TraducaoContext";
 // NAVEGAÇÃO INFERIOR (BOTTOM TABS)
 // ------------------------------------------------------------
 // Define as principais telas que aparecem na barra inferior:
-// Início, Explorar, Favoritos, Carrinho e Perfil.
+// Início, Explorar, Carrinho e Perfil (Favoritos fica no cabeçalho).
 //
 // O Carrinho também possui um badge mostrando a quantidade
 // de itens adicionados.
@@ -88,20 +95,17 @@ export default function TabsLayout() {
 
       {/* ======================================================
           FAVORITOS
+          ------------------------------------------------------
+          Não aparece mais na barra de baixo: o atalho (coração)
+          fica no cabeçalho da tela Início. A tela de verdade agora
+          é app/favoritos/index.tsx (telas escondidas com href: null
+          não abrem por router.push); este item só esconde o arquivo
+          antigo, que apenas redireciona para lá.
           ====================================================== */}
       <Tabs.Screen
         name="favorites"
         options={{
-          title: traduzir(t.abas.favoritos),
-
-          // Ícone de coração
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons
-              name="heart-outline"
-              size={size}
-              color={String(color)}
-            />
-          ),
+          href: null,
         }}
       />
 
@@ -150,26 +154,10 @@ export default function TabsLayout() {
       />
 
 
-      {/* ======================================================
-          TELAS ANTIGAS
-          ------------------------------------------------------
-          Essas telas continuam disponíveis no projeto, mas
-          não aparecem na barra de navegação inferior.
-          ====================================================== */}
-
-      <Tabs.Screen
-        name="contato"
-        options={{
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="sobre"
-        options={{
-          href: null,
-        }}
-      />
+      {/* Atalhos antigos (só redirecionam para as telas novas
+          Fale conosco e Sobre nós) - não aparecem na barra. */}
+      <Tabs.Screen name="contato" options={{ href: null }} />
+      <Tabs.Screen name="sobre" options={{ href: null }} />
 
     </Tabs>
   );

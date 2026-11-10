@@ -165,7 +165,9 @@ export default function Profile() {
               <MenuItem icon="radio-outline" label={t.aoVivo.modoGuia} onPress={() => router.push("/modo-guia")} />
             )}
 
-            <MenuItem icon="heart-outline" label={t.perfil.favoritos} onPress={() => router.push("/(tabs)/favorites")} />
+            <MenuItem icon="heart-outline" label={t.perfil.favoritos} onPress={() => router.push("/favoritos")} />
+            <MenuItem icon="chatbubbles-outline" label="Fale conosco" onPress={() => router.push("/fale-conosco")} />
+            <MenuItem icon="information-circle-outline" label="Sobre nós" onPress={() => router.push("/sobre-nos")} />
             <MenuItem icon="settings-outline" label={t.perfil.configuracoes} onPress={() => router.push("/settings")} />
             <MenuItem icon="log-out-outline" label={t.perfil.sair} onPress={handleLogout} danger semDivisor />
           </View>

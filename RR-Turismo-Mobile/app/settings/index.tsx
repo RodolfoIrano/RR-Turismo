@@ -51,7 +51,7 @@ export default function Configuracoes() {
                 icone="heart-outline"
                 titulo="Favoritos"
                 detalhe="Viagens que você salvou"
-                aoTocar={() => router.push("/(tabs)/favorites")}
+                aoTocar={() => router.push("/favoritos")}
                 ultima
               />
             </Grupo>
@@ -82,13 +82,13 @@ export default function Configuracoes() {
               icone="mail-outline"
               titulo="Fale conosco"
               detalhe="Entre em contato com a equipe"
-              aoTocar={() => router.push("/(tabs)/contato")}
+              aoTocar={() => router.push("/fale-conosco")}
             />
             <Linha
               icone="information-circle-outline"
               titulo="Sobre o RR Turismo"
               detalhe="Conheça o projeto"
-              aoTocar={() => router.push("/(tabs)/sobre")}
+              aoTocar={() => router.push("/sobre-nos")}
               ultima
             />
           </Grupo>
