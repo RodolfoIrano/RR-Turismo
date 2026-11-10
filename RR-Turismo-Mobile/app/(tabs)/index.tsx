@@ -21,6 +21,7 @@ import TripCard from "../../components/TripCard";
 import Loading from "../../components/Loading";
 import EmptyState from "../../components/EmptyState";
 import PrimaryButton from "../../components/PrimaryButton";
+import AtalhosInstitucionais from "../../components/AtalhosInstitucionais";
 
 import { useAuth } from "../../contexts/AuthContext";
 import { Trip } from "../../types";
@@ -39,6 +40,7 @@ import * as tripService from "../../services/tripService";
 // - Destinos em destaque
 // - Viagens populares
 // - Ofertas especiais
+// - Atalhos Fale conosco e Sobre nós (no final)
 //
 // Os dados são carregados através do tripService.
 // Atualmente o serviço utiliza dados mockados, mas futuramente
@@ -163,7 +165,7 @@ export default function Home() {
   if (status === "loading") {
     return (
       <SafeAreaView
-        style={styles.safe}
+        style={[styles.safe, { backgroundColor: colors.background }]}
         edges={["top"]}
       >
         <Header />
@@ -183,7 +185,7 @@ export default function Home() {
   if (status === "error") {
     return (
       <SafeAreaView
-        style={styles.safe}
+        style={[styles.safe, { backgroundColor: colors.background }]}
         edges={["top"]}
       >
         <Header />
@@ -219,6 +221,7 @@ export default function Home() {
       <Header />
 
       <ScrollView
+        style={{ backgroundColor: colors.background }}
         contentContainerStyle={{
           paddingBottom: spacing.xxl,
         }}
@@ -233,41 +236,31 @@ export default function Home() {
       >
 
         {/* ==================================================
-            SAUDAÇÃO
+            TOPO AZUL (saudação + pesquisa)
             --------------------------------------------------
-            Mostra o primeiro nome do usuário logado.
-            Caso não exista usuário, mostra "viajante".
+            Continua o azul do cabeçalho, para a parte de cima
+            da tela não ficar vazia. Mostra o primeiro nome do
+            usuário (ou "viajante") e o campo de pesquisa; ao
+            enviar a pesquisa, abre a tela Explorar.
             ================================================== */}
-        <View style={styles.greeting}>
-          <Text style={typography.h2}>
+        <View style={styles.topoAzul}>
+          <Text style={styles.saudacao}>
             Olá, {user?.name?.split(" ")[0] ?? "viajante"}! 👋
           </Text>
 
-          <Text
-            style={[
-              typography.bodyMuted,
-              { marginTop: 2 },
-            ]}
-          >
-            Encontre sua próxima aventura
+          <Text style={styles.saudacaoSub}>
+            Para onde vamos na próxima viagem?
           </Text>
-        </View>
 
-
-        {/* ==================================================
-            PESQUISA
-            --------------------------------------------------
-            O usuário pode pesquisar por um destino ou viagem.
-            Ao enviar a pesquisa, é direcionado para Explore.
-            ================================================== */}
-        <View style={styles.section}>
-          <SearchBar
-            value={query}
-            onChangeText={setQuery}
-            onSubmitEditing={() =>
-              goToExplore({ query })
-            }
-          />
+          <View style={{ marginTop: spacing.lg }}>
+            <SearchBar
+              value={query}
+              onChangeText={setQuery}
+              onSubmitEditing={() =>
+                goToExplore({ query })
+              }
+            />
+          </View>
         </View>
 
 
@@ -361,6 +354,9 @@ export default function Home() {
           trips={offers}
         />
 
+        {/* Atalhos para Fale conosco e Sobre nós (fim da tela). */}
+        <AtalhosInstitucionais />
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -424,17 +420,24 @@ function Section({
 // ============================================================
 const styles = StyleSheet.create({
 
-  // Container principal da tela
+  // Container principal da tela (azul atrás do cabeçalho; o conteúdo
+  // que rola fica sobre fundo branco).
   safe: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.primary,
   },
 
-  // Área da saudação do usuário
-  greeting: {
+  // Bloco azul abaixo do cabeçalho: saudação + pesquisa.
+  topoAzul: {
+    backgroundColor: colors.primary,
     paddingHorizontal: spacing.lg,
-    marginTop: spacing.sm,
+    paddingTop: spacing.sm,
+    paddingBottom: spacing.xl,
+    borderBottomLeftRadius: radius.xl,
+    borderBottomRightRadius: radius.xl,
   },
+  saudacao: { fontSize: 24, fontWeight: "800", color: colors.textInverse },
+  saudacaoSub: { fontSize: 15, color: colors.primaryMuted, marginTop: 2 },
 
   // Espaçamento padrão das seções
   section: {
