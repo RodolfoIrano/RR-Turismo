@@ -1,21 +1,7 @@
 # RR Turismo
 
-Plataforma de turismo com **site** (Spring Boot) e **aplicativo** (React Native / Expo).
+Plataforma de turismo com **site para guias/empresas** (Spring Boot) e **aplicativo para turistas** (React Native / Expo).
 Os dois usam o **mesmo servidor, o mesmo banco de dados e o mesmo login**.
-
-Projeto de **Rafael e Rodolfo** — Fatec Taquaritinga, curso de **Sistemas para Internet**.
-
-## O que o RR Turismo faz
-
-| Tipo de conta | O que pode fazer |
-|---|---|
-| **Viajante** (quem só quer comprar viagem) | Ver as viagens, salvar favoritos, ver mapa, guia e datas de cada viagem, falar com a equipe |
-| **Guia** ou **Empresa** | Tudo do viajante + **painel** para criar e editar as próprias viagens |
-
-**No site:** banner com as viagens em destaque, busca (inclusive por voz), filtro por categoria, página de cada viagem com mapa, Favoritos, Sobre nós, Fale conosco (abre o WhatsApp da equipe), chat de ajuda (bolinha no canto), tradução do site e recursos de acessibilidade (modo escuro, contraste, VLibras).
-**No app:** catálogo, viagem com mapa, favoritos, perfil e configurações, chat de ajuda, Fale conosco, Sobre nós e o Modo Guia (acompanhar a viagem ao vivo).
-
----
 
 | Parte | Pasta | Tecnologia | Quem usa |
 |---|---|---|---|
@@ -23,6 +9,23 @@ Projeto de **Rafael e Rodolfo** — Fatec Taquaritinga, curso de **Sistemas para
 | Aplicativo | [`RR-Turismo-Mobile`](RR-Turismo-Mobile) | Expo SDK 58, React Native, TypeScript | Turistas compram e acompanham a viagem |
 | Banco | [`banco`](banco) | MySQL 8 | Criado automaticamente |
 | Documentos | [`docs`](docs) | — | Relatório da API do app |
+
+---
+
+## O que o projeto faz
+
+**Site (Spring):**
+- Cadastro e login de **Viajante**, **Guia** e **Empresa** (o mesmo login serve no app).
+- Guias e empresas criam e gerenciam viagens, com fotos, datas e vagas.
+- Viajantes veem as viagens, favoritam, **adicionam ao carrinho** ou **compram direto**.
+- **Compra de teste** com Pix (QR Code), cartão de crédito (até 6x), cartão de débito e boleto. Nenhum dinheiro de verdade é cobrado.
+- **Minhas compras** (histórico com código da reserva), perfil do viajante e **perfil público do guia** (`/guias/{id}`).
+- Idioma em português, inglês e outros, pelo botão flutuante.
+
+**Aplicativo (Mobile):**
+- Mesmas viagens, login, favoritos, carrinho e tela de compra (Pix, crédito, débito e boleto).
+- **Notificações** no celular: compra confirmada e um lembrete às 9h do dia anterior à viagem.
+- Perfil do guia com banner, rodapé com contatos e acompanhamento da viagem ao vivo no mapa.
 
 ---
 
@@ -66,6 +69,22 @@ Siga o [`RR-Turismo-Spring/README.md`](RR-Turismo-Spring/README.md). Resumo:
 1. No site, abra **Cadastro** e crie uma conta de **Guia** ou **Empresa** (senha com no mínimo 8 caracteres).
 2. Entre e abra **Criar nova viagem** no menu. Preencha, envie uma foto e salve.
 
+### Passo 2.5 — Comprar uma viagem (compra de teste)
+1. Saia da conta de guia e crie (ou entre numa) conta de **Viajante**. *Guias e empresas não compram, só criam viagens.*
+2. Abra uma viagem, escolha a quantidade e clique em **Comprar agora** ou **Adicionar ao carrinho**.
+3. Na tela de pagamento use os **dados de teste** abaixo. O pagamento é **simulado**: aparece "Aprovado (teste)" e nada é cobrado.
+
+| Forma | O que preencher |
+|---|---|
+| **Cartão de crédito** (Visa) | Número `4111 1111 1111 1111` · Validade `12/30` · CVV `123` · escolha a bandeira **Visa** |
+| **Cartão de débito** (Mastercard) | Número `5555 5555 5555 4444` · Validade `12/30` · CVV `123` · escolha a bandeira **Mastercard** |
+| **Pix** | Aparece um QR Code e o código "copia e cola" de teste. Clique em confirmar. |
+| **Boleto** | Aparece um boleto de teste. Clique em confirmar. |
+
+- A bandeira escolhida precisa combinar com o número do cartão (Visa começa com 4, Mastercard com 5).
+- Nome do titular: qualquer um. Só a bandeira e os 4 últimos dígitos ficam guardados.
+- A compra aparece em **Minhas compras** (site e app), com o código da reserva (`RR2026...`).
+
 ### Passo 3 — Aplicativo (Mobile)
 Siga o [`RR-Turismo-Mobile/README.md`](RR-Turismo-Mobile/README.md). Resumo, com o **Spring já rodando**:
 
@@ -75,6 +94,8 @@ npm install          # só na 1ª vez: baixa as bibliotecas do app
 npm run android      # abre o EMULADOR Android e o app
 ```
 
+> **Atenção:** esta versão do app usa bibliotecas novas (`expo-clipboard` e `expo-notifications`). Se você já tinha o projeto baixado, rode `npm install` de novo antes de abrir o app.
+
 - **Emulador (principal):** instale o Android Studio, crie um aparelho em *Device Manager* e deixe-o ligado. Depois rode `npm run android`.
 - **Celular (alternativo):** rode `npx expo start -c` e escaneie o QR code com o app **Expo Go** (celular e computador na **mesma rede Wi-Fi**).
 
@@ -82,25 +103,14 @@ A viagem criada no site aparece no app.
 
 ---
 
-## Teste rápido (para quem vai avaliar o projeto)
-
-1. Suba o servidor (Passo 1) e abra http://localhost:9000 — o site abre sem precisar de login.
-2. Clique em **Criar conta → Viajante**, cadastre-se e veja o menu de viajante (menu no topo, rodapé, favoritos).
-3. Saia, clique em **Criar conta → Guia/Empresa**, cadastre-se e entre: aparece o **painel** (menu lateral). Em **Minhas viagens → Criar viagem** publique uma viagem com foto.
-4. Volte ao site como visitante: a viagem aparece no banner e no catálogo. Abra-a para ver o mapa, o guia e o coração de favoritos.
-5. (Opcional) Abra o app (Passo 3) com a mesma conta: a viagem criada no site aparece no app.
-
-> O banco começa **vazio**: as viagens aparecem depois que um guia cria a primeira.
-
 ## Problemas comuns
 
-| Sintoma | O que fazer |
+| Sintoma | Solução |
 |---|---|
-| `javac` não encontrado / "release 17 not supported" | Instale o **JDK 21** (ou coloque-o na pasta `jdk`, veja o README do Spring) |
-| Erro de conexão com o MySQL / "Access denied" | Confira se o MySQL está ligado e a senha em `application-local.properties` |
-| A porta 9000 já está em uso | Feche o outro servidor Spring que estiver aberto |
-| O mapa ou as fotos de destaque não aparecem | Precisam de internet (mapa e fotos de exemplo vêm da web) |
-| O app não conecta no servidor | Celular e computador na **mesma rede Wi-Fi**, Spring rodando; veja o README do Mobile |
+| Ao salvar o perfil/viagem com foto o site volta para o início | Foto muito grande para o MySQL do XAMPP. O site já reduz a imagem, mas por segurança coloque `max_allowed_packet=64M` no `my.ini` do MySQL (XAMPP: `C:\xampp\mysql\bin\my.ini`, seção `[mysqld]`) e reinicie o MySQL. |
+| No app, a foto de fundo do login não aparece | Ela é carregada da internet. Sem conexão o app mostra o fundo azul, e o resto funciona normalmente. |
+| O app não mostra as viagens | Spring desligado ou porta 9000 bloqueada. No emulador o app acessa o servidor em `10.0.2.2:9000` sozinho. |
+| Perdi as contas depois de mexer no XAMPP | Os dados ficam na pasta `data` do MySQL. Não substitua essa pasta; faça backup pelo phpMyAdmin (**Exportar**) e guarde o `.sql`. |
 
 ---
 
@@ -123,7 +133,7 @@ RR-Turismo/
 ```
 
 ## Equipe
-- **Rafael** e **Rodolfo** — Fatec Taquaritinga, Sistemas para Internet.
-- Contato: WhatsApp (16) 99241-6492 (também pelo "Fale conosco" do site e do app).
+- **Web (Spring):** site e criação das viagens — _nome do integrante_
+- **Mobile:** aplicativo do turista — _nome do integrante_
 
-
+Guia para subir e atualizar este repositório: [`docs/GUIA_GIT.md`](docs/GUIA_GIT.md)

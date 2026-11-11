@@ -102,6 +102,7 @@ Para parar: `Ctrl + C` na janela do terminal.
 1. Em http://localhost:9000 abra o **Cadastro** e crie uma conta de **Guia** ou **Empresa** (senha com no mínimo 8 caracteres).
 2. Entre e use **Criar viagem**: preencha os dados, as datas, envie uma foto (até 20 MB) e salve.
 3. A viagem aparece no site e no aplicativo Mobile.
+4. Para testar a compra, entre com uma conta de **Viajante** (guias e empresas não compram), abra a viagem e clique em **Comprar agora** ou **Adicionar ao carrinho**. Cartão de teste: `4111 1111 1111 1111`, validade `12/30`, CVV `123`, bandeira Visa. O pagamento é simulado e nada é cobrado. As compras ficam em **Minhas compras**.
 
 ---
 
@@ -153,3 +154,4 @@ RR-Turismo-Spring/
 | `Unsupported class file major version` | Você rodou pelo botão Run do VS Code. Use `rodar.bat` / `rodar.sh`. |
 | Código cheio de linhas vermelhas no VS Code, mas o servidor roda | É só o editor. `Ctrl+Shift+P` → **Java: Clean Java Language Server Workspace** → **Restart and delete**. Abra a pasta `RR-Turismo-Spring` direto (não a pasta de cima). |
 | Erro ao criar viagem com foto grande | O limite é 20 MB. Use uma foto menor. |
+| Salvar perfil/viagem com foto volta para o início | O MySQL do XAMPP aceita pacotes de 1 MB por padrão. O site já reduz as fotos, mas coloque `max_allowed_packet=64M` na seção `[mysqld]` do `my.ini` (`C:\xampp\mysql\bin\my.ini`) e reinicie o MySQL. |
