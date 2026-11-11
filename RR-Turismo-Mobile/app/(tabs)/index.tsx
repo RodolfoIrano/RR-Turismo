@@ -21,7 +21,7 @@ import TripCard from "../../components/TripCard";
 import Loading from "../../components/Loading";
 import EmptyState from "../../components/EmptyState";
 import PrimaryButton from "../../components/PrimaryButton";
-import AtalhosInstitucionais from "../../components/AtalhosInstitucionais";
+import RodapeDoApp from "../../components/RodapeDoApp";
 
 import { useAuth } from "../../contexts/AuthContext";
 import { Trip } from "../../types";
@@ -40,7 +40,7 @@ import * as tripService from "../../services/tripService";
 // - Destinos em destaque
 // - Viagens populares
 // - Ofertas especiais
-// - Atalhos Fale conosco e Sobre nós (no final)
+// - Rodapé completo (no final)
 //
 // Os dados são carregados através do tripService.
 // Atualmente o serviço utiliza dados mockados, mas futuramente
@@ -223,7 +223,7 @@ export default function Home() {
       <ScrollView
         style={{ backgroundColor: colors.background }}
         contentContainerStyle={{
-          paddingBottom: spacing.xxl,
+          paddingBottom: 0, // o rodapé escuro encosta no fim da tela
         }}
 
         // Permite atualizar a tela puxando o conteúdo para baixo
@@ -354,8 +354,8 @@ export default function Home() {
           trips={offers}
         />
 
-        {/* Atalhos para Fale conosco e Sobre nós (fim da tela). */}
-        <AtalhosInstitucionais />
+        {/* Rodapé completo (Explore, Institucional, Contato...) - components/RodapeDoApp.tsx */}
+        <RodapeDoApp />
 
       </ScrollView>
     </SafeAreaView>

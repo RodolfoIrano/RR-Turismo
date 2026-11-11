@@ -27,6 +27,7 @@ public class GuiaDTO {
     private int reviewCount;
     private boolean cadastur;
     private String photoUrl; // caminho para baixar a foto do guia
+    private String bannerUrl; // caminho para baixar o banner (capa) do perfil do guia
 
     // Redes de contato públicas (as mesmas do perfil do guia no site).
     private String whatsapp;
@@ -72,6 +73,9 @@ public class GuiaDTO {
             dto.photoUrl = perfil.getFoto() != null && perfil.getFoto().length > 0
                     ? "/api/guias/" + criador.getId() + "/foto"
                     : null;
+            dto.bannerUrl = perfil.getBanner() != null && perfil.getBanner().length > 0
+                    ? "/api/guias/" + criador.getId() + "/banner"
+                    : null;
         } else {
             dto.location = criador.getLocal();
         }
@@ -95,6 +99,7 @@ public class GuiaDTO {
     public int getReviewCount() { return reviewCount; }
     public boolean isCadastur() { return cadastur; }
     public String getPhotoUrl() { return photoUrl; }
+    public String getBannerUrl() { return bannerUrl; }
     public String getWhatsapp() { return whatsapp; }
     public String getInstagram() { return instagram; }
     public String getFacebook() { return facebook; }

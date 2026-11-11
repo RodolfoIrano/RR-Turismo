@@ -112,11 +112,20 @@ export default function GuideProfile() {
 
   return (
     <SafeAreaView style={styles.safe} edges={["bottom"]}>
-      <ScrollView contentContainerStyle={{ padding: spacing.lg }}>
+      <ScrollView contentContainerStyle={{ padding: spacing.lg, paddingTop: 0 }}>
 
         {/* ====================================================
             CABEÇALHO: foto, nome, local e avaliação
             ==================================================== */}
+        {/* Banner (capa) do guia: ocupa a largura toda; a foto fica por cima da borda de baixo. */}
+        <View style={styles.bannerArea}>
+          {guide.banner ? (
+            <Image source={{ uri: guide.banner }} style={styles.banner} contentFit="cover" transition={250} />
+          ) : (
+            <View style={[styles.banner, { backgroundColor: colors.primary }]} />
+          )}
+        </View>
+
         <View style={styles.header}>
           <Image source={{ uri: guide.photo }} style={styles.avatar} />
 
@@ -298,12 +307,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
+  // Banner: sai do padding da tela para encostar nas bordas.
+  bannerArea: { marginHorizontal: -spacing.lg, height: 150, marginBottom: -48 },
+  banner: { width: "100%", height: 150 },
+
   // Foto de perfil do guia
   avatar: {
     width: 96,
     height: 96,
     borderRadius: radius.full,
     marginBottom: spacing.md,
+    borderWidth: 4,
+    borderColor: colors.background,
+    backgroundColor: colors.backgroundMuted,
   },
 
   // Área que organiza as estatísticas lado a lado

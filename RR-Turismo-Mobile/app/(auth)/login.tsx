@@ -88,6 +88,8 @@ export default function Login() {
           value={password}
           onChangeText={setPassword}
           temErro={!!error}
+          // Igual ao cadastro: vermelho até 8 caracteres, verde a partir de 8.
+          estado={password.length === 0 ? undefined : password.length >= 8 ? "ok" : "erro"}
         />
       </Aparece>
 
