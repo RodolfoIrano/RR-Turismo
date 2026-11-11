@@ -19,7 +19,7 @@ Dentro da pasta `RR-Turismo-Mobile`:
 ```bash
 npm install
 ```
-Isso baixa as bibliotecas para a pasta `node_modules`. Ela não vai para o GitHub (é pesada e se recria com esse comando), por isso é preciso rodar `npm install` depois de baixar o projeto.
+Isso baixa as bibliotecas para a pasta `node_modules` (inclui `expo-clipboard`, usada no "copia e cola" do Pix, e `expo-notifications`, usada nos avisos). Ela não vai para o GitHub (é pesada e se recria com esse comando), por isso é preciso rodar `npm install` depois de baixar o projeto.
 
 ## 3. Ligar o servidor
 Rode o Spring antes (veja `../RR-Turismo-Spring/README.md`) e crie pelo menos uma viagem no site.
@@ -90,6 +90,17 @@ Pronto: os dois estão no app ao mesmo tempo. E você escolhe: só o emulador (a
 
 ---
 
+## Comprar uma viagem no app (teste)
+Entre com uma conta de **Viajante**, abra uma viagem e toque em **Adicionar ao carrinho** e depois abra a aba **Carrinho** para finalizar. Na tela de pagamento (Pix, crédito, débito ou boleto) use:
+
+- **Crédito (Visa):** `4111 1111 1111 1111` · validade `12/30` · CVV `123`
+- **Débito (Mastercard):** `5555 5555 5555 4444` · validade `12/30` · CVV `123`
+- **Pix:** aparece um QR Code de teste e o botão de copiar o código.
+
+O pagamento é **simulado**, nada é cobrado. Ao confirmar, o app envia uma **notificação** de compra confirmada e agenda um lembrete para as 9h do dia anterior à viagem. Se o aparelho não permitir notificações, a compra funciona do mesmo jeito.
+
+---
+
 ## Problemas comuns
 
 | Sintoma | Solução |
@@ -100,6 +111,10 @@ Pronto: os dois estão no app ao mesmo tempo. E você escolhe: só o emulador (a
 | `adb not found` | Veja a nota na Opção A. |
 | Mapa em branco | Precisa de internet (carrega o mapa do OpenStreetMap). Permita a localização quando o app pedir. |
 | Erro de versão no Expo Go | Atualize o Expo Go (o projeto usa SDK 58). |
+| Erro `Unable to resolve expo-clipboard` / `expo-notifications` | Faltou rodar `npm install` depois de baixar a versão nova. Rode `npm install` e depois `npx expo start -c`. |
+| Mudei o código e a tela não atualizou | Reinicie limpando o cache: `npx expo start -c`. |
+| Foto de fundo do login não aparece | Ela vem da internet. Sem conexão o app usa o fundo azul. |
+| Não chegou notificação | Permita notificações quando o app pedir. No Expo Go pode haver limitações; o restante do app funciona normalmente. |
 
 ## Limitações no Expo Go
 - Voz "segurar para falar" e localização com o app fechado exigem um *development build*.
