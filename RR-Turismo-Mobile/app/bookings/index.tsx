@@ -252,6 +252,14 @@ function BookingCard({
       </Text>
 
 
+      {/* Como foi pago (reservas antigas não têm essa informação) */}
+      {!!booking.paymentLabel && (
+        <Text style={typography.bodyMuted}>
+          Pagamento: {booking.paymentLabel}
+        </Text>
+      )}
+
+
       {/* Mostra o guia somente quando ele foi encontrado */}
       {guide && (
         <Text style={typography.bodyMuted}>

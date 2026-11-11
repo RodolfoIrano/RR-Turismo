@@ -63,6 +63,8 @@ export interface Guide {
   id: string;
   name: string;
   photo: string;
+  // Banner (capa) do perfil do guia; ausente se ele não colocou um no site.
+  banner?: string;
   location: string;
   bio: string;
   experienceYears: number;
@@ -126,6 +128,9 @@ export interface CartItem {
 
 export type BookingStatus = "Confirmada" | "Pendente" | "Cancelada";
 
+// Formas de pagamento aceitas na tela de compra (pagamento de TESTE).
+export type MetodoDePagamento = "credit_card" | "debit_card" | "pix" | "boleto";
+
 export interface Booking {
   id: string; // ex: RR20260001
   userId: string;
@@ -137,12 +142,16 @@ export interface Booking {
   dataVolta?: string;
   total: number;
   status: BookingStatus;
+  // Como foi pago (opcionais: reservas antigas não têm). Nunca guardamos número/CVV.
+  paymentMethod?: MetodoDePagamento;
+  paymentLabel?: string;   // ex: "Cartão de débito Visa final 1111"
+  installments?: number;
 }
 
 export interface Payment {
   id: string;
   bookingId: string;
-  method: "credit_card" | "pix";
+  method: MetodoDePagamento;
   amount: number;
   status: "approved" | "pending" | "failed";
 }

@@ -133,6 +133,23 @@ public class ViagemApiController {
         return ResponseEntity.ok().contentType(img.tipo()).body(img.bytes());
     }
 
+    // Banner (capa) do perfil do guia: a mesma imagem que aparece no perfil público do site.
+    @GetMapping("/guias/{id}/banner")
+    public ResponseEntity<byte[]> bannerGuia(@PathVariable("id") int id,
+                                             @RequestParam(name = "w", defaultValue = "0") int w) {
+        Optional<Cadastro> criador = cadastroService.buscarPorId(id);
+        if (criador.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        byte[] banner = perfilUsuarioService.buscarOuCriar(criador.get()).getBanner();
+        if (banner == null || banner.length == 0) {
+            return ResponseEntity.notFound().build();
+        }
+        RedimensionadorDeImagem.Imagem img =
+                RedimensionadorDeImagem.servir("guia-banner-" + id + "-" + banner.length, banner, w);
+        return ResponseEntity.ok().contentType(img.tipo()).body(img.bytes());
+    }
+
     // Lista as viagens de um guia específico (tela de perfil do guia no app).
     @GetMapping("/guias/{id}/viagens")
     public ResponseEntity<List<ViagemDTO>> viagensDoGuia(@PathVariable("id") int id) {

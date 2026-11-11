@@ -41,6 +41,9 @@ const REGRAS_BANDEIRA: BrandRule[] = [
 
 // Nomes amigaveis para exibir na tela (podem ser traduzidos
 // futuramente pelo sistema de idiomas, se fizer sentido).
+// Bandeiras que aparecem como botões na tela de pagamento (a pessoa escolhe).
+export const BANDEIRAS_DE_ESCOLHA: CardBrand[] = ["visa", "mastercard", "elo", "hipercard", "amex"];
+
 export const NOME_BANDEIRA: Record<CardBrand, string> = {
   visa: "Visa",
   mastercard: "Mastercard",

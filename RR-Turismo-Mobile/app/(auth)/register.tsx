@@ -111,6 +111,7 @@ export default function Register() {
           dicaNoRotulo={`(${ValidadorDeSenha.DICA.toLowerCase()})`}
           secureTextEntry
           autoCapitalize="none"
+          estado={password.length === 0 ? undefined : password.length >= 8 ? "ok" : "erro"}
           value={password}
           onChangeText={setPassword}
         />
@@ -124,6 +125,13 @@ export default function Register() {
           dicaNoRotulo={`(${ValidadorDeSenha.DICA.toLowerCase()})`}
           secureTextEntry
           autoCapitalize="none"
+          estado={
+            confirmPassword.length === 0
+              ? undefined
+              : password.length >= 8 && password === confirmPassword
+              ? "ok"
+              : "erro"
+          }
           value={confirmPassword}
           onChangeText={setConfirmPassword}
         />

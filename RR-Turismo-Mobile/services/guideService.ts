@@ -18,6 +18,7 @@ import { getTrips } from "./tripService";
 // Rotas usadas (públicas, não exigem login):
 //   GET /api/guias/{id}          -> dados do guia
 //   GET /api/guias/{id}/foto     -> foto de perfil dele
+//   GET /api/guias/{id}/banner   -> banner (capa) do perfil dele
 //   GET /api/guias/{id}/viagens  -> viagens criadas por ele
 // ============================================================
 
@@ -35,6 +36,7 @@ interface GuiaApi {
   reviewCount: number;
   cadastur: boolean;
   photoUrl: string | null;
+  bannerUrl?: string | null;
   whatsapp: string | null;
   instagram: string | null;
   facebook: string | null;
@@ -65,6 +67,7 @@ function paraGuide(guia: GuiaApi): Guide {
     photo: guia.photoUrl
       ? `${BASE_URL.replace(/\/api$/, "")}${guia.photoUrl}?w=400`
       : `${FOTO_PADRAO}${encodeURIComponent(guia.name)}`,
+    banner: guia.bannerUrl ? `${BASE_URL.replace(/\/api$/, "")}${guia.bannerUrl}?w=900` : undefined,
     location: guia.location ?? "",
     bio: guia.bio ?? "",
 

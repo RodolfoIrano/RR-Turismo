@@ -41,7 +41,7 @@
     <%-- catalogo.css fica por último para não ser sobrescrito pelos estilos das outras páginas --%>
     <link rel="stylesheet" href="/css/catalogo.css?v=7">
     <%-- site.css: topo, rodapé, banner, chat e responsivo (também usado no painel) --%>
-    <link rel="stylesheet" href="/css/site.css?v=14">
+    <link rel="stylesheet" href="/css/site.css?v=16">
     <link rel="icon" href="/imagens/logo_preta.png">
 </head>
 

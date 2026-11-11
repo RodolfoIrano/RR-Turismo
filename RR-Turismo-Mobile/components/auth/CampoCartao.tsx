@@ -20,9 +20,14 @@ interface Props extends TextInputProps {
   icone: NomeDoIcone; // ícone à esquerda
   dicaNoRotulo?: string; // texto pequeno ao lado do rótulo, ex.: "(mínimo de 8 caracteres)"
   temErro?: boolean; // deixa a borda vermelha
+  // Igual ao site: "ok" deixa a linha (borda), o rótulo e o ícone VERDES;
+  // "erro" deixa tudo vermelho. Usado na senha do cadastro (verde ao chegar em 8).
+  estado?: "ok" | "erro";
 }
 
-export default function CampoCartao({ label, icone, dicaNoRotulo, temErro, secureTextEntry, onFocus, onBlur, ...rest }: Props) {
+const VERDE_OK = "#1D9A63";
+
+export default function CampoCartao({ label, icone, dicaNoRotulo, temErro, estado, secureTextEntry, onFocus, onBlur, ...rest }: Props) {
   const [senhaVisivel, setSenhaVisivel] = useState(false);
   const [focado, setFocado] = useState(false);
 
@@ -33,14 +38,17 @@ export default function CampoCartao({ label, icone, dicaNoRotulo, temErro, secur
     Animated.timing(foco, { toValue: para, duration: 180, useNativeDriver: false }).start();
   }
 
-  const corDaBorda = temErro
+  const comErro = temErro || estado === "erro";
+  const corDaBorda = comErro
     ? colors.danger
+    : estado === "ok"
+    ? VERDE_OK
     : foco.interpolate({ inputRange: [0, 1], outputRange: ["#E6ECF1", colors.secondary] });
   const corDeFundo = foco.interpolate({ inputRange: [0, 1], outputRange: ["#F5F8FA", "#FFFFFF"] });
 
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.label}>
+      <Text style={[styles.label, estado === "ok" && { color: VERDE_OK }, estado === "erro" && { color: colors.danger }]}>
         {label}
         {dicaNoRotulo ? <Text style={styles.dicaRotulo}>{"  "}{dicaNoRotulo}</Text> : null}
       </Text>
@@ -49,7 +57,7 @@ export default function CampoCartao({ label, icone, dicaNoRotulo, temErro, secur
         <Ionicons
           name={icone}
           size={19}
-          color={temErro ? colors.danger : focado ? colors.secondary : colors.textMuted}
+          color={comErro ? colors.danger : estado === "ok" ? VERDE_OK : focado ? colors.secondary : colors.textMuted}
           style={styles.icone}
         />
 

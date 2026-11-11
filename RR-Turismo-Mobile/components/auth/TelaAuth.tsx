@@ -39,6 +39,10 @@ interface Props {
 }
 
 // ---------- Círculos decorativos que flutuam devagar ----------
+// Foto de fundo (a mesma do login do site). Precisa de internet; sem ela,
+// aparece só o azul escuro. ✏️ Para trocar a foto, mude o endereço abaixo.
+const FOTO_DE_FUNDO = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=70";
+
 function CirculoFlutuante({ tamanho, cor, estilo, duracao }: { tamanho: number; cor: string; estilo: object; duracao: number }) {
   const vai = useRef(new Animated.Value(0)).current;
   useEffect(() => {
@@ -153,13 +157,18 @@ export default function TelaAuth({ aba, retornarPara, titulo, subtitulo, childre
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: "#F4F7F6" }}
+      style={{ flex: 1, backgroundColor: colors.primaryDark }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
-      {/* Fundo decorativo */}
-      <CirculoFlutuante tamanho={280} cor="rgba(26,86,219,0.14)" estilo={{ top: -90, right: -90 }} duracao={4200} />
-      <CirculoFlutuante tamanho={220} cor="rgba(255,122,61,0.12)" estilo={{ bottom: 40, left: -80 }} duracao={5000} />
-      <CirculoFlutuante tamanho={150} cor="rgba(30,42,94,0.08)" estilo={{ top: 260, left: -40 }} duracao={3800} />
+      {/* Fundo: foto de praia com camada azul por cima (igual ao site). O cartão continua branco. */}
+      <Image source={{ uri: FOTO_DE_FUNDO }} style={StyleSheet.absoluteFill} resizeMode="cover" />
+      <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(0,17,70,0.80)" }]} />
+      <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(0,110,255,0.16)" }]} />
+
+      {/* Círculos decorativos flutuando (claros sobre o fundo escuro) */}
+      <CirculoFlutuante tamanho={280} cor="rgba(79,195,255,0.10)" estilo={{ top: -90, right: -90 }} duracao={4200} />
+      <CirculoFlutuante tamanho={220} cor="rgba(255,255,255,0.06)" estilo={{ bottom: 40, left: -80 }} duracao={5000} />
+      <CirculoFlutuante tamanho={150} cor="rgba(255,122,61,0.10)" estilo={{ top: 260, left: -40 }} duracao={3800} />
 
       <ScrollView
         contentContainerStyle={styles.container}
@@ -169,7 +178,7 @@ export default function TelaAuth({ aba, retornarPara, titulo, subtitulo, childre
         {/* Logo (tamanho definido pelo próprio usuário - não mexer) */}
         <Animated.View style={[styles.logoArea, { opacity: entradaLogo }]}>
           <Image
-            source={require("../../assets/images/RRTurismoEscuro.png")}
+            source={require("../../assets/images/RRTurismoClaro.png")}
             style={styles.logo}
             resizeMode="contain"
           />
