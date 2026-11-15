@@ -21,12 +21,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { Text } from "./TextoTraduzido";
 import { colors } from "../constants/colors";
 import { radius, spacing } from "../constants/spacing";
-import { linkDoWhatsapp, WHATSAPP_NUMERO } from "../constants/contato";
+import { EMAIL_CONTATO, emailConfigurado, linkDoEmail, linkDoWhatsapp, WHATSAPP_NUMERO } from "../constants/contato";
 
 // 👈 COLOQUE AQUI os endereços das redes sociais (https://...). Vazio = o ícone some.
 const REDES: { icone: keyof typeof Ionicons.glyphMap; nome: string; url: string }[] = [
-  { icone: "logo-instagram", nome: "Instagram", url: "" },
-  { icone: "logo-facebook", nome: "Facebook", url: "" },
+  { icone: "logo-instagram", nome: "Instagram", url: "https://www.instagram.com/rodolfoirano" },
+  { icone: "logo-facebook", nome: "Facebook", url: "https://www.facebook.com/rodolfoirano" },
   { icone: "logo-youtube", nome: "YouTube", url: "" },
 ];
 
@@ -61,6 +61,7 @@ const COLUNAS: { titulo: string; links: Link[] }[] = [
   {
     titulo: "Contato",
     links: [
+      { texto: "E-mail: " + EMAIL_CONTATO, externo: "email" },
       { texto: "WhatsApp: (16) 99241-6492", externo: "zap" },
       { texto: "Fatec Taquaritinga" },
       { texto: "Sistemas para Internet" },
@@ -79,6 +80,8 @@ export default function RodapeDoApp() {
   function tocar(link: Link) {
     if (link.rota) {
       router.push(link.rota as Href);
+    } else if (link.externo === "email") {
+      if (emailConfigurado()) Linking.openURL(linkDoEmail("Contato pelo app RR Turismo", "Olá, equipe RR Turismo!")).catch(() => {});
     } else if (link.externo === "zap") {
       abrirZap("Olá, equipe RR Turismo!");
     } else if (link.externo === "site") {

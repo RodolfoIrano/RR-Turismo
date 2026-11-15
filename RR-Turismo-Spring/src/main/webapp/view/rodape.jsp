@@ -15,8 +15,8 @@
     - Cores e espaçamentos ..... css/site.css (seção RODAPÉ)
 --%>
 <%-- 👈 COLOQUE AQUI os endereços das redes sociais da equipe (https://...) --%>
-<c:set var="linkInstagram" value="" />
-<c:set var="linkFacebook" value="" />
+<c:set var="linkInstagram" value="https://www.instagram.com/rodolfoirano" />
+<c:set var="linkFacebook" value="https://www.facebook.com/rodolfoirano" />
 <c:set var="linkYoutube" value="" />
 <%-- 👈 WhatsApp da equipe: 55 + DDD + número (só números) --%>
 <c:set var="zap" value="5516992416492" />
@@ -29,22 +29,33 @@
             <a href="/inicio"><img src="/imagens/logo_branca_recortada.png" alt="RR Turismo"></a>
             <p>Descubra novos destinos, viva experiências incríveis e encontre a sua próxima aventura com guias e agências de confiança.</p>
 
+            <%-- Gradiente do Instagram (usado só ao passar o mouse; ver .rede-instagram no site.css) --%>
+            <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+                <defs>
+                    <linearGradient id="gradInstagram" x1="0" y1="1" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#fdb44b"/>
+                        <stop offset="35%" stop-color="#f0446f"/>
+                        <stop offset="70%" stop-color="#d62976"/>
+                        <stop offset="100%" stop-color="#8a3ab9"/>
+                    </linearGradient>
+                </defs>
+            </svg>
             <div class="rodape-redes" aria-label="Redes sociais">
-                <a href="https://wa.me/${zap}" target="_blank" rel="noopener" aria-label="WhatsApp">
+                <a class="rede rede-whatsapp" href="https://wa.me/${zap}" target="_blank" rel="noopener" aria-label="WhatsApp">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.200Zm4.5-6.1c-.2-.1-1.500-.7-1.700-.8s-.4-.1-.6.100-.6.800-.8 1-.3.200-.5.100a6.700 6.700 0 0 1-3.300-2.900c-.3-.4.300-.4.800-1.400.1-.2 0-.3 0-.5l-.8-1.800c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.300 3 3 0 0 0-.9 2.200 5.200 5.200 0 0 0 1.100 2.800 11.900 11.900 0 0 0 4.600 4c1.700.7 2.400.8 3.200.7a2.700 2.700 0 0 0 1.800-1.300 2.200 2.200 0 0 0 .2-1.300c-.1-.1-.3-.2-.5-.3Z"/></svg>
                 </a>
                 <c:if test="${not empty linkInstagram}">
-                    <a href="${linkInstagram}" target="_blank" rel="noopener" aria-label="Instagram">
+                    <a class="rede rede-instagram" href="${linkInstagram}" target="_blank" rel="noopener" aria-label="Instagram">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.500" cy="6.500" r="1" fill="currentColor" stroke="none"/></svg>
                     </a>
                 </c:if>
                 <c:if test="${not empty linkFacebook}">
-                    <a href="${linkFacebook}" target="_blank" rel="noopener" aria-label="Facebook">
+                    <a class="rede rede-facebook" href="${linkFacebook}" target="_blank" rel="noopener" aria-label="Facebook">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M13.500 22v-8.200h2.800l.4-3.300h-3.200V8.400c0-.9.300-1.600 1.600-1.600h1.700V3.900A22 22 0 0 0 14.400 3.800c-2.400 0-4.100 1.500-4.100 4.200v2.500H7.500v3.300h2.800V22h3.200Z"/></svg>
                     </a>
                 </c:if>
                 <c:if test="${not empty linkYoutube}">
-                    <a href="${linkYoutube}" target="_blank" rel="noopener" aria-label="YouTube">
+                    <a class="rede rede-youtube" href="${linkYoutube}" target="_blank" rel="noopener" aria-label="YouTube">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M21.600 7.200a2.600 2.600 0 0 0-1.800-1.800C18.200 5 12 5 12 5s-6.200 0-7.800.4A2.600 2.600 0 0 0 2.400 7.200 27 27 0 0 0 2 12a27 27 0 0 0 .4 4.800 2.600 2.600 0 0 0 1.800 1.800C5.800 19 12 19 12 19s6.200 0 7.800-.4a2.600 2.600 0 0 0 1.800-1.800A27 27 0 0 0 22 12a27 27 0 0 0-.4-4.800ZM10 15V9l5.200 3L10 15Z"/></svg>
                     </a>
                 </c:if>
@@ -92,6 +103,7 @@
         <div class="rodape-col">
             <button type="button" class="rodape-titulo" aria-expanded="false">Contato <span class="rodape-seta" aria-hidden="true"></span></button>
             <div class="rodape-lista">
+                <a href="mailto:rodolfoirano579@gmail.com">E-mail: rodolfoirano579@gmail.com</a>
                 <a href="https://wa.me/${zap}" target="_blank" rel="noopener">WhatsApp: (16) 99241-6492</a>
                 <span>Fatec Taquaritinga</span>
                 <span>Sistemas para Internet</span>

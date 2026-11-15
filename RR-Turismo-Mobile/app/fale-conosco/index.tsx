@@ -2,9 +2,9 @@
 // 📄 O QUE ESTE ARQUIVO FAZ:
 // Tela FALE CONOSCO. A pessoa preenche nome, e-mail, telefone,
 // assunto e mensagem (tudo validado) e aceita o uso dos dados. Ao
-// enviar, o app abre o WhatsApp da equipe com a mensagem pronta (ou o
-// e-mail). Também tem botões diretos de WhatsApp/e-mail e perguntas
-// frequentes.
+// enviar, o app abre o E-MAIL da equipe (canal principal) com a mensagem
+// pronta, ou o WhatsApp se a pessoa preferir. Também tem botões diretos de
+// e-mail/WhatsApp e perguntas frequentes.
 //
 // ✏️ ONDE MUDAR O QUÊ:
 //   - Número do WhatsApp e e-mail ........ constants/contato.ts
@@ -199,25 +199,27 @@ export default function FaleConosco() {
         {/* Canais diretos */}
         <Aparece atraso={80}>
           <View style={styles.canais}>
-            <TouchableOpacity style={[styles.canal, styles.canalZap]} onPress={() => abrirDireto("whatsapp")} accessibilityRole="button">
-              <Ionicons name="logo-whatsapp" size={24} color="#FFFFFF" />
-              <View style={{ flex: 1 }}>
-                <Text style={styles.canalTitulo}>WhatsApp</Text>
-                <Text style={styles.canalSub}>Resposta mais rápida</Text>
-              </View>
-              <Ionicons name="chevron-forward" size={18} color="#FFFFFF" />
-            </TouchableOpacity>
-
+            {/* E-mail = canal PRINCIPAL (aparece primeiro e em destaque) */}
             {emailConfigurado() && (
               <TouchableOpacity style={[styles.canal, styles.canalEmail]} onPress={() => abrirDireto("email")} accessibilityRole="button">
-                <Ionicons name="mail" size={24} color={colors.secondary} />
+                <Ionicons name="mail" size={24} color="#FFFFFF" />
                 <View style={{ flex: 1 }}>
-                  <Text style={[styles.canalTitulo, { color: colors.primary }]}>E-mail</Text>
-                  <Text style={[styles.canalSub, { color: colors.textSecondary }]}>{EMAIL_CONTATO}</Text>
+                  <Text style={styles.canalTitulo}>E-mail</Text>
+                  <Text style={styles.canalSub}>{EMAIL_CONTATO}</Text>
                 </View>
-                <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
+                <Ionicons name="chevron-forward" size={18} color="#FFFFFF" />
               </TouchableOpacity>
             )}
+
+            {/* WhatsApp continua disponível, como segunda opção */}
+            <TouchableOpacity style={[styles.canal, styles.canalZap]} onPress={() => abrirDireto("whatsapp")} accessibilityRole="button">
+              <Ionicons name="logo-whatsapp" size={24} color="#1FA855" />
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.canalTitulo, { color: colors.primary }]}>WhatsApp</Text>
+                <Text style={[styles.canalSub, { color: colors.textSecondary }]}>Se preferir, chame por aqui</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
+            </TouchableOpacity>
           </View>
         </Aparece>
 
@@ -329,13 +331,17 @@ export default function FaleConosco() {
               {!!erros.aceite && <Erro texto={erros.aceite} />}
 
               <View style={{ gap: spacing.sm, marginTop: spacing.sm }}>
-                <BotaoCartao label="Enviar pelo WhatsApp" onPress={() => enviar("whatsapp")} />
-                {emailConfigurado() && (
-                  <TouchableOpacity style={styles.botaoEmail} onPress={() => enviar("email")} accessibilityRole="button">
-                    <Ionicons name="mail-outline" size={18} color={colors.secondary} />
-                    <Text style={styles.botaoEmailTexto}>Enviar por e-mail</Text>
-                  </TouchableOpacity>
-                )}
+                {emailConfigurado() ? (
+                  <BotaoCartao label="Enviar por e-mail" onPress={() => enviar("email")} />
+                ) : null}
+                <TouchableOpacity
+                  style={[styles.botaoEmail, { borderColor: "#1FA855" }]}
+                  onPress={() => enviar("whatsapp")}
+                  accessibilityRole="button"
+                >
+                  <Ionicons name="logo-whatsapp" size={18} color="#1FA855" />
+                  <Text style={[styles.botaoEmailTexto, { color: "#1FA855" }]}>Enviar pelo WhatsApp</Text>
+                </TouchableOpacity>
               </View>
             </View>
           )}
@@ -414,8 +420,8 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     borderRadius: radius.lg,
   },
-  canalZap: { backgroundColor: "#1FA855" },
-  canalEmail: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border },
+  canalEmail: { backgroundColor: colors.primary },
+  canalZap: { backgroundColor: colors.surface, borderWidth: 1.5, borderColor: "#1FA855" },
   canalTitulo: { color: "#FFFFFF", fontSize: 16, fontWeight: "700" },
   canalSub: { color: "rgba(255,255,255,0.85)", fontSize: 13 },
 

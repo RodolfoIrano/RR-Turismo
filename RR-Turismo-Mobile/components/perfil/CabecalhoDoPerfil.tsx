@@ -1,7 +1,7 @@
 // ============================================================
 // 📄 O QUE ESTE ARQUIVO FAZ:
-// Topo do PERFIL: capa (banner) grande, foto redonda por cima
-// dela, nome e e-mail. Tocar na capa ou na foto troca a imagem
+// Topo do PERFIL (estilo Facebook): capa (banner) grande, foto redonda
+// à esquerda com metade dentro da capa, nome e e-mail. Tocar na capa ou na foto troca a imagem
 // (quem decide o que acontece é a tela que usa este componente).
 // Usado na tela Perfil e na tela Editar perfil.
 // ============================================================
@@ -28,8 +28,9 @@ interface Props {
   aoTrocarBanner: () => void;
 }
 
-const ALTURA_CAPA = 150;
-const TAMANHO_FOTO = 100;
+// Estilo Facebook: capa grande e foto redonda, à esquerda, com metade dentro da capa.
+const ALTURA_CAPA = 190;
+const TAMANHO_FOTO = 116;
 
 export default function CabecalhoDoPerfil({
   nome, email, ehGuia, foto, banner, enviandoFoto, enviandoBanner, aoTrocarFoto, aoTrocarBanner,
@@ -75,14 +76,14 @@ export default function CabecalhoDoPerfil({
             <Image source={foto} style={styles.foto} contentFit="cover" />
           ) : (
             <View style={[styles.foto, styles.fotoVazia]}>
-              <Ionicons name="person" size={44} color={colors.textMuted} />
+              <Ionicons name="person" size={50} color={colors.textMuted} />
             </View>
           )}
           <View style={styles.selo}>
             {enviandoFoto ? (
               <ActivityIndicator size="small" color={colors.textInverse} />
             ) : (
-              <Ionicons name="camera" size={15} color={colors.textInverse} />
+              <Ionicons name="camera" size={17} color={colors.textInverse} />
             )}
           </View>
         </TouchableOpacity>
@@ -119,14 +120,14 @@ const styles = StyleSheet.create({
   botaoCapaTexto: { color: colors.textInverse, fontSize: 12, fontWeight: "700" },
 
   identidade: {
-    alignItems: "center",
+    alignItems: "flex-start",
     marginTop: -(TAMANHO_FOTO / 2),
     paddingHorizontal: spacing.lg,
   },
   fotoSombra: {
     borderRadius: radius.full,
     backgroundColor: colors.background,
-    padding: 4,
+    padding: 5,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.15,
@@ -139,8 +140,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 2,
     bottom: 2,
-    width: 30,
-    height: 30,
+    width: 34,
+    height: 34,
     borderRadius: radius.full,
     backgroundColor: colors.secondary,
     alignItems: "center",

@@ -17,7 +17,7 @@ export const WHATSAPP_NUMERO = "5516992416492";
 
 // 👈 COLOQUE AQUI o e-mail da equipe. Enquanto estiver vazio ("") o app
 // esconde os botões de e-mail do Fale conosco.
-export const EMAIL_CONTATO = "";
+export const EMAIL_CONTATO = "rodolfoirano579@gmail.com";
 
 export function emailConfigurado(): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(EMAIL_CONTATO);

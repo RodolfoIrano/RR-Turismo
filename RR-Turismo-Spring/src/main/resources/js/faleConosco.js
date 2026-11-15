@@ -1,8 +1,9 @@
 /* ============================================================
    📄 O QUE ESTE ARQUIVO FAZ:
    Valida o formulário do FALE CONOSCO e, estando tudo certo, abre o
-   WhatsApp da equipe com a mensagem pronta (wa.me). Não envia nada
-   para o servidor do site e não guarda a mensagem.
+   E-MAIL da equipe (canal principal), o Gmail ou o WhatsApp, conforme o
+   botão clicado, com a mensagem pronta. Não envia nada para o servidor
+   do site e não guarda a mensagem.
 
    Regras: nome (mín. 3 letras), e-mail válido, telefone opcional com
    DDD (10 ou 11 dígitos), assunto escolhido, mensagem de 10 a 500
@@ -20,6 +21,7 @@
     var ESPERA_MS = 30000;
     var REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     var numero = (form.getAttribute("data-whatsapp") || "").replace(/\D/g, "");
+    var emailEquipe = (form.getAttribute("data-email") || "").trim();
 
     var nome = document.getElementById("cNome");
     var email = document.getElementById("cEmail");
@@ -87,6 +89,14 @@
         return l.join("\n");
     }
 
+    // Texto do e-mail (sem os asteriscos do WhatsApp).
+    function montarTextoEmail() {
+        var l = ["Olá, equipe RR Turismo!", "", "Assunto: " + assunto, "Nome: " + nome.value.trim(), "E-mail: " + email.value.trim()];
+        if (tel.value.trim()) l.push("Telefone: " + tel.value.trim());
+        l.push("", "Mensagem:", msg.value.trim(), "", "Enviado pelo site RR Turismo");
+        return l.join("\n");
+    }
+
     form.addEventListener("submit", function (e) {
         e.preventDefault();
         dizerAviso("");
@@ -103,13 +113,34 @@
             if (primeiro && primeiro.scrollIntoView) primeiro.scrollIntoView({ behavior: "smooth", block: "center" });
             return;
         }
-        if (!/^55\d{10,11}$/.test(numero)) {
-            dizerAviso("O WhatsApp da equipe ainda não foi configurado neste site.");
-            return;
+        var canal = (e.submitter && e.submitter.getAttribute("data-canal")) || "email";
+        var aviso_ok;
+        if (canal === "whatsapp") {
+            if (!/^55\d{10,11}$/.test(numero)) {
+                dizerAviso("O WhatsApp da equipe ainda não foi configurado neste site.");
+                return;
+            }
+            window.open("https://wa.me/" + numero + "?text=" + encodeURIComponent(montarTexto()), "_blank", "noopener");
+            aviso_ok = "Abrimos o WhatsApp com a sua mensagem. É só confirmar o envio por lá. Obrigado!";
+        } else {
+            if (!REGEX_EMAIL.test(emailEquipe)) {
+                dizerAviso("O e-mail da equipe ainda não foi configurado neste site.");
+                return;
+            }
+            var assuntoEmail = assunto + " - contato pelo site RR Turismo";
+            var corpo = montarTextoEmail();
+            if (canal === "gmail") {
+                window.open("https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(emailEquipe) +
+                    "&su=" + encodeURIComponent(assuntoEmail) + "&body=" + encodeURIComponent(corpo), "_blank", "noopener");
+                aviso_ok = "Abrimos o Gmail com a sua mensagem. É só clicar em Enviar. Obrigado!";
+            } else {
+                window.location.href = "mailto:" + emailEquipe + "?subject=" + encodeURIComponent(assuntoEmail) +
+                    "&body=" + encodeURIComponent(corpo);
+                aviso_ok = "Abrimos o seu programa de e-mail com a mensagem pronta. É só enviar. Se nada abriu, use o botão \"Abrir no Gmail\".";
+            }
         }
-        window.open("https://wa.me/" + numero + "?text=" + encodeURIComponent(montarTexto()), "_blank", "noopener");
         try { sessionStorage.setItem("rr_contato_ultimo", String(Date.now())); } catch (x) { }
-        dizerAviso("Abrimos o WhatsApp com a sua mensagem. É só confirmar o envio por lá. Obrigado!", true);
+        dizerAviso(aviso_ok, true);
         msg.value = ""; aceite.checked = false;
         document.getElementById("contador").textContent = "0/500";
     });

@@ -129,7 +129,7 @@ export default function GuideProfile() {
         <View style={styles.header}>
           <Image source={{ uri: guide.photo }} style={styles.avatar} />
 
-          <Text style={[typography.h1, styles.centro]}>{guide.name}</Text>
+          <Text style={typography.h1}>{guide.name}</Text>
 
           <Text style={typography.bodyMuted}>
             {t.guia.guiaTuristico}{guide.location ? ` • ${guide.location}` : ""}
@@ -304,20 +304,20 @@ const styles = StyleSheet.create({
 
   // Área com as informações principais do guia
   header: {
-    alignItems: "center",
+    alignItems: "flex-start",
   },
 
   // Banner: sai do padding da tela para encostar nas bordas.
-  bannerArea: { marginHorizontal: -spacing.lg, height: 150, marginBottom: -48 },
-  banner: { width: "100%", height: 150 },
+  bannerArea: { marginHorizontal: -spacing.lg, height: 190, marginBottom: -58 },
+  banner: { width: "100%", height: 190 },
 
   // Foto de perfil do guia
   avatar: {
-    width: 96,
-    height: 96,
+    width: 116,
+    height: 116,
     borderRadius: radius.full,
     marginBottom: spacing.md,
-    borderWidth: 4,
+    borderWidth: 5,
     borderColor: colors.background,
     backgroundColor: colors.backgroundMuted,
   },

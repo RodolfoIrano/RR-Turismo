@@ -30,10 +30,10 @@
     <link rel="stylesheet" href="/css/padrao.css?v=8">
     <link rel="stylesheet" href="/css/perfil.css?v=2">
     <c:if test="${pagina == 'editarPerfil.jsp'}">
-        <link rel="stylesheet" href="/css/editarPerfil.css?v=2">
+        <link rel="stylesheet" href="/css/editarPerfil.css?v=4">
     </c:if>
     <c:if test="${pagina == 'perfilPublico.jsp'}">
-        <link rel="stylesheet" href="/css/perfilPublico.css?v=2">
+        <link rel="stylesheet" href="/css/perfilPublico.css?v=4">
     </c:if>
     <link rel="stylesheet" href="/css/inicio.css">
     <link rel="stylesheet" href="/css/criarViagem.css?v=3">
@@ -41,7 +41,7 @@
     <%-- catalogo.css fica por último para não ser sobrescrito pelos estilos das outras páginas --%>
     <link rel="stylesheet" href="/css/catalogo.css?v=7">
     <%-- site.css: topo, rodapé, banner, chat e responsivo (também usado no painel) --%>
-    <link rel="stylesheet" href="/css/site.css?v=16">
+    <link rel="stylesheet" href="/css/site.css?v=19">
     <link rel="icon" href="/imagens/logo_preta.png">
 </head>
 
@@ -238,17 +238,26 @@
         </div>
     </header>
 
-    <%-- IDIOMA: botão pequeno fixo no canto de baixo (saiu do cabeçalho) --%>
-    <div class="idioma-flutuante">
-        <button class="lang-trigger" id="langTrigger" type="button" aria-expanded="false"
-            aria-controls="langModal" onclick="LangSelector.open()" aria-label="Idioma">
-            <span class="globe-icon" aria-hidden="true">&#127760;</span>
-            <span id="current-lang-flag">BR</span>
-            <span id="current-lang-label">Portugu&ecirc;s (BR)</span>
-        </button>
-    </div>
-
     <main class="conteudo site-conteudo">
+        <%-- IDIOMA (modo site): o MESMO botão inteiro do painel (globo, bandeira, nome e seta).
+             Na página inicial ele fica por cima do banner (está dentro do inicio.jsp);
+             nas outras páginas aparece nesta linha, no topo do conteúdo. --%>
+        <c:if test="${pagina != 'inicio.jsp'}">
+            <div class="idioma-linha">
+                <button class="lang-trigger" id="langTrigger" type="button" aria-expanded="false"
+                    aria-controls="langModal" onclick="LangSelector.open()">
+                    <span class="globe-icon" aria-hidden="true">&#127760;</span>
+                    <span id="current-lang-flag">BR</span>
+                    <span id="current-lang-label">Portugu&ecirc;s (BR)</span>
+                    <svg class="chevron" viewBox="0 0 24 24" width="14" height="14" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                </button>
+            </div>
+        </c:if>
+
         <!-- MENSAGENS DE FEEDBACK -->
         <c:if test="${not empty mensagemErro}">
             <div class="toast-erro">${mensagemErro}</div>
