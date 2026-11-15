@@ -7,7 +7,7 @@
     <!-- MENU LATERAL -->
     <aside class="perfil-sidebar">
         <h2>Meu Perfil</h2>
-        <a href="#secao-foto">Foto e Banner</a>
+        <a href="#secao-foto">Capa e Foto</a>
         <a href="#secao-dados">
             <c:choose>
                 <c:when test="${sessionScope.usuarioLogado.guia}">Dados do Guia</c:when>
@@ -36,44 +36,40 @@
                  SEÇÃO: FOTO E BANNER
             ======================== -->
             <section id="secao-foto" class="form-card perfil-card">
-                <h2>Foto e Banner</h2>
+                <h2>Capa e Foto</h2>
 
-                <!-- BANNER (separado da foto, sem cobrir) -->
-                <div class="banner-wrapper">
+                <!-- CAPA + FOTO (estilo Facebook): a foto redonda fica dentro da capa, no canto de baixo -->
+                <div class="capa-edicao">
                     <div class="banner-preview" id="bannerPreview">
                         <c:if test="${not empty perfil.bannerBase64}">
-                            <img src="${perfil.bannerBase64}" alt="Banner atual">
+                            <img src="${perfil.bannerBase64}" alt="Capa atual">
                         </c:if>
-                        <label class="upload-banner" title="Alterar banner">
+                        <label class="upload-banner" title="Alterar capa">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                                 <polyline points="17 8 12 3 7 8"/>
                                 <line x1="12" y1="3" x2="12" y2="15"/>
                             </svg>
-                            Alterar Banner
+                            Alterar Capa
                             <form:input path="bannerFile" type="file" id="bannerInput" accept="image/*" hidden="hidden" />
                         </label>
                     </div>
-                </div>
 
-                <!-- FOTO DO PERFIL (abaixo do banner, nunca sobreposta) -->
-                <div class="profile-photo-section">
                     <div class="profile-photo-container">
                         <img src="${not empty perfil.fotoBase64 ? perfil.fotoBase64 : '/imagens/user-placeholder.svg'}"
                              id="previewPerfil"
                              class="profile-photo"
                              alt="Foto do perfil">
-                        <label class="upload-photo" title="Alterar foto">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <label class="upload-photo" title="Alterar foto" aria-label="Alterar foto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                                 <circle cx="12" cy="13" r="4"/>
                             </svg>
-                            Alterar Foto
                             <form:input path="fotoFile" type="file" id="fotoPerfil" accept="image/*" hidden="hidden" />
                         </label>
                     </div>
-                    <p class="foto-hint">Clique em "Alterar Foto" para escolher uma imagem do seu dispositivo.</p>
                 </div>
+                <p class="foto-hint">Use "Alterar Capa" para a imagem grande e a câmera para a foto redonda. É assim que o seu perfil aparece para os outros.</p>
             </section>
 
             <!-- ========================

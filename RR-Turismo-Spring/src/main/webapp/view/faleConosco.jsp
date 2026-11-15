@@ -4,11 +4,13 @@
   📄 O QUE ESTE ARQUIVO FAZ:
   Página FALE CONOSCO (pública). A pessoa preenche nome, e-mail,
   telefone (opcional), assunto e mensagem; tudo é VALIDADO no navegador.
-  Ao enviar, abre o WhatsApp da equipe com a mensagem pronta.
-  NADA é guardado em banco: o site só monta o texto e entrega ao WhatsApp.
+  O canal PRINCIPAL é o E-MAIL: ao enviar, abre o programa de e-mail (ou o Gmail)
+  com a mensagem pronta. O WhatsApp continua como segunda opção.
+  NADA é guardado em banco: o site só monta o texto e entrega ao e-mail/WhatsApp.
   Embaixo ficam as perguntas frequentes (#perguntas).
 
   ✏️ ONDE MUDAR O QUÊ:
+    - E-mail da equipe ........... data-email na <form> (e nos links "mailto:" abaixo)
     - Número do WhatsApp ......... data-whatsapp na <form> (só números, 55+DDD+número)
     - Assuntos (botões) .......... bloco "chips-assunto"
     - Perguntas frequentes ....... <details> da seção #perguntas
@@ -19,12 +21,12 @@
     <section class="catalogo-topo">
         <span class="catalogo-etiqueta">Fale conosco</span>
         <h1>Como podemos ajudar?</h1>
-        <p>Escreva sua mensagem: ela abre direto no WhatsApp da nossa equipe, já pronta para enviar.</p>
+        <p>Escreva sua mensagem: ela vira um e-mail pronto para a nossa equipe. Se preferir, também dá para enviar pelo WhatsApp.</p>
     </section>
 
     <div class="contato-layout">
 
-        <form id="formContato" class="contato-form" novalidate data-whatsapp="5516992416492">
+        <form id="formContato" class="contato-form" novalidate data-email="rodolfoirano579@gmail.com" data-whatsapp="5516992416492">
             <div class="contato-aviso" id="contatoAviso" role="alert" hidden></div>
 
             <div class="contato-campo">
@@ -74,17 +76,27 @@
             </label>
             <small class="erro" data-erro="cAceite"></small>
 
-            <button type="submit" class="contato-enviar">
+            <button type="submit" class="contato-enviar contato-enviar-email" data-canal="email">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 8 8 6 8-6"/></svg>
+                Enviar por e-mail
+            </button>
+            <button type="submit" class="contato-link" data-canal="gmail">O e-mail não abriu? Abrir no Gmail</button>
+
+            <div class="contato-ou"><span>ou</span></div>
+
+            <button type="submit" class="contato-enviar contato-enviar-zap" data-canal="whatsapp">
                 <img src="/imagens/whatsapp.png" alt=""> Enviar pelo WhatsApp
             </button>
-            <p class="contato-nota">Não guardamos esta mensagem no site: ela vai direto para o seu WhatsApp, e você confirma o envio por lá.</p>
+            <p class="contato-nota">Não guardamos esta mensagem no site: ela vai direto para o seu e-mail ou WhatsApp, e você confirma o envio por lá.</p>
         </form>
 
         <aside class="contato-lateral">
             <div class="contato-cartao">
                 <h3>Prefere falar direto?</h3>
-                <p>Chame a equipe pelo WhatsApp.</p>
-                <a class="botao-catalogo" target="_blank" rel="noopener" href="https://wa.me/5516992416492?text=Ol%C3%A1!%20Vim%20pelo%20site%20do%20RR%20Turismo.">WhatsApp (16) 99241-6492</a>
+                <p>O e-mail é o nosso canal principal:</p>
+                <a class="botao-catalogo" href="mailto:rodolfoirano579@gmail.com">rodolfoirano579@gmail.com</a>
+                <p class="contato-ou-zap">Ou, se for mais fácil, chame no WhatsApp:</p>
+                <a class="texto-link" target="_blank" rel="noopener" href="https://wa.me/5516992416492?text=Ol%C3%A1!%20Vim%20pelo%20site%20do%20RR%20Turismo.">WhatsApp (16) 99241-6492 &rarr;</a>
             </div>
             <div class="contato-cartao">
                 <h3>Quem somos</h3>
@@ -106,4 +118,4 @@
         </div>
     </section>
 </div>
-<script src="/js/faleConosco.js?v=1"></script>
+<script src="/js/faleConosco.js?v=2"></script>

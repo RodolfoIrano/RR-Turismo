@@ -45,9 +45,9 @@ public class DadosDoSiteAdvice {
 
     @ModelAttribute("categoriasRodape")
     public List<String> categoriasRodape() {
-        return editarViagemService.listarTodas().stream()
-                .map(Viagem::getCategoria)
-                .filter(c -> c != null && !c.isBlank())
+        // Consulta leve: só os nomes (antes carregava todas as viagens com fotos em TODA página).
+        return editarViagemService.listarCategorias().stream()
+                .map(String::trim)
                 .distinct()
                 .sorted(String.CASE_INSENSITIVE_ORDER)
                 .limit(6)

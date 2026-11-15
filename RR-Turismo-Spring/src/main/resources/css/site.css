@@ -119,6 +119,16 @@ body.modo-site { background: #f1f5fb; }
     background: rgba(255,255,255,.1); color: #fff; transition: background .2s, transform .2s;
 }
 .rodape-redes a:hover { background: var(--azul3); transform: translateY(-2px); text-decoration: none; }
+/* Ao passar o mouse, a COR DA MARCA aparece dentro do próprio desenho do ícone
+   (não no fundo): WhatsApp verde, Facebook azul, Instagram rosa e YouTube vermelho. */
+.rodape-redes a.rede svg { transition: color .25s, transform .25s; }
+.rodape-redes a.rede:hover { background: rgba(255,255,255,.14); }
+.rodape-redes a.rede:hover svg { transform: scale(1.15); }
+.rodape-redes a.rede-whatsapp:hover { color: #25d366; }
+.rodape-redes a.rede-facebook:hover { color: #3b8cff; }
+.rodape-redes a.rede-youtube:hover { color: #ff3b3b; }
+.rodape-redes a.rede-instagram:hover svg { stroke: url(#gradInstagram); }
+.rodape-redes a.rede-instagram:hover svg circle[fill] { fill: url(#gradInstagram); }
 .rodape-titulo {
     display: flex; align-items: center; justify-content: space-between; width: 100%;
     background: none; border: none; color: #fff; text-align: left; padding: 0 0 12px;
@@ -300,6 +310,15 @@ body.modo-site { overflow-x: clip; }
 .contato-enviar { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px; border: none; border-radius: 14px; cursor: pointer; background: #25d366; color: #04210f; font-size: 15px; font-weight: 700; }
 .contato-enviar:hover { background: #1fbd5a; }
 .contato-enviar img { width: 22px; height: 22px; }
+/* E-mail = botão principal (azul); WhatsApp = opção secundária (contorno verde). */
+.contato-enviar-email { background: var(--azul3, #0a3bd1); color: #fff; }
+.contato-enviar-email:hover { background: #0830a8; }
+.contato-enviar-zap { background: #fff; color: #0f7a3c; border: 2px solid #25d366; }
+.contato-enviar-zap:hover { background: #eafaf1; }
+.contato-link { align-self: center; background: none; border: none; padding: 2px 4px; cursor: pointer; color: #0a3bd1; font-size: 13px; text-decoration: underline; }
+.contato-ou { display: flex; align-items: center; gap: 12px; color: #8a93a6; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+.contato-ou::before, .contato-ou::after { content: ""; flex: 1; height: 1px; background: #e1e6f0; }
+.contato-ou-zap { margin: 14px 0 6px; }
 .contato-nota { margin: 0; font-size: 12px; color: #5b6475; text-align: center; }
 .contato-aviso { padding: 12px 16px; border-radius: 12px; background: #fff1f1; color: #a52a2d; font-size: 14px; font-weight: 600; }
 .contato-aviso.ok { background: #e9f9ee; color: #176a36; }
@@ -656,16 +675,16 @@ body.acc-escuro .sobre-bloco *, body.acc-escuro .contato-form label, body.acc-es
 .engrenagem-btn[aria-expanded="true"] svg { transform: rotate(60deg); }
 .site-acoes .perfil-dropdown { width: 210px; }
 
-/* botão de idioma pequeno no canto de baixo (esquerda). ✏️ Para mover: troque left por right. */
-.idioma-flutuante { position: fixed; left: 16px; bottom: 16px; z-index: 850; }
-.idioma-flutuante .lang-trigger {
-    min-width: 0; height: 40px; padding: 0 14px; gap: 8px; font-size: 13px;
-    background: #0a1f6b; border-color: rgba(255,255,255,.35);
-    box-shadow: 0 8px 20px rgba(0, 17, 70, .35);
+/* ---------- tradutor (modo site): MESMO botão inteiro do painel ----------
+   Na home fica por cima do banner (alinhado com o texto do banner); nas outras páginas, numa linha no topo. */
+.banner-idioma { position: absolute; z-index: 6; top: 22px; left: max(24px, calc(50vw - 596px)); }
+.banner-idioma .lang-trigger, .idioma-linha .lang-trigger { box-shadow: 0 10px 26px rgba(0, 17, 70, .35); }
+.idioma-linha { display: flex; margin: -6px 0 18px; }
+.banner-idioma #current-lang-label, .idioma-linha #current-lang-label { max-width: none; } /* nome do idioma inteiro, também no celular */
+@media (max-width: 600px) {
+    .banner-idioma { top: 14px; left: 16px; }
+    .banner-idioma .lang-trigger, .idioma-linha .lang-trigger { min-width: 0; height: 46px; padding: 0 16px; font-size: 14px; }
 }
-.idioma-flutuante .lang-trigger .globe-icon { font-size: 16px; }
-.idioma-flutuante .lang-trigger #current-lang-label { display: none; }
-@media (max-width: 600px) { .idioma-flutuante { left: 10px; bottom: 10px; } }
 
 /* celular: carrinho e engrenagem lado a lado; nome do usuário embaixo, em linha própria */
 @media (max-width: 900px) {

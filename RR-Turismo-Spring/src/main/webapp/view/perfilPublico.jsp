@@ -10,62 +10,66 @@
 
 <div class="public-profile-page">
 
-    <!-- BANNER -->
-    <section class="public-banner">
-        <c:choose>
-            <c:when test="${not empty perfil.bannerBase64}">
-                <img src="${perfil.bannerBase64}" alt="Banner do perfil">
-            </c:when>
-            <c:otherwise>
-                <div class="banner-padrao"></div>
-            </c:otherwise>
-        </c:choose>
-    </section>
+    <!-- CAPA + FOTO (estilo Facebook): a foto redonda fica "dentro" da capa, no canto de baixo -->
+    <section class="public-card">
 
-    <!-- PERFIL: FOTO + NOME (sem sobrepor o banner) -->
-    <section class="public-profile">
-
-        <div class="public-avatar-wrapper">
-            <img src="${not empty perfil.fotoBase64 ? perfil.fotoBase64 : '/imagens/user-placeholder.svg'}"
-                 class="public-avatar"
-                 alt="Foto do perfil">
+        <div class="public-banner">
+            <c:choose>
+                <c:when test="${not empty perfil.bannerBase64}">
+                    <img src="${perfil.bannerBase64}" alt="Capa do perfil">
+                </c:when>
+                <c:otherwise>
+                    <div class="banner-padrao"></div>
+                </c:otherwise>
+            </c:choose>
         </div>
 
-        <h1><c:out value="${nomePerfil}" /></h1>
+        <div class="public-profile">
 
-        <div class="badges">
-            <span>
-                <c:choose>
-                    <c:when test="${isGuia}">&#10004; Guia Verificado</c:when>
-                    <c:when test="${isViajante}">&#9992; Viajante</c:when>
-                    <c:otherwise>&#10004; Empresa Verificada</c:otherwise>
-                </c:choose>
-            </span>
-            <c:if test="${not empty usuario.cadastur}">
-                <span>&#10004; CADASTUR</span>
-            </c:if>
+            <div class="public-avatar-wrapper">
+                <img src="${not empty perfil.fotoBase64 ? perfil.fotoBase64 : '/imagens/user-placeholder.svg'}"
+                     class="public-avatar"
+                     alt="Foto do perfil">
+            </div>
+
+            <div class="public-info">
+                <h1><c:out value="${nomePerfil}" /></h1>
+
+                <div class="badges">
+                    <span>
+                        <c:choose>
+                            <c:when test="${isGuia}">&#10004; Guia Verificado</c:when>
+                            <c:when test="${isViajante}">&#9992; Viajante</c:when>
+                            <c:otherwise>&#10004; Empresa Verificada</c:otherwise>
+                        </c:choose>
+                    </span>
+                    <c:if test="${not empty usuario.cadastur}">
+                        <span>&#10004; CADASTUR</span>
+                    </c:if>
+                </div>
+
+                <c:if test="${not empty perfil.cidade || not empty perfil.estado || not empty usuario.local}">
+                    <p class="location">
+                        &#128205;
+                        <c:choose>
+                            <c:when test="${not empty perfil.cidade || not empty perfil.estado}">
+                                <c:out value="${perfil.cidade}" />
+                                <c:if test="${not empty perfil.cidade && not empty perfil.estado}"> - </c:if>
+                                <c:out value="${perfil.estado}" />
+                            </c:when>
+                            <c:otherwise>
+                                <c:out value="${usuario.local}" />
+                            </c:otherwise>
+                        </c:choose>
+                    </p>
+                </c:if>
+
+                <c:if test="${not empty perfil.idiomas}">
+                    <p class="languages">&#127758; <c:out value="${perfil.idiomas}" /></p>
+                </c:if>
+            </div>
+
         </div>
-
-        <c:if test="${not empty perfil.cidade || not empty perfil.estado || not empty usuario.local}">
-            <p class="location">
-                &#128205;
-                <c:choose>
-                    <c:when test="${not empty perfil.cidade || not empty perfil.estado}">
-                        <c:out value="${perfil.cidade}" />
-                        <c:if test="${not empty perfil.cidade && not empty perfil.estado}"> - </c:if>
-                        <c:out value="${perfil.estado}" />
-                    </c:when>
-                    <c:otherwise>
-                        <c:out value="${usuario.local}" />
-                    </c:otherwise>
-                </c:choose>
-            </p>
-        </c:if>
-
-        <c:if test="${not empty perfil.idiomas}">
-            <p class="languages">&#127758; <c:out value="${perfil.idiomas}" /></p>
-        </c:if>
-
     </section>
 
     <!-- ESTATÍSTICAS -->

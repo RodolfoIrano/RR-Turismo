@@ -8,18 +8,27 @@
 
 
 /* =========================================================
-   BANNER
+   CAPA + FOTO (estilo Facebook)
+   ✏️ Altura da capa .......... .public-banner { height }
+   ✏️ Tamanho da foto ......... .public-avatar { width/height } (e o margin-top
+                                 de .public-avatar-wrapper = metade do tamanho, negativo)
 ========================================================= */
 
-.public-banner {
-    height: 280px;
+.public-card {
+    margin-bottom: 24px;
     overflow: hidden;
+    border: 1px solid #e4e9f2;
     border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 18px 42px rgba(0, 49, 120, 0.12);
+}
+
+.public-banner {
+    height: clamp(220px, 30vw, 360px);
+    overflow: hidden;
     background:
         linear-gradient(135deg, rgba(0, 49, 120, 0.88), rgba(0, 110, 255, 0.66)),
         linear-gradient(120deg, var(--azul8), #38bdf8);
-    box-shadow: 0 18px 42px rgba(0, 49, 120, 0.18);
-    margin-bottom: 0;
 }
 
 .public-banner img,
@@ -30,40 +39,42 @@
     display: block;
 }
 
-
-/* =========================================================
-   PERFIL: FOTO + NOME (abaixo do banner, sem sobreposição)
-========================================================= */
-
+/* foto à esquerda (metade sobre a capa) e nome ao lado, como no Facebook */
 .public-profile {
-    text-align: center;
-    padding: 0 18px;
-    margin-top: 30px;
-    margin-bottom: 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 26px;
+    padding: 0 34px 28px;
 }
 
 .public-avatar-wrapper {
-    display: inline-block;
-    margin-bottom: 16px;
+    flex: 0 0 auto;
+    margin-top: -84px;
 }
 
 .public-avatar {
-    width: 160px;
-    height: 160px;
+    width: 168px;
+    height: 168px;
     border: 6px solid #ffffff;
     border-radius: 50%;
     object-fit: cover;
     background: #ffffff;
-    box-shadow: 0 12px 30px rgba(22, 34, 51, 0.2);
+    box-shadow: 0 12px 30px rgba(22, 34, 51, 0.25);
     display: block;
+}
+
+.public-info {
+    flex: 1;
+    min-width: 0;
+    padding-top: 18px;
 }
 
 .public-profile h1 {
     margin-top: 0;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     color: #172033;
-    font-size: 36px;
-    font-weight: 800;
+    font-size: 34px;
+    font-weight: 700;
     line-height: 1.2;
 }
 
@@ -73,7 +84,7 @@
 
 .badges span {
     display: inline-block;
-    margin: 4px;
+    margin: 4px 8px 4px 0;
     padding: 8px 14px;
     border-radius: 999px;
     background: #eef6ff;
@@ -113,7 +124,7 @@
 .stat-card h2 {
     color: var(--azul3);
     font-size: 30px;
-    font-weight: 800;
+    font-weight: 700;
     margin-bottom: 4px;
 }
 
@@ -140,7 +151,7 @@
     margin-bottom: 14px;
     color: #172033;
     font-size: 22px;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .public-section p {
@@ -241,7 +252,7 @@
     background: var(--azul3);
     color: #ffffff;
     font-size: 14px;
-    font-weight: 800;
+    font-weight: 700;
     box-shadow: 0 8px 22px rgba(0, 110, 255, 0.22);
     transition: background 0.2s, transform 0.2s;
 }
@@ -262,18 +273,24 @@
     }
 }
 
-@media (max-width: 560px) {
-    .public-banner {
-        height: 180px;
-        border-radius: 14px;
+@media (max-width: 700px) {
+    .public-profile {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        padding: 0 20px 24px;
+        text-align: center;
     }
 
-    .public-profile h1 {
-        font-size: 28px;
-    }
+    .public-avatar-wrapper { margin-top: -64px; }
 
     .public-avatar {
-        width: 120px;
-        height: 120px;
+        width: 128px;
+        height: 128px;
+        border-width: 5px;
     }
+
+    .public-info { padding-top: 12px; }
+    .public-profile h1 { font-size: 26px; }
+    .badges span { margin: 4px; }
 }

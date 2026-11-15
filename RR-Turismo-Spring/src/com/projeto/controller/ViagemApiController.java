@@ -2,7 +2,9 @@ package com.projeto.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
+import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -84,7 +86,9 @@ public class ViagemApiController {
         }
         // "w" = largura máxima pedida pelo app (versão leve para o celular).
         RedimensionadorDeImagem.Imagem img = RedimensionadorDeImagem.servir("viagem-" + id, viagem.getImagem(), w);
-        return ResponseEntity.ok().contentType(img.tipo()).body(img.bytes());
+        // O navegador guarda a foto por 1 minuto (evita baixar de novo a cada página).
+        return ResponseEntity.ok().cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS).cachePublic())
+                .contentType(img.tipo()).body(img.bytes());
     }
 
     // Serve a foto EXTRA número "n" da viagem (1 = 2ª foto, 2 = 3ª...). A capa é /viagens/{id}/imagem.
@@ -98,7 +102,8 @@ public class ViagemApiController {
         }
         RedimensionadorDeImagem.Imagem img =
                 RedimensionadorDeImagem.servir("viagem-" + id + "-" + n + "-" + dados.length, dados, w);
-        return ResponseEntity.ok().contentType(img.tipo()).body(img.bytes());
+        return ResponseEntity.ok().cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS).cachePublic())
+                .contentType(img.tipo()).body(img.bytes());
     }
 
     // Converte a viagem para o formato do app, já com a lista de fotos.

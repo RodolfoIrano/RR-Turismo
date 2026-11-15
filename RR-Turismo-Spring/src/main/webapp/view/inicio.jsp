@@ -89,6 +89,21 @@
             <button type="submit" class="banner-busca-ok">Buscar</button>
         </form>
 
+        <%-- Tradutor por cima do banner (mesmo botão inteiro do painel) --%>
+        <div class="banner-idioma">
+            <button class="lang-trigger" id="langTrigger" type="button" aria-expanded="false"
+                aria-controls="langModal" onclick="LangSelector.open()">
+                <span class="globe-icon" aria-hidden="true">&#127760;</span>
+                <span id="current-lang-flag">BR</span>
+                <span id="current-lang-label">Portugu&ecirc;s (BR)</span>
+                <svg class="chevron" viewBox="0 0 24 24" width="14" height="14" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9" />
+                </svg>
+            </button>
+        </div>
+
         <div class="banner-pontos" aria-label="Escolher slide">
             <c:forEach begin="1" end="${destaques.size() + (faltam > 0 ? faltam : 0)}" var="n">
                 <button type="button" aria-label="Slide ${n}"></button>

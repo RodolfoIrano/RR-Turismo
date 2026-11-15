@@ -137,6 +137,23 @@ export default function Home() {
 
 
   // ==========================================================
+  // PUXAR PARA ATUALIZAR
+  // ----------------------------------------------------------
+  // Atualiza em segundo plano, mostrando só a rodinha do
+  // RefreshControl. Antes ele chamava loadData() direto, que
+  // trocava a tela inteira por "Carregando..." e fazia o topo
+  // azul piscar.
+  // ==========================================================
+  const [atualizando, setAtualizando] = useState(false);
+
+  async function atualizar() {
+    setAtualizando(true);
+    await loadData(false);
+    setAtualizando(false);
+  }
+
+
+  // ==========================================================
   // NAVEGAÇÃO PARA A TELA EXPLORAR
   // ----------------------------------------------------------
   // Pode enviar uma pesquisa ou uma categoria para a tela
@@ -163,14 +180,15 @@ export default function Home() {
   // indicador de carregamento.
   // ==========================================================
   if (status === "loading") {
+    // O topo continua AZUL (igual à tela pronta), só o corpo é branco.
+    // Antes o topo ficava branco aqui e azul depois, e por isso "piscava".
     return (
-      <SafeAreaView
-        style={[styles.safe, { backgroundColor: colors.background }]}
-        edges={["top"]}
-      >
+      <SafeAreaView style={styles.safe} edges={["top"]}>
         <Header />
 
-        <Loading label="Carregando viagens..." />
+        <View style={styles.corpoClaro}>
+          <Loading label="Carregando viagens..." />
+        </View>
       </SafeAreaView>
     );
   }
@@ -184,23 +202,22 @@ export default function Home() {
   // ==========================================================
   if (status === "error") {
     return (
-      <SafeAreaView
-        style={[styles.safe, { backgroundColor: colors.background }]}
-        edges={["top"]}
-      >
+      <SafeAreaView style={styles.safe} edges={["top"]}>
         <Header />
 
-        <EmptyState
-          icon="cloud-offline-outline"
-          title="Não foi possível carregar as viagens."
-          message="Verifique sua conexão e tente novamente."
-        />
-
-        <View style={{ padding: spacing.lg }}>
-          <PrimaryButton
-            label="Tentar novamente"
-            onPress={loadData}
+        <View style={styles.corpoClaro}>
+          <EmptyState
+            icon="cloud-offline-outline"
+            title="Não foi possível carregar as viagens."
+            message="Verifique sua conexão e tente novamente."
           />
+
+          <View style={{ padding: spacing.lg }}>
+            <PrimaryButton
+              label="Tentar novamente"
+              onPress={() => loadData(true)}
+            />
+          </View>
         </View>
       </SafeAreaView>
     );
@@ -229,8 +246,10 @@ export default function Home() {
         // Permite atualizar a tela puxando o conteúdo para baixo
         refreshControl={
           <RefreshControl
-            refreshing={false}
-            onRefresh={loadData}
+            refreshing={atualizando}
+            onRefresh={atualizar}
+            tintColor={colors.primary}
+            colors={[colors.primary]}
           />
         }
       >
@@ -425,6 +444,12 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: colors.primary,
+  },
+
+  // Corpo branco das telas de carregando/erro (o topo continua azul).
+  corpoClaro: {
+    flex: 1,
+    backgroundColor: colors.background,
   },
 
   // Bloco azul abaixo do cabeçalho: saudação + pesquisa.

@@ -1,7 +1,7 @@
 // ============================================================
 // 📄 O QUE ESTE ARQUIVO FAZ:
-// É o "MOLDE" visual das telas de LOGIN e CADASTRO: fundo com
-// círculos coloridos flutuando, a logo e um CARTÃO moderno (cantos
+// É o "MOLDE" visual das telas de LOGIN e CADASTRO: fundo igual ao do
+// login do site (foto de praia + degradê azul), a logo e um CARTÃO moderno (cantos
 // arredondados + sombra) que sobe animado. Dentro do cartão tem as
 // abas "Entrar | Criar conta" (com um marcador que desliza) e o
 // conteúdo de cada tela.
@@ -23,6 +23,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import Svg, { Defs, LinearGradient, Rect, Stop } from "react-native-svg";
 import { Text } from "../TextoTraduzido";
 import { colors } from "../../constants/colors";
 import { spacing } from "../../constants/spacing";
@@ -38,39 +39,28 @@ interface Props {
   children: React.ReactNode;
 }
 
-// ---------- Círculos decorativos que flutuam devagar ----------
-// Foto de fundo (a mesma do login do site). Precisa de internet; sem ela,
-// aparece só o azul escuro. ✏️ Para trocar a foto, mude o endereço abaixo.
+// ---------- Fundo (igual ao do login do site) ----------
+// Foto de praia + degradê azul por cima, com as MESMAS cores do site
+// (site: css/login.css e css/entrar.css). A foto precisa de internet; sem ela,
+// aparece só o degradê azul. ✏️ Para trocar a foto, mude o endereço abaixo.
 const FOTO_DE_FUNDO = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=70";
 
-function CirculoFlutuante({ tamanho, cor, estilo, duracao }: { tamanho: number; cor: string; estilo: object; duracao: number }) {
-  const vai = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    const laco = Animated.loop(
-      Animated.sequence([
-        Animated.timing(vai, { toValue: 1, duration: duracao, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
-        Animated.timing(vai, { toValue: 0, duration: duracao, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
-      ])
-    );
-    laco.start();
-    return () => laco.stop();
-  }, [duracao, vai]);
-
+function FundoDoSite() {
   return (
-    <Animated.View
-      pointerEvents="none"
-      style={[
-        {
-          position: "absolute",
-          width: tamanho,
-          height: tamanho,
-          borderRadius: tamanho / 2,
-          backgroundColor: cor,
-          transform: [{ translateY: vai.interpolate({ inputRange: [0, 1], outputRange: [-12, 12] }) }],
-        },
-        estilo,
-      ]}
-    />
+    <>
+      <Image source={{ uri: FOTO_DE_FUNDO }} style={StyleSheet.absoluteFill} resizeMode="cover" />
+      {/* Degradê 160° do site: azul bem escuro → azul → azul claro (com transparência). */}
+      <Svg style={StyleSheet.absoluteFill} width="100%" height="100%" preserveAspectRatio="none" pointerEvents="none">
+        <Defs>
+          <LinearGradient id="degradeDoSite" x1="0.11" y1="-0.02" x2="0.89" y2="1.02">
+            <Stop offset="0" stopColor="#001146" stopOpacity={0.93} />
+            <Stop offset="0.55" stopColor="#090FC2" stopOpacity={0.8} />
+            <Stop offset="1" stopColor="#006EFF" stopOpacity={0.7} />
+          </LinearGradient>
+        </Defs>
+        <Rect x="0" y="0" width="100%" height="100%" fill="url(#degradeDoSite)" />
+      </Svg>
+    </>
   );
 }
 
@@ -160,15 +150,8 @@ export default function TelaAuth({ aba, retornarPara, titulo, subtitulo, childre
       style={{ flex: 1, backgroundColor: colors.primaryDark }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
-      {/* Fundo: foto de praia com camada azul por cima (igual ao site). O cartão continua branco. */}
-      <Image source={{ uri: FOTO_DE_FUNDO }} style={StyleSheet.absoluteFill} resizeMode="cover" />
-      <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(0,17,70,0.80)" }]} />
-      <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(0,110,255,0.16)" }]} />
-
-      {/* Círculos decorativos flutuando (claros sobre o fundo escuro) */}
-      <CirculoFlutuante tamanho={280} cor="rgba(79,195,255,0.10)" estilo={{ top: -90, right: -90 }} duracao={4200} />
-      <CirculoFlutuante tamanho={220} cor="rgba(255,255,255,0.06)" estilo={{ bottom: 40, left: -80 }} duracao={5000} />
-      <CirculoFlutuante tamanho={150} cor="rgba(255,122,61,0.10)" estilo={{ top: 260, left: -40 }} duracao={3800} />
+      {/* Fundo igual ao do site (sem bolinhas) */}
+      <FundoDoSite />
 
       <ScrollView
         contentContainerStyle={styles.container}
