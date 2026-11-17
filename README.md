@@ -65,6 +65,18 @@ Siga o [`RR-Turismo-Spring/README.md`](RR-Turismo-Spring/README.md). Resumo:
 2. **Windows:** duplo clique em `rodar.bat` · **Mac/Linux:** `./rodar.sh`
 3. Aguarde `Tomcat started on port 9000` e abra http://localhost:9000
 
+### Dados de exemplo (já vêm prontos)
+Na **primeira vez** que o servidor liga com o banco vazio, ele cria sozinho **6 viagens de exemplo** (Rio de Janeiro, Gramado, Fernando de Noronha, Foz do Iguaçu, Bonito e Salvador) e duas contas de demonstração. Você já pode entrar sem cadastrar nada:
+
+| Conta | E-mail | Senha |
+|---|---|---|
+| **Guia** (dona das viagens de exemplo) | `guia.demo@rrturismo.test` | `Demo@1234` |
+| **Viajante** (para testar compras) | `viajante.demo@rrturismo.test` | `Demo@1234` |
+
+- Se o banco **já tem viagens**, nada é criado nem alterado.
+- Para desligar os exemplos: defina a variável `DADOS_EXEMPLO=false` antes de iniciar.
+- As imagens são ilustrações criadas para o projeto (pasta `RR-Turismo-Spring/src/main/resources/imagens/demo`).
+
 ### Passo 2 — Criar uma viagem (site)
 1. No site, abra **Cadastro** e crie uma conta de **Guia** ou **Empresa** (senha com no mínimo 8 caracteres).
 2. Entre e abra **Criar nova viagem** no menu. Preencha, envie uma foto e salve.
@@ -129,7 +141,7 @@ RR-Turismo/
 │   ├── components/ services/ hooks/ ...
 │   └── README.md              ← como rodar o app
 ├── banco/criar_banco.sql      ← script do banco (opcional)
-└── docs/                      ← relatório da API e guia do Git
+└── docs/                      ← relatório da API, guia do Git, comparativo PHP×Spring e guia da nuvem
 ```
 
 ## Equipe
@@ -137,3 +149,5 @@ RR-Turismo/
 - **Mobile:** aplicativo do turista — _nome do integrante_
 
 Guia para subir e atualizar este repositório: [`docs/GUIA_GIT.md`](docs/GUIA_GIT.md)
+Comparativo com o projeto PHP das aulas (padoca): [`docs/COMPARATIVO_PHP_SPRING.md`](docs/COMPARATIVO_PHP_SPRING.md)
+Como colocar o projeto na nuvem (Docker): [`docs/NUVEM.md`](docs/NUVEM.md)

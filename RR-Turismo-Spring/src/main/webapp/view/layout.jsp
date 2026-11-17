@@ -33,7 +33,7 @@
         <link rel="stylesheet" href="/css/editarPerfil.css?v=4">
     </c:if>
     <c:if test="${pagina == 'perfilPublico.jsp'}">
-        <link rel="stylesheet" href="/css/perfilPublico.css?v=4">
+        <link rel="stylesheet" href="/css/perfilPublico.css?v=6">
     </c:if>
     <link rel="stylesheet" href="/css/inicio.css">
     <link rel="stylesheet" href="/css/criarViagem.css?v=3">
@@ -106,7 +106,6 @@
                         </div>
                     </div>
 
-                    <a href="/favoritos"    data-path="/favoritos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.5-9.2C1 8 3 4.5 6.5 4.5c2 0 3.5 1.1 5.5 3 2-1.9 3.5-3 5.5-3C21 4.5 23 8 21.5 11.8 19.5 16.4 12 21 12 21z"/></svg>Favoritos</a>
                     <a href="/sobre-nos"    data-path="/sobre-nos"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>Sobre nós</a>
                     <a href="/fale-conosco" data-path="/fale-conosco"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg>Fale conosco</a>
                 </nav>
@@ -365,7 +364,7 @@
         <script src="/js/editarPerfil.js?v=2" charset="UTF-8"></script>
     </c:if>
     <c:if test="${pagina == 'perfilPublico.jsp'}">
-        <script src="/js/perfilPublico.js?v=2" charset="UTF-8"></script>
+        <script src="/js/perfilPublico.js?v=3" charset="UTF-8"></script>
     </c:if>
 
     <script type="text/javascript"

@@ -10,26 +10,53 @@
 
 <div class="public-profile-page">
 
+    <%-- Menu estilo Facebook (aparece ao clicar na foto/capa) --%>
+    <div class="foto-menu" id="fotoMenu" hidden role="menu">
+        <button type="button" data-acao="ver" role="menuitem">&#128065; <span id="fotoMenuVer">Ver foto de perfil</span></button>
+        <button type="button" data-acao="trocar" role="menuitem">&#128247; <span id="fotoMenuTrocar">Trocar foto de perfil</span></button>
+    </div>
+
+    <%-- Visualizador de imagem em tela cheia --%>
+    <div class="foto-visualizador" id="fotoVisualizador" hidden>
+        <button type="button" class="foto-visualizador-fechar" id="fotoVisualizadorFechar" aria-label="Fechar">&times;</button>
+        <img src="" alt="" id="fotoVisualizadorImg">
+    </div>
+
+    <input type="file" id="fotoInput" accept="image/*" hidden>
+    <div class="foto-aviso" id="fotoAviso" hidden></div>
+
+
     <!-- CAPA + FOTO (estilo Facebook): a foto redonda fica "dentro" da capa, no canto de baixo -->
     <section class="public-card">
 
-        <div class="public-banner">
+        <%-- Clicar na capa: o dono escolhe "Ver capa" ou "Trocar foto de capa"; visitantes só veem a capa. --%>
+        <div class="public-banner ${not empty perfil.bannerBase64 or not perfilDeOutraPessoa ? 'clicavel' : ''}"
+             data-foto-menu="capa" data-dono="${not perfilDeOutraPessoa}"
+             data-tem="${not empty perfil.bannerBase64}">
             <c:choose>
                 <c:when test="${not empty perfil.bannerBase64}">
-                    <img src="${perfil.bannerBase64}" alt="Capa do perfil">
+                    <img src="${perfil.bannerBase64}" alt="Capa do perfil" id="imgCapa">
                 </c:when>
                 <c:otherwise>
                     <div class="banner-padrao"></div>
                 </c:otherwise>
             </c:choose>
+            <c:if test="${not perfilDeOutraPessoa}">
+                <span class="botao-camera-capa">&#128247; Editar capa</span>
+            </c:if>
         </div>
 
         <div class="public-profile">
 
-            <div class="public-avatar-wrapper">
+            <div class="public-avatar-wrapper ${not empty perfil.fotoBase64 or not perfilDeOutraPessoa ? 'clicavel' : ''}"
+                 data-foto-menu="foto" data-dono="${not perfilDeOutraPessoa}"
+                 data-tem="${not empty perfil.fotoBase64}">
                 <img src="${not empty perfil.fotoBase64 ? perfil.fotoBase64 : '/imagens/user-placeholder.svg'}"
-                     class="public-avatar"
+                     class="public-avatar" id="imgFoto"
                      alt="Foto do perfil">
+                <c:if test="${not perfilDeOutraPessoa}">
+                    <span class="botao-camera-foto" aria-hidden="true">&#128247;</span>
+                </c:if>
             </div>
 
             <div class="public-info">

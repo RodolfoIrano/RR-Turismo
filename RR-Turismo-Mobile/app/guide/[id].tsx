@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import { View, ScrollView, StyleSheet, FlatList, TouchableOpacity, Linking } from "react-native";
 import { Text } from "../../components/TextoTraduzido";
 import { Image } from "expo-image";
+import VisualizadorDeImagem from "../../components/perfil/VisualizadorDeImagem";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -70,6 +71,7 @@ export default function GuideProfile() {
   const [guiaDireto, setGuiaDireto] = useState<Guide | null>(null);
   const [erroDireto, setErroDireto] = useState<string | null>(null);
   const [tentativa, setTentativa] = useState(0);
+  const [vendo, setVendo] = useState<{ uri: string } | null>(null); // imagem em tela cheia
 
   useEffect(() => {
     if (guiaDoCatalogo || carregando) return;
@@ -118,16 +120,21 @@ export default function GuideProfile() {
             CABEÇALHO: foto, nome, local e avaliação
             ==================================================== */}
         {/* Banner (capa) do guia: ocupa a largura toda; a foto fica por cima da borda de baixo. */}
+        {/* Tocar na capa ou na foto abre a imagem em tela cheia (visitante só pode ver). */}
         <View style={styles.bannerArea}>
           {guide.banner ? (
-            <Image source={{ uri: guide.banner }} style={styles.banner} contentFit="cover" transition={250} />
+            <TouchableOpacity activeOpacity={0.9} onPress={() => setVendo({ uri: guide.banner! })}>
+              <Image source={{ uri: guide.banner }} style={styles.banner} contentFit="cover" transition={250} />
+            </TouchableOpacity>
           ) : (
             <View style={[styles.banner, { backgroundColor: colors.primary }]} />
           )}
         </View>
 
         <View style={styles.header}>
-          <Image source={{ uri: guide.photo }} style={styles.avatar} />
+          <TouchableOpacity activeOpacity={0.9} onPress={() => setVendo({ uri: guide.photo })}>
+            <Image source={{ uri: guide.photo }} style={styles.avatar} />
+          </TouchableOpacity>
 
           <Text style={typography.h1}>{guide.name}</Text>
 
@@ -219,6 +226,7 @@ export default function GuideProfile() {
           )}
         </Section>
       </ScrollView>
+      <VisualizadorDeImagem visivel={vendo !== null} fonte={vendo} aoFechar={() => setVendo(null)} />
     </SafeAreaView>
   );
 }

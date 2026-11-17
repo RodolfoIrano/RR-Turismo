@@ -99,6 +99,8 @@ Para parar: `Ctrl + C` na janela do terminal.
 
 ## 4. Primeiro uso
 
+**Já vem com dados de exemplo.** Com o banco vazio, o servidor cria 6 viagens e duas contas de demonstração na primeira vez que liga: guia `guia.demo@rrturismo.test` e viajante `viajante.demo@rrturismo.test`, ambos com a senha `Demo@1234`. Se o banco já tem viagens, nada é criado. Para desligar: variável `DADOS_EXEMPLO=false`. Para criar as suas próprias viagens, siga os passos abaixo.
+
 1. Em http://localhost:9000 abra o **Cadastro** e crie uma conta de **Guia** ou **Empresa** (senha com no mínimo 8 caracteres).
 2. Entre e use **Criar viagem**: preencha os dados, as datas, envie uma foto (até 20 MB) e salve.
 3. A viagem aparece no site e no aplicativo Mobile.
