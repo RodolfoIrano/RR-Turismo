@@ -294,3 +294,123 @@
     .public-profile h1 { font-size: 26px; }
     .badges span { margin: 4px; }
 }
+
+/* =========================================================
+   Foto/capa clicáveis + menu estilo Facebook + visualizador
+   ========================================================= */
+.public-banner { position: relative; }
+.public-banner.clicavel,
+.public-avatar-wrapper.clicavel { cursor: pointer; }
+.public-avatar-wrapper { position: relative; }
+
+.botao-camera-capa {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(0, 17, 70, 0.7);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+.botao-camera-foto {
+    position: absolute;
+    right: 6px;
+    bottom: 10px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #1a56db;
+    color: #fff;
+    border: 3px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.public-banner.enviando,
+.public-avatar-wrapper.enviando { opacity: 0.55; pointer-events: none; }
+
+.foto-menu {
+    position: fixed;
+    z-index: 3000;
+    min-width: 230px;
+    padding: 6px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
+    border: 1px solid #e4e9f2;
+}
+.foto-menu[hidden] { display: none; }
+.foto-menu button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 11px 14px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1d2a44;
+    text-align: left;
+    cursor: pointer;
+}
+.foto-menu button[hidden] { display: none; }
+.foto-menu button:hover { background: #eef3ff; }
+
+.foto-visualizador {
+    position: fixed;
+    inset: 0;
+    z-index: 4000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.88);
+    padding: 24px;
+}
+.foto-visualizador[hidden] { display: none; }
+.foto-visualizador img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 6px;
+}
+.foto-visualizador-fechar {
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+}
+.foto-visualizador-fechar:hover { background: rgba(255, 255, 255, 0.3); }
+
+.foto-aviso {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    z-index: 5000;
+    padding: 12px 20px;
+    border-radius: 999px;
+    background: #0f7b3e;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+}
+.foto-aviso.erro { background: #b3261e; }
+.foto-aviso[hidden] { display: none; }

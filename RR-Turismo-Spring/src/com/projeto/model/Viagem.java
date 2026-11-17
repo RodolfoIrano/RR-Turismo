@@ -7,6 +7,7 @@ import java.util.Base64;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,6 +42,8 @@ public class Viagem {
     private String local;
     private String categoria;
     private String transporte;
+    // O formulário aceita até 2000 caracteres (o padrão do banco seria só 255).
+    @Column(length = 2000)
     private String descricao;
 
     // Total de vagas e quantas já foram ocupadas.

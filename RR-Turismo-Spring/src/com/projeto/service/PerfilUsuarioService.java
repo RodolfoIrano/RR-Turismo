@@ -56,6 +56,12 @@ public class PerfilUsuarioService {
         return perfilUsuarioRepository.save(perfil);
     }
 
+    // Salva SÓ a foto/capa já definidas no perfil, sem mexer nos outros campos
+    // (nem zerar as estatísticas). Usado pela troca rápida de foto/capa.
+    public PerfilUsuario salvarImagens(PerfilUsuario perfil) {
+        return perfilUsuarioRepository.save(perfil);
+    }
+
     // Remove espaços em branco no início/fim do texto.
     private String limpar(String valor) {
         return valor == null ? null : valor.trim();

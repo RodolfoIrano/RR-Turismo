@@ -1,12 +1,13 @@
 // ============================================================
 // 📄 O QUE ESTE ARQUIVO FAZ:
 // Topo do PERFIL (estilo Facebook): capa (banner) grande, foto redonda
-// à esquerda com metade dentro da capa, nome e e-mail. Tocar na capa ou na foto troca a imagem
-// (quem decide o que acontece é a tela que usa este componente).
+// à esquerda com metade dentro da capa, nome e e-mail. Tocar na capa ou na foto
+// abre um menu igual ao do Facebook: "Ver foto/capa" (tela cheia) ou
+// "Trocar foto/capa" (abre a galeria; quem envia é a tela que usa este componente).
 // Usado na tela Perfil e na tela Editar perfil.
 // ============================================================
-import React from "react";
-import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { ActivityIndicator, Modal, Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -15,6 +16,7 @@ import { colors } from "../../constants/colors";
 import { radius, spacing } from "../../constants/spacing";
 import { typography } from "../../constants/typography";
 import type { FonteDeImagem } from "../../hooks/usePerfilImagens";
+import VisualizadorDeImagem from "./VisualizadorDeImagem";
 
 interface Props {
   nome: string;
@@ -35,14 +37,33 @@ const TAMANHO_FOTO = 116;
 export default function CabecalhoDoPerfil({
   nome, email, ehGuia, foto, banner, enviandoFoto, enviandoBanner, aoTrocarFoto, aoTrocarBanner,
 }: Props) {
+  // Qual menu está aberto ("foto" ou "capa") e qual imagem está em tela cheia.
+  const [menu, setMenu] = useState<"foto" | "capa" | null>(null);
+  const [vendo, setVendo] = useState<FonteDeImagem | null>(null);
+
+  const imagemDoMenu = menu === "foto" ? foto : banner;
+  const rotuloVer = menu === "foto" ? "Ver foto de perfil" : "Ver capa";
+  const rotuloTrocar = menu === "foto" ? "Trocar foto de perfil" : "Trocar foto de capa";
+
+  function escolher(acao: "ver" | "trocar") {
+    const atual = menu;
+    setMenu(null);
+    if (acao === "ver") {
+      setVendo(atual === "foto" ? foto : banner);
+    } else {
+      // Espera o menu fechar antes de abrir a galeria (evita conflito de modais no iOS).
+      setTimeout(() => (atual === "foto" ? aoTrocarFoto() : aoTrocarBanner()), 250);
+    }
+  }
+
   return (
     <View>
       {/* CAPA */}
       <TouchableOpacity
         activeOpacity={0.85}
-        onPress={aoTrocarBanner}
+        onPress={() => setMenu("capa")}
         disabled={enviandoBanner}
-        accessibilityLabel="Alterar capa"
+        accessibilityLabel="Opções da capa"
       >
         {banner ? (
           <Image source={banner} style={styles.capa} contentFit="cover" />
@@ -67,9 +88,9 @@ export default function CabecalhoDoPerfil({
       <View style={styles.identidade}>
         <TouchableOpacity
           activeOpacity={0.85}
-          onPress={aoTrocarFoto}
+          onPress={() => setMenu("foto")}
           disabled={enviandoFoto}
-          accessibilityLabel="Alterar foto de perfil"
+          accessibilityLabel="Opções da foto de perfil"
           style={styles.fotoSombra}
         >
           {foto ? (
@@ -98,6 +119,31 @@ export default function CabecalhoDoPerfil({
           </View>
         )}
       </View>
+
+      {/* MENU (estilo Facebook): ver ou trocar */}
+      <Modal visible={menu !== null} transparent animationType="fade" onRequestClose={() => setMenu(null)}>
+        <Pressable style={styles.menuFundo} onPress={() => setMenu(null)}>
+          <Pressable style={styles.menuCaixa} onPress={() => {}}>
+            <View style={styles.menuAlca} />
+            {!!imagemDoMenu && (
+              <TouchableOpacity style={styles.menuItem} onPress={() => escolher("ver")}>
+                <Ionicons name="eye-outline" size={22} color={colors.primary} />
+                <Text style={styles.menuTexto}>{rotuloVer}</Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity style={styles.menuItem} onPress={() => escolher("trocar")}>
+              <Ionicons name="camera-outline" size={22} color={colors.primary} />
+              <Text style={styles.menuTexto}>{rotuloTrocar}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuItem} onPress={() => setMenu(null)}>
+              <Ionicons name="close-outline" size={22} color={colors.textMuted} />
+              <Text style={[styles.menuTexto, { color: colors.textMuted }]}>Cancelar</Text>
+            </TouchableOpacity>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
+      <VisualizadorDeImagem visivel={vendo !== null} fonte={vendo} aoFechar={() => setVendo(null)} />
     </View>
   );
 }
@@ -149,6 +195,18 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.background,
   },
+  menuFundo: { flex: 1, backgroundColor: "rgba(0,0,0,0.45)", justifyContent: "flex-end" },
+  menuCaixa: {
+    backgroundColor: colors.background,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.xl,
+    paddingTop: spacing.sm,
+  },
+  menuAlca: { alignSelf: "center", width: 40, height: 4, borderRadius: 2, backgroundColor: colors.border ?? "#d0d5dd", marginBottom: spacing.sm },
+  menuItem: { flexDirection: "row", alignItems: "center", gap: spacing.md, paddingVertical: spacing.md },
+  menuTexto: { fontSize: 16, fontWeight: "600", color: colors.primary },
   nome: { fontSize: 22, fontWeight: "700", color: colors.primary, marginTop: spacing.sm },
   chipGuia: {
     flexDirection: "row",

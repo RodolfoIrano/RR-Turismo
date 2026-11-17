@@ -1,6 +1,7 @@
 package com.projeto.controller;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -94,6 +96,46 @@ public class PerfilUsuarioController {
     public ResponseEntity<byte[]> bannerPerfil(HttpSession session) {
         PerfilUsuario perfil = perfilUsuarioService.buscarOuCriar(usuarioLogado(session));
         return imagem(perfil.getBanner());
+    }
+
+    // Troca RÁPIDA da foto de perfil (menu "Trocar foto de perfil", sem abrir a edição).
+    // Devolve JSON: { ok, url } com a imagem nova pronta para usar no <img>.
+    @PostMapping("/perfil/trocar-foto")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> trocarFoto(@RequestParam("arquivo") MultipartFile arquivo,
+                                                          HttpSession session) {
+        return trocarImagem(arquivo, session, true);
+    }
+
+    // Troca RÁPIDA da capa (menu "Trocar foto de capa").
+    @PostMapping("/perfil/trocar-capa")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> trocarCapa(@RequestParam("arquivo") MultipartFile arquivo,
+                                                          HttpSession session) {
+        return trocarImagem(arquivo, session, false);
+    }
+
+    private ResponseEntity<Map<String, Object>> trocarImagem(MultipartFile arquivo, HttpSession session, boolean foto) {
+        Cadastro usuario = usuarioLogado(session);
+        if (usuario == null) {
+            return ResponseEntity.status(401).body(Map.of("ok", false, "erro", "Faça login novamente."));
+        }
+        if (arquivo == null || arquivo.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("ok", false, "erro", "Nenhuma imagem foi enviada."));
+        }
+        String tipo = arquivo.getContentType();
+        if (tipo == null || !tipo.startsWith("image/")) {
+            return ResponseEntity.badRequest().body(Map.of("ok", false, "erro", "O arquivo precisa ser uma imagem."));
+        }
+        try {
+            PerfilUsuario perfil = perfilUsuarioService.buscarOuCriar(usuario);
+            salvarImagem(arquivo, perfil, foto);
+            perfil = perfilUsuarioService.salvarImagens(perfil);
+            String url = foto ? perfil.getFotoBase64() : perfil.getBannerBase64();
+            return ResponseEntity.ok(Map.of("ok", true, "url", url == null ? "" : url));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(500).body(Map.of("ok", false, "erro", "Não foi possível salvar a imagem."));
+        }
     }
 
     private Cadastro usuarioLogado(HttpSession session) {
