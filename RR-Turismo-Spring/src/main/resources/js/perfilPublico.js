@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let alvoAtual = null; // elemento clicado (foto ou capa)
 
     const textos = {
-        foto: { ver: "Ver foto de perfil", trocar: "Trocar foto de perfil", url: "/perfil/trocar-foto" },
-        capa: { ver: "Ver capa", trocar: "Trocar foto de capa", url: "/perfil/trocar-capa" },
+        foto: { ver: "Ver foto de perfil", trocar: "Trocar foto de perfil", url: (window.RR_BASE || "") + "/perfil/trocar-foto" },
+        capa: { ver: "Ver capa", trocar: "Trocar foto de capa", url: (window.RR_BASE || "") + "/perfil/trocar-capa" },
     };
 
     function mostrarAviso(texto, erro) {
