@@ -15,7 +15,7 @@ function abrirModalDelete(id, nome) {
     if (!overlay || !nomeEl || !form) return;
 
     nomeEl.textContent = "\u201C" + nome + "\u201D";
-    form.action        = "/deletarviagem/" + id;
+    form.action        = (window.RR_BASE || "") + "/deletarviagem/" + id;
 
     overlay.classList.remove("hidden");
     overlay.offsetHeight; // reflow

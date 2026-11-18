@@ -22,6 +22,8 @@
 <html lang="pt-br">
 
 <head>
+    <%-- Prefixo do site quando ele roda num subcaminho (ex.: /pi/rrturismo). Vazio no uso normal. --%>
+    <script>window.RR_BASE = "${RR_BASE}";</script>
     <title>RR Turismo</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -358,19 +360,19 @@
     <script src="/js/padrao.js?v=4" charset="UTF-8"></script>
     <script src="/js/perfil.js?v=2" charset="UTF-8"></script>
     <script src="/js/site.js?v=4" charset="UTF-8"></script>
-    <script src="/js/chatSite.js?v=1" charset="UTF-8"></script>
+    <script src="/js/chatSite.js?v=2" charset="UTF-8"></script>
 
     <c:if test="${pagina == 'editarPerfil.jsp'}">
         <script src="/js/editarPerfil.js?v=2" charset="UTF-8"></script>
     </c:if>
     <c:if test="${pagina == 'perfilPublico.jsp'}">
-        <script src="/js/perfilPublico.js?v=3" charset="UTF-8"></script>
+        <script src="/js/perfilPublico.js?v=4" charset="UTF-8"></script>
     </c:if>
 
     <script type="text/javascript"
         src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script src="/js/criarViagem.js?v=10"></script>
-    <script src="/js/editarViagem.js"></script>
+    <script src="/js/criarViagem.js?v=11"></script>
+    <script src="/js/editarViagem.js?v=2"></script>
     <script src="/js/acessibilidade.js?v=10"></script>
 
     <!-- VLibras plugin oficial -->

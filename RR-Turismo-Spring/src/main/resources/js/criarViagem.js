@@ -354,7 +354,7 @@
                 // Imagem "embutida" no próprio link (data:image/...): não precisa do servidor.
                 blob = await (await fetch(link)).blob();
             } else {
-                const resposta = await fetch("/imagem-por-link?url=" + encodeURIComponent(link));
+                const resposta = await fetch((window.RR_BASE || "") + "/imagem-por-link?url=" + encodeURIComponent(link));
                 if (!resposta.ok) {
                     throw new Error((await resposta.text()) || "Não consegui baixar essa imagem.");
                 }

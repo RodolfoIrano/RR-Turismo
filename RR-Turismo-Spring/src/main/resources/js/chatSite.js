@@ -197,7 +197,7 @@
         linha.className = "chat-linha " + (m.de === "eu" ? "eu" : "bot");
         if (m.de !== "eu") {
             var av = document.createElement("img");
-            av.className = "chat-mini-avatar"; av.src = "/imagens/RRBolinha.png"; av.alt = "";
+            av.className = "chat-mini-avatar"; av.src = (window.RR_BASE || "") + "/imagens/RRBolinha.png"; av.alt = "";
             linha.appendChild(av);
         }
         var col = document.createElement("div");
@@ -208,7 +208,7 @@
         col.appendChild(balao);
         if (m.atalho) {
             var a = document.createElement("a");
-            a.className = "chat-atalho"; a.href = m.atalho.href; a.textContent = m.atalho.texto + " →";
+            a.className = "chat-atalho"; a.href = (window.RR_BASE || "") + m.atalho.href; a.textContent = m.atalho.texto + " →";
             col.appendChild(a);
         }
         linha.appendChild(col);
@@ -236,7 +236,7 @@
         digitando = true;
         var ind = document.createElement("div");
         ind.className = "chat-linha bot";
-        ind.innerHTML = '<img class="chat-mini-avatar" src="/imagens/RRBolinha.png" alt=""><div class="chat-col"><div class="chat-balao chat-digitando"><i></i><i></i><i></i></div></div>';
+        ind.innerHTML = '<img class="chat-mini-avatar" src="' + (window.RR_BASE || "") + '/imagens/RRBolinha.png" alt=""><div class="chat-col"><div class="chat-balao chat-digitando"><i></i><i></i><i></i></div></div>';
         lista.appendChild(ind); rolar();
         var r = responder(texto, primeiroNome);
         setTimeout(function () {
